@@ -1,0 +1,65 @@
+﻿@model Guid
+@using pCMS.Core;
+@using pCMS.Framework.UI
+@{
+    //register CSS and JS
+   
+
+    //other variables
+    var random = CommonHelper.GenerateRandomInteger();
+    var clientId = "filedownload" + random;
+    var downloadService = DependencyResolver.Current.GetService<pCMS.Services.IDownloadService>();
+    var download = downloadService.GetDownloadById(Model);
+}
+<div id="@(clientId + "value")">
+    @Html.HiddenFor(x => x)
+</div>
+@*<div id="@(clientId + "image")">
+    <img src="@(downloadService.GetDownloadUrl(Model, 100, true))" />
+</div>*@
+@if (download != null)
+{
+    <span id="@(clientId + "remove")" class="t-button">@T("Admin.Download.RemoveDownload")</span>
+}
+else
+{
+    <span id="@(clientId + "remove")" class="t-button" style="display:none;">@T("Admin.Download.RemoveDownload")</span>
+}
+<br />
+<div id="@clientId">
+    <noscript>
+        <p>
+            Please enable JavaScript to use file uploader.
+        </p>
+        <!-- or put a simple form for upload here -->
+    </noscript>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $(function () {
+            var uploader@(clientId) = new qq.FileUploader({
+                element: document.getElementById('@clientId'),
+                action: '@(Url.Content("~/Admin/Download/AsyncUpload"))',
+                onComplete: function (id, fileName, responseJSON) {
+                    if (responseJSON.success) {
+                        $("#@(clientId + "image")").html("<img src='" + responseJSON.imageUrl + "'/>");
+                        $("#@(clientId + "value") input").val(responseJSON.pictureId);
+                        $("#@(clientId + "remove")").show();
+                    }
+                },
+                strings: {
+                    upload: "@T("Common.FileUploader.Upload")",
+                    drop: "@T("Common.FileUploader.DropFiles")",
+                    cancel: "@T("Common.FileUploader.Cancel")",
+                    failed: "@T("Common.FileUploader.Failed")"
+                }
+            });
+
+            @*$("#@(clientId + "remove")").click(function (e) {
+                $("#@(clientId + "image")").html("<img src='@downloadService.GetDefaultDownloadUrl()'/>");
+                $("#@(clientId + "value") input").val(0);
+                $(this).hide();
+            });*@
+        });
+    });
+</script>

@@ -47,7 +47,7 @@ I will exclude the UL wrapper and only show the HTML necessary for a single pane
 3)	Slideshow with panel overlays
 	
 		<li>
-			<img src="../gv/path/to/image.jpg" alt="image" title="Pretty Picture" longdesc="Some more information about the photo" />
+			<img src="../gv/path/to/image.jpg" alt="image" title="Pretty Download" longdesc="Some more information about the photo" />
 		</li>
 		
 	For this gallery, the contents of the title and longdesc attributes will display on top of the panel image, its position determined by the 

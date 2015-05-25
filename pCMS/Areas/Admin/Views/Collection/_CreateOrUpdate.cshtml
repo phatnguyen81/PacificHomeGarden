@@ -70,6 +70,15 @@
                 @Html.ValidationMessageFor(model => model.PictureId)
             </td>
         </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.FileDownloadId):
+            </td>
+            <td class="adminData">
+                <input type="file" name="FileDownload"/>
+                <input type="file" name="FileDownlo" />
+            </td>
+        </tr>
     </table>
 }
 

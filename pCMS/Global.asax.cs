@@ -96,6 +96,7 @@ namespace pCMS
             builder.Register(c => new LocalizationService(c.Resolve<IDalContext>(), c.Resolve<ICacheManager>())).As<Services.ILocalizationService>().InstancePerHttpRequest();
             builder.Register(c => new ManufacturerService(c.Resolve<IDalContext>())).As<IManufacturerService>().InstancePerHttpRequest();
             builder.Register(c => new PictureService(c.Resolve<IDalContext>(),c.Resolve<IWebHelper>())).As<IPictureService>().InstancePerHttpRequest();
+            builder.Register(c => new DownloadService(c.Resolve<IDalContext>(), c.Resolve<IWebHelper>())).As<IDownloadService>().InstancePerHttpRequest();
             builder.Register(c => new PollService(c.Resolve<IDalContext>())).As<IPollService>().InstancePerHttpRequest();
             builder.Register(c => new ProductAttributeService(c.Resolve<IDalContext>())).As<IProductAttributeService>().InstancePerHttpRequest();
             builder.Register(c => new ProductService(c.Resolve<IDalContext>())).As<IProductService>().InstancePerHttpRequest();

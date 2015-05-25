@@ -32,7 +32,7 @@ namespace pCMS.Data
         IUserRepository Users { get; }
         ILogRepository Logs { get; }
         IPageRepository Pages { get; }
-        
+        IFileDownloadRepository FileDownloads { get; }
     }
 
     public class DalContext : IDalContext
@@ -59,7 +59,8 @@ namespace pCMS.Data
         private IUserRepository _users;
         private ILogRepository _logs;
         private IPageRepository _pages;
-        private ICollectionRepository _collection;
+        private ICollectionRepository _collections;
+        private IFileDownloadRepository _filedowloads;
 
         public DalContext()
         {
@@ -116,6 +117,10 @@ namespace pCMS.Data
                 _logs.Dispose();
             if(_pages != null)
                 _pages.Dispose();
+            if(_collections != null)
+                _collections.Dispose();
+            if(_filedowloads != null)
+                _filedowloads.Dispose();
             if (_dbContext != null)
                 _dbContext.Dispose();
             GC.SuppressFinalize(this);
@@ -226,9 +231,14 @@ namespace pCMS.Data
             get { return _pages ?? (_pages = new PageRepository(_dbContext)); }
         }
 
+        public IFileDownloadRepository FileDownloads
+        {
+            get { return _filedowloads ?? (_filedowloads = new FileDownloadRepository(_dbContext)); }
+        }
+
         public ICollectionRepository Collections
         {
-            get { return _collection ?? (_collection = new CollectionRepository(_dbContext)); }
+            get { return _collections ?? (_collections = new CollectionRepository(_dbContext)); }
         }
         
     }

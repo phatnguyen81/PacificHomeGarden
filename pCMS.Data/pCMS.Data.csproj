@@ -57,6 +57,7 @@
     <Compile Include="LogRepository.cs" />
     <Compile Include="OrderRepository.cs" />
     <Compile Include="PageRepository.cs" />
+    <Compile Include="FileDownloadRepository.cs" />
     <Compile Include="PollAnswerRepository.cs" />
     <Compile Include="EventRepository.cs" />
     <Compile Include="CollectionRepository.cs" />
