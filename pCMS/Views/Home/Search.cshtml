@@ -1,0 +1,52 @@
+﻿@using pCMS.Core.Domain
+@using pCMS.Framework
+@using pCMS.Models
+@model SearchModel
+@{
+    ViewBag.Title = "Search Results";
+}
+<style>
+    .t-grid-header
+    {
+          display: none ;
+    }
+</style>
+<div style="padding-left: 5px; padding-right: 5px;">
+        <h3>@ViewBag.Title</h3>
+@using (Html.BeginForm("Search", "Home", FormMethod.Get))
+{
+    @Html.TextBoxFor(model => model.Keywords, new {@style="width:300px;"})
+    <button > Search</button>
+    if (!string.IsNullOrWhiteSpace(Model.Keywords))
+    {
+
+        @(Html.Telerik().Grid(Model.SearchResults.Data)
+                   .Name("SearchList")
+                   .DataKeys(key => key.Add(q => q.Id))
+                   .DataBinding(dataBinding => dataBinding.Ajax().Select("Searchs", "Home"))
+                   .Columns(columns =>
+                                {
+                                    columns.Bound(o => o.Title)
+                                        .Template(@<text>
+                                                       @if (item.Type == DocumentType.ProductPicture)
+                                                       {
+                                                           <strong>@Html.ActionLink(item.Title, "ProductDetail", "Home", new {id = item.ParentId, picid = item.Id}, new {@target = "_blank"})
+                                                           </strong>
+                                                           <p>
+                                                               @item.Content
+                                                           </p>
+                                                       }
+                                                   </text>)
+                                        .ClientTemplate("<strong><a href='" + Url.Action("ProductDetail", "Home") + "/<#=ParentId#>?picid=<#=Id#>' target='_blank'><#=Title#></a></strong><p><#=Content#></p>");
+
+                                })
+                   .Scrollable(scroll => scroll.Height(450))
+                   
+                   .Selectable()
+                   .EnableCustomBinding(true)
+                   .Pageable(page => page.PageSize(20).Total(Model.SearchResults.Total))
+                   .HtmlAttributes(new {@style = "margin-bottom: 20px;"})
+              )
+    }
+}
+</div>

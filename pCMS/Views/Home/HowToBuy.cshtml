@@ -1,0 +1,55 @@
+﻿@model pCMS.Models.PageModel
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.MetaDescription = Model.MetaDescription;
+    ViewBag.MetaKeywords = Model.MetaKeywords; 
+}
+<div id="DivCompany" style="width: 681px; height: 536px; margin: 7px;">
+    <div class="DivPageContent" style="position: relative; background: url(@Url.Content("~/Images/bg_company.gif"));
+        height: 536px;">
+        <div align="justify" class="ContentInfo" style="position: absolute; top: 10px; left: 10px;
+            width: 450px; background: url(@Url.Content("~/Images/bg_transparent.png"));">
+            <div style="margin: 0 0; height: 390px; overflow: auto; width: 460px; padding-right: 5px;">
+                @*<span style="font-family: Corbel; font-size: 19px; font-weight: nonal;">How to buy from
+                    us</span><p>
+                        <b>See our products for yourself</b><br />
+                        You are invited to visit us in our warehouse showrooms in California and Georgia.
+                        We also have a showroom at the Atlanta Merchandise Mart. We attend many major trade
+                        shows in the US, including an Independent Garden Center Show in Chicago and TPIE
+                        in Fort Lauderdale, as well as some Co-op shows. Please refer to our trade show
+                        schedule for updated information.<br />
+                        <br />
+                        <b>Our program</b><br />
+                        We tailor our programs to supply independent garden centers, nurseries, pottery
+                        shops, specialty stores and high-end small to medium scale chains. Because of our
+                        on-going production, we offer lower minimums for each style and color than most
+                        manufacturers. We have the flexibility to mix a variety of products from multiple
+                        factories overseas. We are capable of designing and manufacturing products exclusively
+                        for you. Please consult our sales associate for details.
+                        <br />
+                        <ul class="menu5">
+                            <li>Program I - <a href="@Url.Content("~/pdfFiles/ShippingFromOurWarehouses.pdf")" target="_blank">shipping
+                                from our warehouses.</a></li>
+                            <li>Program II - <a href="@Url.Content("~/pdfFiles/ShippingAtFactoriesPrice.pdf")" target="_blank">shipping
+                                directly from our overseas factories at factory prices.</a></li>
+                            <li>Program III - <a href="@Url.Content("~/pdfFiles/ShippingAtPortPrices.pdf")" target="_blank">shipping
+                                directly from our overseas factories at port prices.</a></li>
+                        </ul>
+                        <br />
+                        <br />
+                        <b>Shipping points</b><br />
+                        We ship direct containers, FOB from Yiantian and Shanghai, China and HCMC, Vietnam.
+                        US based shipping points are Hayward, CA (near San Francisco) and Decatur, Georgia
+                        (near Atlanta).<br />
+                        <br />
+                        <b>Sales Representatives</b><br />
+                Please contact us and we will direct you to the right person to handle your account
+                according to your needs. Volume buyers are invited to visit our warehouses for a
+                sales consultation and product preview. We will arrange a free trip for you. If
+                your time does not permit you to visit us, our key account manager will work with
+                you at your convenience.*@
+                @Html.Raw(Model.Body)
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+﻿@using pCMS.Admin.Models
+
+@using pCMS.Framework
+@model pCMS.Admin.Models.ProductAttributeItemModel
+@Html.HiddenFor(model => model.Id)           
+@Html.HiddenFor(model => model.ProductTypeId)
+@(Html.Telerik()
+.TabStrip()
+.Name("Attribute-Tab")
+.Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Catalog.ProductAttribute.Tabs.Info")).Content(TabInfo().ToHtmlString());
+    var tabAttributeOptions = x.Add().Text(T("Admin.Catalog.ProductAttribute.Tabs.AttributeOptions")).Content(TabAttributeOptions().ToHtmlString());
+    var selectedTab = (string)ViewBag.SelectedTab;
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+}))
+
+@helper TabInfo()
+{
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.ProductTypeTitle):
+            </td>
+            <td class="adminData">
+                <b>@Html.DisplayTextFor(model => model.ProductTypeTitle)</b>
+                @Html.ValidationMessageFor(model => model.ProductTypeTitle)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Title):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Title, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.DataType):
+            </td>
+            <td class="adminData">
+                @(Html.Telerik().DropDownListFor(model => model.DataType)
+                .BindTo(new SelectList(Model.DataTypeList, "Value", "Text")))
+                @Html.ValidationMessageFor(model => model.DataType)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.AllowFilter):
+            </td>
+            <td class="adminData">
+                @Html.CheckBoxFor(model => model.AllowFilter)
+                @Html.ValidationMessageFor(model => model.AllowFilter)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.DisplayOrder):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.DisplayOrder)
+                @Html.ValidationMessageFor(model => model.DisplayOrder)
+            </td>
+        </tr>
+    </table>
+}
+
+@helper TabAttributeOptions()
+    {
+        if (Model.Id != Guid.Empty)
+        {
+            <table class="adminContent">
+                <tr>
+                    <td>
+                @(Html.Telerik().Grid<ProductAttributeOptionModel>()
+                    .Name("options-grid")
+                    .DataKeys(x => x.Add(y => y.Id).RouteKey("Id"))
+                    .Columns(columns =>
+                                    {
+                                    columns.Bound(x => x.DataValue);
+                                    columns.Bound(x => x.OptionDisplayOrder).Width(100);
+                                    columns.Command(commands =>
+                                    {
+                                        commands.Edit();
+                                        commands.Delete();
+                                    }).Width(180);  
+                                })
+                    .ToolBar(x => x.Insert())
+                    .Editable(x => x.Mode(GridEditMode.InLine))
+                    .DataBinding(dataBinding => dataBinding.Ajax()
+                        .Select("AttributeOptions", "ProductAttribute", new { id = Model.Id })
+                        .Update("AttributeOptionUpdate", "ProductAttribute")
+                        .Delete("AttributeOptionDelete", "ProductAttribute")
+                        .Insert("AttributeOptionAdd", "ProductAttribute", new { id = Model.Id }))
+                    .EnableCustomBinding(true))
+                    </td>
+                </tr>
+            </table>
+        }
+        else
+        {
+            <text>Lưu thuộc tính trước khi thêm giá trị</text>
+        }
+}

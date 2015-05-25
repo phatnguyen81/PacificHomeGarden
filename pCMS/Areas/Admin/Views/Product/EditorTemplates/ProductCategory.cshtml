@@ -1,0 +1,14 @@
+﻿@using Telerik.Web.Mvc.UI;
+@{    
+    var categoryList = new List<SelectListItem>();
+    var categoryService = DependencyResolver.Current.GetService<pCMS.Services.ICategoryService>();
+    var allCategories = categoryService.GetAllWithOrder();
+
+    categoryList.AddRange(allCategories.Select(c => new SelectListItem()
+                                                        {
+                                                            Text = c.FullTitle,
+                                                            Value = c.Id.ToString()
+                                                        }).ToList());
+}
+
+@Html.Telerik().DropDownList().Name("NewCategoryId").BindTo(categoryList)

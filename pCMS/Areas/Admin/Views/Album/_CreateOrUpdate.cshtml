@@ -1,0 +1,138 @@
+﻿@using pCMS.Admin.Models
+@using pCMS.Framework
+@model pCMS.Admin.Models.AlbumItemModel
+
+@(Html.Telerik()
+.TabStrip()
+.Name("Album-Tab")
+.Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Content.Album.Tab.Info")).Content(TabInfo().ToHtmlString());
+    var tabPicture = x.Add().Text(T("Admin.Content.Album.Tab.Picture")).Content(TabPicture().ToHtmlString());
+    var selectedTab = (string)ViewData["selectedTab"];
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+        case "picture":
+            tabPicture.Selected(true);
+            break;
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+}))
+
+@helper TabInfo()
+    {
+        
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Title):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Title, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Alias):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Alias, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.Alias)
+                <i>(Tự phát sinh khi để trống)</i>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Description):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.Description, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.Description)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.IsPublished):
+            </td>
+            <td class="adminData">
+                @Html.CheckBoxFor(model => model.IsPublished)
+                @Html.ValidationMessageFor(model => model.IsPublished)
+            </td>
+        </tr>
+    </table>
+}
+@helper TabPicture()
+{
+    if (Model.Id != Guid.Empty)
+    {
+        <table class="adminContent">
+            <tr>
+                <td>
+                    @(Html.Telerik().Grid<AlbumItemModel.PictureListModel>()
+                                   .Name("pictures-grid")
+                                   .DataKeys(x =>
+                                                 {
+                                                     x.Add(y => y.PictureId).RouteKey("PictureId");
+                                                     x.Add(y => y.AlbumId).RouteKey("AlbumId");
+                                                 })
+                                   .Columns(columns =>
+                                                {
+                                                    columns.Bound(c => c.PictureId)
+                                                        .ClientTemplate("<img width='200' alt='<#= Description#>' src='<#= PictureUrl#>'/>")
+                                                        .Title("Picture").Width(200);
+                                                    columns.Bound(x => x.Description);
+                                                    columns.Bound(x => x.DisplayOrder).Centered().Width(100);
+                                                    columns.Bound(x => x.MineType).Width(100).Centered();
+                                                    columns.Command(commands =>
+                                                                        {
+                                                                            commands.Edit();
+                                                                            commands.Delete();
+                                                                        }).Width(180);
+
+                                                })
+                                        .Editable(x => x.Mode(GridEditMode.InLine))
+                                        .Selectable()
+                                        .Pageable(page => page.PageSize(20))
+                                        .Scrollable(scroll => scroll.Height(500))
+                                   .DataBinding(dataBinding => dataBinding.Ajax()
+                                        .Select("AlbumPictures", "Album", new { albumId = Model.Id })
+                                        .Delete("AlbumPictureDelete", "Album")
+                                        .Update("AlbumPictureUpdate","Album")
+                           )    
+                                    .EnableCustomBinding(true)    
+                  )
+        </td>
+            </tr>
+        </table>
+    @(Html.Telerik().Upload()
+        .Name("attachments")
+        .Async(async => async
+                    .Save("UploadPictures", "Album", new { albumId = Model.Id }
+                    )).ShowFileList(false)
+                    
+        .ClientEvents(events => events
+            .OnSuccess("onSuccess")
+            )        
+    )
+    
+    }
+    else
+    {
+            <text>Lưu Album trước khi thêm hình ảnh</text>
+    }
+}
+<script type="text/javascript">
+  
+    function onSuccess(e) {
+        var grid = $("#pictures-grid").data("tGrid");
+        
+        grid.rebind({ albumId: '@Model.Id' });
+    }
+ 
+</script>

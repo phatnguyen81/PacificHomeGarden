@@ -1,0 +1,48 @@
+﻿@model pCMS.Admin.Models.RoleCreateOrUpdateModel
+@(Html.Telerik()
+.TabStrip()
+.Name("Customer-Tab")
+.Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Account.Role.Tabs.Info")).Content(TabInfo().ToHtmlString());
+    var selectedTab = (string)ViewData["selectedTab"];
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+}))
+
+@helper TabInfo()
+{
+    <table class="adminContent">
+        @if (!Model.IsEdit)
+        {
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.RoleName):
+                </td>
+                <td class="adminData">
+                    @Html.TextBoxFor(model => model.RoleName)
+                    @Html.ValidationMessageFor(model => model.RoleName)
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.RoleName):
+                </td>
+                <td class="adminData">
+                    @Model.RoleName
+                </td>
+            </tr>
+        }
+        
+    </table>
+}

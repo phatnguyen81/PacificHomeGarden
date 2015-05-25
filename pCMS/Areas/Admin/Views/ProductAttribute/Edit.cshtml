@@ -1,0 +1,24 @@
+﻿@using pCMS.Framework
+@model pCMS.Admin.Models.ProductAttributeItemModel
+
+@{
+    ViewBag.Title = T("Admin.Catalog.ProductAttribute.ProductAttributeEdit");
+    
+}
+@using (Html.BeginForm())
+{
+    <div class="section-header">
+        <div class="title">
+        <img src="@Url.Content("~/Content/admin/images/ico-catalog.png")" alt="" />
+             @ViewBag.Title @Html.ActionLink("(trờ về danh sách)", "Edit", "ProductType", new { id = Model.ProductTypeId, selectedTab = "attribute"}, null)
+        </div>
+        <div class="options">
+            <button type="submit" name="save" value="save" class="t-button">@T("Admin.Common.Save")</button>
+            <button type="submit" name="save" value="save-continue" class="t-button">@T("Admin.Common.SaveContinue")</button>
+            <span id="attribute-delete" class="t-button">@T("Admin.Common.Delete")</span>   
+
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate", Model)
+}
+@Html.DeleteConfirmation(Model.Id.ToString(), "attribute-delete")

@@ -1,0 +1,68 @@
+﻿@using pCMS.Framework
+@using pCMS.Utils
+@model pCMS.Models.ShoppingCartModel
+
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/MicrosoftAjax.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/MicrosoftMvcAjax.js")" type="text/javascript"></script>
+@using (Html.BeginForm())
+{
+    <div style="padding-left: 5px; padding-right: 5px;">
+        <h3>@ViewBag.Title</h3>
+        @(Html.Telerik().Grid<pCMS.Models.ShoppingCartModel.OrderItemModel>()
+           .Name("GridShoppingCart")
+           .DataKeys(x =>
+                         {
+                             x.Add(y => y.ProductId).RouteKey("ProductId");
+                             x.Add(y => y.PictureId).RouteKey("PictureId");
+                         })
+           .Columns(columns =>
+                        {
+                            columns.Bound(o => o.PictureTitle);
+                            columns.Bound(o => o.PictureId).ClientTemplate("<img src='<#=ThumbnailPictureUrl#>' alt='<#=PictureTitle#>' title='<#=PictureTitle#>'/>").Width(110);
+                            columns.Bound(o => o.Qtty).Right().Width(100).FooterTemplate(
+                                @<text>
+                                        Total: 
+                                 </text>
+                                ).FooterHtmlAttributes(new {@style="text-align:right;"});
+                            columns.Bound(o => o.UnitPrice).Width(100).Format("{0:c}").Right().FooterTemplate(
+                                @<text>
+                                    <span id="totalprice"></span>
+                                </text>
+                                ).FooterHtmlAttributes(new { @style = "text-align:right;" }); 
+                            columns.Command(commands =>
+                            {
+                                commands.Edit();
+                                commands.Delete();
+                            }).Width(180);
+                        })
+                                                    .Footer(true)
+                                       .DataBinding(dataBinding => dataBinding.Ajax()
+                                                                       .Select("ShoppingCarts", "Home")
+                                                                       .Update("ShoppingCartUpdate", "Home")
+                                                                       .Delete("ShoppingCartDelete", "Home")
+                                       )
+                                       .Pageable(paging => paging.PageSize(20))
+                                       .Scrollable(c => c.Height("380px"))
+                                       .ClientEvents(events => events.OnDataBound("OnDataBound"))
+
+                                          )
+        <br/>
+        <button class="t-button">Submit your cart</button>
+        <a href="@(string.IsNullOrWhiteSpace(SessionManager.ContinueShoppingUrl) ? "/" : SessionManager.ContinueShoppingUrl)" class="t-button">Continue shopping</a>
+    </div>
+    
+    
+}
+<script type="text/javascript">
+    function OnDataBound(e) {
+        $.getJSON("@Url.Action("GetTotalPrice","Home")", null, function(data) {
+            $("#totalprice").text(data.TotalPrice);
+        });
+    }
+</script>

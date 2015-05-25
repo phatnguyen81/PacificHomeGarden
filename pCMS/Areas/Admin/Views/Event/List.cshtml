@@ -1,0 +1,48 @@
+﻿@using pCMS.Framework
+@model pCMS.Admin.Models.EventListModel
+
+@{
+    ViewBag.Title = T("Admin.Content.Event.EventList");
+        
+}
+
+@using (Html.BeginForm())
+{
+     <div class="section-header">
+         <div class="title">
+             <img src="@Url.Content("~/Content/admin/images/ico-content.png")" alt="" />
+             @ViewBag.Title
+         </div>
+         <div class="options">
+             <a href="@Url.Action("Create")" class="t-button">@T("Admin.Common.AddNew")</a>
+         </div>
+     </div>
+     <table class="adminContent">
+         <tr>
+             <td>
+                @(Html.Telerik().Grid(Model.Events.Data)
+                        .Name("EventList")
+                        .DataKeys(key=>key.Add(q=>q.Id))
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("Events", "Event"))
+                        .Columns(columns =>
+                                     {
+                                         columns.Bound(o => o.Title);
+                                         columns.Bound(o => o.Description);
+                                         columns.Bound(o => o.DateBegin).Template(o => o.DateBegin.ToString("dd/MM/yyyy")).Width(100);
+                                         columns.Bound(o => o.DateEnd).Template(o => o.DateBegin.ToString("dd/MM/yyyy")).Width(100);
+                                         columns.Bound(o => o.PublishedDate).Template(o => o.PublishedDate.ToString("dd/MM/yyyy hh:mm")).Width(100);
+                                         columns.Bound(o => o.ExpiredDate).Template(o => o.ExpiredDate == null ? "" : o.ExpiredDate.Value.ToString("dd/MM/yyyy hh:mm")).Width(100);
+                                         columns.Bound(o => o.IsPublished).Centered().Width(30);
+                                         columns.Template(@<text>
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                        </text>).Title("").Width(70).Centered();
+                                     })
+                        .Selectable()
+                        .EnableCustomBinding(true)
+                        .Pageable(page => page.PageSize(20).Total(Model.Events.Total))
+                                .HtmlAttributes(new { @style = "margin-bottom: 20px;" })
+                )
+             </td>
+         </tr>
+     </table>
+}

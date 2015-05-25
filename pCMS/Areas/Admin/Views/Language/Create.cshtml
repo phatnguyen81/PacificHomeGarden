@@ -1,0 +1,19 @@
+﻿@model pCMS.Admin.Models.LanguageItemModel
+
+@{
+    ViewBag.Title = T("Admin.Configuration.Languages.CreateLanguage");
+}
+@using (Html.BeginForm())
+{
+    <div class="section-header">
+        <div class="title">
+        <img src="@Url.Content("~/Content/admin/images/ico-configuration.png")" alt="" />
+             @ViewBag.Title @Html.ActionLink("(" + T("Admin.Configuration.Languages.BackToList") + ")", "List")
+        </div>
+        <div class="options">
+            <button type="submit" name="save" value="save" class="t-button">@T("Admin.Common.Save")</button>
+            <button type="submit" name="save" value="save-continue" class="t-button">@T("Admin.Common.SaveContinue")</button>
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate", Model)
+}

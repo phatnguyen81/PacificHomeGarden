@@ -1,0 +1,95 @@
+﻿@model pCMS.Admin.Models.PageModel
+
+@(Html.Telerik()
+.TabStrip()
+.Name("Page-Tab")
+.Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Content.Page.Tabs.Info")).Content(TabInfo().ToHtmlString());
+    var tabSEO = x.Add().Text(T("Admin.Content.Page.Tabs.SEO")).Content(TabSEO().ToHtmlString());
+    var selectedTab = (string)ViewData["selectedTab"];
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+}))
+
+@helper TabInfo()
+{
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Title):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Title, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Alias):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Alias, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.Alias)
+                <i>(Tự phát sinh khi để trống)</i>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Body):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Body)
+                @Html.ValidationMessageFor(model => model.Body)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.ShowInSiteMap):
+            </td>
+            <td class="adminData">
+                @Html.CheckBoxFor(model => model.ShowInSiteMap)
+                @Html.ValidationMessageFor(model => model.ShowInSiteMap)
+            </td>
+        </tr>
+    </table>
+}
+@helper TabSEO()
+{
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.MetaKeywords):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.MetaKeywords)
+                @Html.ValidationMessageFor(model => model.MetaKeywords)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.MetaDescription):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.MetaDescription)
+                @Html.ValidationMessageFor(model => model.MetaDescription)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.MetaTitle):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.MetaTitle)
+                @Html.ValidationMessageFor(model => model.MetaTitle)
+            </td>
+        </tr>
+    </table>
+}

@@ -1,0 +1,45 @@
+﻿@model pCMS.Admin.Models.CategoryListModel
+
+@{
+    ViewBag.Title = T("Admin.Catalog.Category.CategoryList");
+    
+}
+@using (Html.BeginForm())
+{
+     <div class="section-header">
+         <div class="title">
+             <img src="@Url.Content("~/Content/admin/images/ico-content.png")" alt="" />
+             @ViewBag.Title @Html.ActionLink("(" + T("Admin.Catalog.Category.SwitchToTreeView") + ")", "Tree")
+         </div>
+         <div class="options">
+             <a href="@Url.Action("Create")" class="t-button">@T("Admin.Common.AddNew")</a>
+         </div>
+     </div>
+     <table class="adminContent">
+         <tr>
+             <td>
+                @(Html.Telerik().Grid(Model.Categories.Data)
+                        .Name("CategoryList")
+                        .DataKeys(key => key.Add(q=>q.Id))
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("Categories", "Category"))
+                        .Columns(columns =>
+                                     {
+                                         columns.Bound(o => o.FullTitle);
+                                         columns.Bound(o => o.Alias).Width(400);
+                                         columns.Bound(o => o.ProductTypeTitle).Width(100);
+                                         
+                                         columns.Template(@<text>
+                                                @Html.ActionLink(T("Admin.Common.Edit"), "Edit", new { id = item.Id })
+                                            </text>)
+                                            .ClientTemplate("<a href='"+Url.Action("Edit","Category")+"/<#=Id#>'>" + T("Admin.Common.Edit") + "</a>")
+                                        .Title("").Width(70).HtmlAttributes(new { @style = "text-align: center;" });
+                                     })
+                        .Selectable()
+                        .EnableCustomBinding(true)
+                        .Pageable(page => page.PageSize(20).Total(Model.Categories.Total))
+                                .HtmlAttributes(new { @style = "margin-bottom: 20px;" })
+                )
+             </td>
+         </tr>
+     </table>
+}

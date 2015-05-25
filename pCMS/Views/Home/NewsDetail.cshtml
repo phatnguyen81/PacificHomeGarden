@@ -1,0 +1,14 @@
+﻿@model pCMS.Models.NewsDetailModel
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<div id="DivCompany" style="width: 681px; height: 536px; margin: 7px;">
+    <div class="DivPageContent" style="height: 534px; border: 1px #efefef solid;">
+        <div align="justify" class="ContentInfo" style="height: 493px; overflow: auto;">
+            <h2>Pacific Home and Garden's News</h2>
+            @Html.Raw(Model.Body)
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+﻿@using pCMS.Framework
+@model pCMS.Admin.Models.ChannelItemModel
+
+@{
+    ViewBag.Title = T("Admin.Content.Channel.ChannelEdit");
+    
+}
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.Id);
+    <div class="section-header">
+        <div class="title">
+        <img src="@Url.Content("~/Content/admin/images/ico-content.png")" alt="" />
+             @ViewBag.Title @Html.ActionLink("(" + T("Admin.Configuration.Languages.BackToList") + ")", "List")
+        </div>
+        <div class="options">
+            <button type="submit" name="save" value="save" class="t-button">@T("Admin.Common.Save")</button>
+            <button type="submit" name="save" value="save-continue" class="t-button">@T("Admin.Common.SaveContinue")</button>
+            <span id="channel-delete" class="t-button">@T("Admin.Common.Delete")</span>
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate", Model)
+}
+@Html.DeleteConfirmation(Model.Id.ToString(), "channel-delete")

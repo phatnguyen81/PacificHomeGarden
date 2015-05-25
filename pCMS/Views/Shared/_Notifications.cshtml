@@ -1,0 +1,38 @@
+﻿@using pCMS.Framework
+@{
+    //success messages
+    var successMessages = new List<string>();
+    if (TempData[string.Format("notifications.{0}", NotifyType.Success)] != null)
+    {
+        successMessages.AddRange(TempData[string.Format("notifications.{0}", NotifyType.Success)] as IList<string>);
+    }
+    if (ViewData[string.Format("notifications.{0}", NotifyType.Success)] != null)
+    {
+        successMessages.AddRange(ViewData[string.Format("notifications.{0}", NotifyType.Success)] as IList<string>);
+    }
+
+
+    //error messages
+    var errorMessages = new List<string>();
+    if (TempData[string.Format("notifications.{0}", NotifyType.Error)] != null)
+    {
+        errorMessages.AddRange(TempData[string.Format("notifications.{0}", NotifyType.Error)] as IList<string>);
+    }
+    if (ViewData[string.Format("notifications.{0}", NotifyType.Error)] != null)
+    {
+        errorMessages.AddRange(ViewData[string.Format("notifications.{0}", NotifyType.Error)] as IList<string>);
+    }
+}
+@if (successMessages.Count > 0 || errorMessages.Count > 0)
+{
+    <script type="text/javascript">
+        @foreach (var message in successMessages)
+        {
+            <text>alert('@message');</text>
+        }
+        @foreach (var message in errorMessages)
+        {
+            <text>alert('@message');</text>
+        }
+    </script>
+}

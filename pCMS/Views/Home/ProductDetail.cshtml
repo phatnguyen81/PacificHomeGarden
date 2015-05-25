@@ -1,0 +1,157 @@
+﻿@using pCMS.Core
+@using pCMS.Services
+@using pCMS.Utils
+@model pCMS.Models.ProductDetailModel
+@{
+    if (Request.Url != null)
+    {
+        SessionManager.ContinueShoppingUrl = Request.Url.AbsoluteUri;
+    }
+    var localzationService = DependencyResolver.Current.GetService<ILocalizationService>();
+}
+<link type="text/css" rel="stylesheet" href="@Url.Content("~/Scripts/tn3gallery/skins/tn3/tn3.css")"></link>
+<script type="text/javascript" src="@Url.Content("~/Scripts/tn3gallery/js/jquery.tn3lite.min.js")"></script>
+<style type="text/css">
+    #content {width:620px; margin:0px auto;}
+    #desc {margin:10px; float:left; font-family: Arial, sans-serif; font-size: 12px;}
+    #tabs-1 {padding: 0.3em 0em;}
+    .demo {
+        width: 445px;
+        float: left;
+    }
+</style>
+@*
+<div id="DivCompany" style="width: 681px; height: 536px; margin: 7px;">
+    <div class="DivPageContent" style="height: 534px; border: 1px #efefef solid;">
+        <div align="justify" class="ContentInfo" style="height: 493px; overflow: auto;">
+            <h2>@Model.Title</h2>
+            @Html.Raw(Model.Body)
+        </div>
+    </div>
+</div>*@
+<script type="text/javascript">
+    $(function () {
+        $("#tabs").tabs();
+    });
+</script>
+
+<div class="demo">
+    <div class="mygallery">
+        <div class="tn3 album">
+            <h4>Fixed Dimensions</h4>
+            <div class="tn3 description">Images with fixed dimensions</div>
+            <div class="tn3 thumb">images/35x35/1.jpg</div>
+            <ol>
+                @foreach (var picture in Model.Pictures)
+                {
+                    <li>
+                        <h4>@picture.Title</h4>
+                        <div class="tn3 description">@Html.Raw(picture.Description)</div>
+                        <div class="tn3 pictureid">@picture.Id</div>
+                        <a href="@picture.PictureUrl">
+                            <img src="@picture.PictureThumbnailUrl" alt="@picture.Title" />
+                        </a>
+                    </li>
+                }
+            </ol>
+        </div>
+
+    </div><!-- End demo -->
+
+</div>
+
+<div style="width: 250px; float: left;background-color: black;height: 550px;">
+    <div style="padding-left: 5px; padding-right: 5px;">
+        @Html.Hidden("productId", Model.Id)
+        @Html.Hidden("pictureId", "")
+        <h4 id="picture_title" style="color: white"></h4>
+        <div id="picture_description"></div>
+        <br/>
+        <table border="0" cellpadding="2" cellspacing="2">
+            <tr>
+                <td>
+                    @(Html.Telerik()
+                       .IntegerTextBox()
+                       .Name("qtty")
+                       .MinValue(1)
+                       .HtmlAttributes(new { @style = "width:50px;" })
+                       .InputHtmlAttributes(new { @style = "width:50px;" })
+                       .Value(1)
+                          )
+                </td>
+                <td>
+                    <button class="t-button" id="buttonadditem">Add to Cart</button>
+                </td>
+            </tr>
+        </table>
+        
+        
+    </div> 
+</div>
+<script type="text/javascript">
+$(document).ready(function () {
+    var $mytn3 = $('.mygallery').tn3({
+        skinDir: "@Url.Content("~/Scripts/tn3gallery/skins/")",
+        skin: ["tn3e"],
+        width: 445,
+        iniImage: @(Model.PictureIndex),
+        height:550,
+        imageClick: "next",
+        image: {
+            maxZoom: 1.5,
+            clickEvent: "click",
+            transitions: [{
+                type: "fade",
+                easing: "swing",
+                duration: 500
+            }]
+        },
+        set_text: function(e) {
+            if (e.field == "title") {
+                $("#pictureId").val(e.data.pictureid);
+                $("#picture_title").text( e.text);
+                e.text += "<br /><i>@localzationService.GetResource("Web.UI.General.DefaultTitlePicture")</i>";
+            }
+            if (e.field == "description") {
+                $("#picture_description").html(e.text);
+                e.text = "";
+            }
+
+        }
+    }).data('tn3');
+    $(".hack").attr("style",'width: 40px; height: 18px; right: 53px; bottom: 14px; position: absolute; cursor: pointer; text-align:center; color:white;font-weight:bold;');
+    $(".hack").text("Back");
+    $(".hack").click(function() {
+        window.location = "@Url.Action("ProductList",new {id = Model.CategoryAlias})";
+    });
+    $("#buttonadditem").click(function () {
+        if($.trim($("#qtty").val()) == "") {
+            alert("Quantity is required!!!");
+            return;
+        }
+        if($("#qtty").val() == 0) {
+            alert("Quantity must greater than 0!!!");
+            return;
+        }
+        $.ajax({
+            url: "@Url.Action("AddItem")",
+            type : "POST",
+            dataType: 'json',
+            data: {productId: $("#productId").val(), pictureId:$("#pictureId").val(), qtty:$("#qtty").val()},
+            success: function(result){
+                if(result.success == true){
+                    $("#countitem").text("(" + result.countitem + ")");
+                    $("#hproductcount").val(result.countproduct);
+                    $("#hitemcount").val(result.countitem);
+                    alert("Item Added Successfully");
+                    
+                } else {
+                    alert(result.message);
+                }
+            }
+      
+        });
+    });
+    
+});
+</script>

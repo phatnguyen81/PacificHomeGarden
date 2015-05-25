@@ -1,0 +1,62 @@
+﻿@model pCMS.Models.PageModel
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.MetaDescription = Model.MetaDescription;
+    ViewBag.MetaKeywords = Model.MetaKeywords; 
+}
+<div id="DivCompany" style="width: 681px; height: 536px; margin: 7px;">
+    <div class="DivPageContent" style="position: relative; background: url(@Url.Content("~/Images/bg_ourproduct.gif"));
+        height: 536px;">
+        <div align="justify" class="ContentInfo" style="position: absolute; top: 10px; left: 10px;
+            width: 450px; height: auto; min-height: 250px; background: url(@Url.Content("~/Images/bg_transparent.png"));">
+            <div style="margin: 0 0; height: 390px; overflow: auto; width: 460px; padding-right: 5px;">
+                @*<span style="font-family: Corbel; font-size: 20px; font-weight: nonal;">Care of our
+                    products</span><p>
+                        <b>Pottery:</b><br />
+                        Most of our pottery is fired at high temperatures and is suitable for normal usage
+                        as garden vessels, fountains or furniture. Surfaces are easily cleaned with water
+                        and cloth while wearing gloves. Proper planting with adequate drainage is critical
+                        to prevent cracking in sudden weather changes. It is recommended to add a drainage
+                        material in the bottom of the pot, such as clay shards or drain pad. Additionally,
+                        if the pot is to be placed directly on garden soil, you should set it on blocks
+                        or pot feet to raise slightly above ground level.
+                        <br />
+                        <br />
+                        <b>Frost Proof:</b><br />
+                        Our Le Beau, Chelsea Garden and Provenza collections are frost proof pottery which
+                        can withstand freezing temperatures under normal circumstances. Our products have been
+                        used in very harsh climates by returning customers for many years and are still
+                        intact. Of course, anything filled with water can burst under certain conditions 
+                        and sudden extreme changes in temperature,
+                        so assuring proper drainage when planting is critical for all-season durability.<br />
+                        <br />
+                        All Jars should be emptied over winter. Sealed fountain tops serve only as water
+                        reservoirs. Do not place bricks or heavy objects on top as weight (to secure fountain
+                        covers, for example).<br />
+                        <br />
+                        All Water Bowls should be drained and flipped over or covered in winter. The Seasons
+                        collection is not frost proof and should be brought indoors over freezing winters.
+                        If your indoor area is subject to freezing temperatures, be sure the product is
+                        kept dry.
+                        <br />
+                        <br />
+                        <b>Water:</b><br />
+                        If you suspect your water has extreme PH levels or contains contaminants and/or
+                        heavy metals, you might experience unforeseen reactions in some glazes. Use appropriate
+                        neutralizers to adjust the water quality.
+                        <br />
+                        <br />
+                        <b>Stone:</b><br />
+                        Stone products can be used outdoors in any climate and will withstand normal ranges
+                        in temperature.
+                        <br />
+                        <br />
+                        <b>Bamboo:</b><br />
+                We use very strong bamboo materials for our bamboo garden accents. However, Bamboo
+                is a wood product and will age naturally. Regular retouching with Tung Oil can extend
+                the lifespan.*@
+                @Html.Raw(Model.Body)
+            </div>
+        </div>
+    </div>
+</div>

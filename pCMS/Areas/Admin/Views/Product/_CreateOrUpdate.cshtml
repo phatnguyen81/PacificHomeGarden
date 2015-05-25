@@ -1,0 +1,295 @@
+﻿@using pCMS.Framework
+@model pCMS.Admin.Models.ProductItemModel
+@Html.HiddenFor(model => model.Id)           
+@(Html.Telerik()
+.TabStrip()
+.Name("Product-Tab")
+.Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Content.Product.Tabs.Info")).Content(TabInfo().ToHtmlString());
+    var tabSEO = x.Add().Text(T("Admin.Content.Product.Tabs.SEO")).Content(TabSEO().ToHtmlString());
+    var tabCategories = x.Add().Text(T("Admin.Content.Product.Tabs.Categories")).Content(TabCategories().ToHtmlString());
+    var tabPictures = x.Add().Text(T("Admin.Content.Product.Tabs.Picture")).Content(TabPictures().ToHtmlString());
+    string selectedTab = ViewBag.SelectedTab;
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+        case "seo":
+            tabSEO.Selected(true);
+            break;
+        case "category":
+            tabCategories.Selected(true);
+            break;
+        case "picture":
+            tabPictures.Selected(true);
+            break;
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+}))
+
+@helper TabInfo()
+    {
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Title):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Title, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Alias):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Alias, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.Alias)
+                <i>(@T("Admin.Content.Product.Messages.GenWhenEmpty"))</i>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.ManufacturerId):
+            </td>
+            <td class="adminData">
+                @(Html.Telerik().DropDownListFor(model => model.ManufacturerId)
+                .BindTo(new SelectList(Model.Manufacturers, "Value", "Text")))
+                @Html.ValidationMessageFor(model => model.ManufacturerId)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.IsPublished):
+            </td>
+            <td class="adminData">
+                @Html.CheckBoxFor(model => model.IsPublished)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Quote):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.Quote, new { style = "Width: 500px; Height: 150px;" })
+                @Html.ValidationMessageFor(model => model.Quote)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Body):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Body, "RichEditor")
+                @Html.ValidationMessageFor(model => model.Body)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.CallForPrice):
+            </td>
+            <td class="adminData">
+                @Html.CheckBoxFor(model => model.CallForPrice)
+                @Html.ValidationMessageFor(model => model.CallForPrice)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Price):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Price)
+                @Html.ValidationMessageFor(model => model.Price)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.OldPrice):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.OldPrice)
+                @Html.ValidationMessageFor(model => model.OldPrice)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.DateCreated):
+            </td>
+            <td class="adminData">
+                @Html.DisplayTextFor(model => model.DateCreated)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.UserCreated):
+            </td>
+            <td class="adminData">
+                @Html.DisplayTextFor(model => model.UserCreated)
+            </td>
+        </tr>
+    </table>
+}
+@helper TabSEO()
+    {
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.MetaKeywords):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.MetaKeywords)
+                @Html.ValidationMessageFor(model => model.MetaKeywords)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.MetaDescription):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.MetaDescription)
+                @Html.ValidationMessageFor(model => model.MetaDescription)
+            </td>
+        </tr>
+        
+    </table>
+}
+
+@helper TabCategories()
+    {
+        if (Model.Id != Guid.Empty)
+        {
+    <table class="adminContent">
+        <tr>
+            <td>
+                @(Html.Telerik().Grid<pCMS.Admin.Models.ProductItemModel.ProductCategoryModel>()
+                    .Name("categories-grid")
+                    .DataKeys(x => 
+                        {
+                            x.Add(y => y.ProductId).RouteKey("ProductId");
+                            x.Add(y => y.CategoryId).RouteKey("CategoryId");
+                            
+                        })
+                    .Columns(columns =>
+                                 {
+                                    columns.Bound(x => x.CategoryTitle);
+                                    columns.Bound(x => x.IsFeatured).Width(100).Centered();
+                                    columns.Bound(x => x.DisplayOrder).Width(100);
+                                    columns.Command(commands =>
+                                    {
+                                        commands.Edit();
+                                        commands.Delete();
+                                    }).Width(180);  
+
+                                })
+                    .ToolBar(x => x.Insert())
+                    .Editable(x => x.Mode(GridEditMode.InLine))
+                    .DataBinding(dataBinding => dataBinding.Ajax()
+                                                    .Select("ProductCategories", "Product", new { productId = Model.Id })
+                                                    .Update("ProductCategoryUpdate", "Product")
+                                                    .Delete("ProductCategoryDelete", "Product")
+                                                    .Insert("ProductCategoryAdd", "Product", new { productId = Model.Id }))
+                    .ClientEvents(events => events.OnEdit("onProductCategoryEdit"))          
+                    .Pageable(paging => paging.PageSize(20))
+                    .EnableCustomBinding(true))
+            </td>
+        </tr>
+    </table>
+        }
+        else
+        {
+            @T("Admin.Content.Catalog.Product.SaveBeforeAddCategory")
+        }
+}
+
+@helper TabPictures()
+    {
+        if (Model.Id != Guid.Empty)
+        {
+            <table class="adminContent">
+                <tr>
+                    <td>
+                        @(Html.Telerik().Grid<pCMS.Admin.Models.ProductItemModel.ProductPictureModel>()
+                                   .Name("pictures-grid")
+                                   .DataKeys(x =>
+                                   {
+                                       x.Add(y => y.ProductId).RouteKey("ProductId");
+                                       x.Add(y => y.PictureId).RouteKey("PictureId");
+                                   })
+                                   .Columns(columns =>
+                                   {
+                                       columns.Bound(c => c.PictureId)
+                                           .ClientTemplate("<img width='200' alt='<#= SeoFilename#>' src='<#= PictureUrl#>'/>")
+                                           .Title("Picture").Width(200) ;
+                                       columns.Bound(x => x.Title).Width(250);
+                                       columns.Bound(x => x.Description).Template(x=> Html.Raw(x.Description));
+                                       columns.Bound(x => x.Price).Format("{0:c}").Width(80).Right();
+                                       columns.Bound(x => x.DisplayOrderPicture).Centered().Width(100);
+                                       columns.Bound(x => x.IsAvatar).Centered().Width(50);
+                                       columns.Bound(x => x.IsDefault).Centered().Width(50);
+                                       columns.Bound(x => x.MineType).Width(100).Centered();
+                                       columns.Bound(x => x.PictureId)
+                                           .ClientTemplate("<a href='" + @Url.Action("EditPicture") + "/<#=PictureId#>?productId=<#=ProductId#>' class='t-button'>" + T("Admin.Common.Edit") + "</a>")
+                                           .Title("").Width(100);
+                                            
+                                       columns.Command(commands => commands.Delete()).Width(100);
+
+                                   })
+                                        .Editable(x => x.Mode(GridEditMode.InLine))
+                                        .Selectable()
+                                        .Pageable(page => page.PageSize(20))
+                                        .Scrollable(scroll => scroll.Height(500))
+                                       .DataBinding(dataBinding => dataBinding.Ajax()
+                                            .Select("ProductPictures", "Product", new { productId = Model.Id })
+                                            .Delete("ProductPictureDelete", "Product")
+                                            .Update("ProductPictureUpdate", "Product")
+                           )
+                                    .EnableCustomBinding(true)
+                                    .ClientEvents(events=>events.OnEdit("onEditPicture"))
+                  )
+                    </td>
+                </tr>
+            </table>
+        @(Html.Telerik().Upload()
+        .Name("attachments1")
+        .Async(async => async
+                    .Save("UploadPictures", "Product", new { productId = Model.Id }
+                    )).ShowFileList(false)
+
+        .ClientEvents(events => events
+                    .OnSuccess("onSuccess1")
+            )
+    )
+        }
+        else
+        {
+            @T("Admin.Content.Catalog.Product.SaveBeforeAddPicture")
+        }
+}
+
+<script type="text/javascript">
+    function onSuccess1(e) {
+        var grid = $("#pictures-grid").data("tGrid");
+
+        grid.rebind({ productId: '@Model.Id' });
+    }
+    function onProductCategoryEdit(e) {
+        $(e.form).find('#NewCategoryId').data('tDropDownList').select(function (dataItem) {
+            return dataItem.Value == e.dataItem['CategoryId'];
+        });
+    }
+    function onEditPicture(e) {
+        $(e.form).find("#ProductId").closest(".editor-field").prev().andSelf().remove();
+        $(e.form).find("#PictureId").closest(".editor-field").prev().andSelf().remove();
+        $(e.form).find("#MineType").closest(".editor-field").prev().andSelf().remove();
+        $(e.form).find("#PictureUrl").closest(".editor-field").prev().andSelf().remove();
+        tinyMCE.init({
+            mode: "exact",
+            elements: "Description"
+        });
+    }
+</script>

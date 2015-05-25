@@ -1,0 +1,12 @@
+﻿@model string
+@using Telerik.Web.Mvc.UI
+@using pCMS.Core.Utils
+@using pCMS.Utils
+
+@{
+    var dateTime = DateTimeHelpers.ConvertStringToDateTime(Model);
+}
+@(Html.Telerik().DatePicker()
+    .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty))
+                        .Value(dateTime)
+    )

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<pCMS.Models.CategoryModel>
+<div class="titleSection">
+                    PRODUCT CATALOG
+                </div>
+<ul class="Menu2">
+    
+
+    @foreach(var category in Model.Where(q=>q.ParentId == null))
+    {
+        <li>@Html.ActionLink(category.Title,"CategoryDetail",new {id=category.Alias}, new {@style="text-transform: uppercase; ", @cid=category.Alias})</li>
+        if (Model.Any(q => q.ParentId == category.Id))
+        {
+           
+            <ul class="subMenu">
+                @foreach(var subcategory in Model.Where(q=>q.ParentId == category.Id))
+                {
+                    <li>@Html.ActionLink(subcategory.Title, "ProductList", new { id = subcategory.Alias }, new { @style = "text-transform: capitalize; " })</li> 
+                }
+            </ul>
+        }
+    }
+    
+</ul>

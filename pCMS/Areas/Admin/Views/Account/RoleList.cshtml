@@ -1,0 +1,37 @@
+﻿@using pCMS.Framework
+@model IEnumerable<pCMS.Admin.Models.RoleListModel>
+@{
+    ViewBag.Title = "Danh sách nhóm";
+    
+}
+@using (Html.BeginForm())
+{
+     <div class="section-header">
+         <div class="title">
+             <img src="@Url.Content("~/Content/admin/images/ico-customers.png")" alt="" />
+             @ViewBag.Title
+         </div>
+         <div class="options">
+             <a href="@Url.Action("RoleCreate")" class="t-button">Thêm mới</a>
+         </div>
+     </div>
+     <table class="adminContent">
+         <tr>
+             <td>
+                @(Html.Telerik().Grid(Model)
+                        .Name("RoleList")
+                        .Columns(columns =>
+                                     {
+                                         columns.Bound(o => o.RoleName);
+                                         columns.Template(@<text>
+                                            @Html.ActionLink("Sửa", "RoleEdit", new { id = item.RoleName })
+                                        </text>).Title("").Width(70).HtmlAttributes(new { @style = "text-align: center;" });
+                                     })
+                        .Sortable()
+                        .Pageable(page => page.PageSize(20))
+                                .HtmlAttributes(new { @style = "margin-bottom: 20px;" })
+                )
+             </td>
+         </tr>
+     </table>
+}

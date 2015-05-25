@@ -1,0 +1,74 @@
+﻿@using pCMS.Framework
+@model pCMS.Admin.Models.ProductTypeItemModel
+
+@(Html.Telerik()
+.TabStrip()
+.Name("ProductType-Tab")
+
+.Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Catalog.ProductType.Tabs.Info")).Content(TabInfo().ToHtmlString());
+    var tabAttribute = x.Add().Text(T("Admin.Catalog.ProductType.Tabs.ProductAttributes")).Content(TabProductAttributes().ToHtmlString());
+    var selectedTab = (string)ViewBag.SelectedTab;
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+        case "attribute":
+            tabAttribute.Selected(true);
+            break;
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+}))
+
+@helper TabInfo()
+{
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Title):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Title, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </td>
+        </tr>
+    </table>
+}
+@helper TabProductAttributes()
+    {
+        if (Model.Id != Guid.Empty)
+        {
+            <table class="adminContent">
+                <tr>
+                    <td>
+                        @(Html.Telerik().Grid<ProductAttributeModel>()
+                            .Name("attribute-grid")
+                            .DataKeys(x => x.Add(y => y.Id).RouteKey("Id"))
+                            .Columns(columns =>
+                                         {
+                                            columns.Bound(x => x.Title);
+                                            columns.Bound(x => x.DataTypeName).Width(100).Centered();
+                                            columns.Bound(x => x.DisplayOrder).Width(100).Centered();
+                                            columns.Bound(x => x.AllowFilter).Width(100).Centered();
+                                            columns.Bound(x => x.Id).ClientTemplate("<a href='" + Url.Action("Edit","ProductAttribute") + "/<#= Id #>?productTypeId=" + Model.Id + "'>Sửa</a>").Width(100).Centered();
+                                         })
+                                        .ToolBar(toolBar => toolBar.Template(
+                                            @<text>
+                                                @Html.ActionLink("Thêm thuộc tính", "Create", "ProductAttribute", new { productTypeId = Model.Id }, new { @class = "t-button" })
+                                            </text>))
+                    .DataBinding(dataBinding => dataBinding.Ajax().Select("ProductAttributes", "ProductType", new { id = Model.Id }))
+                            .EnableCustomBinding(true))
+                    </td>
+                </tr>
+            </table>
+        }
+        else
+        {
+            <text>Lưu Loại sản phẩm trước khi thêm thuộc tính</text>
+        }
+}
+

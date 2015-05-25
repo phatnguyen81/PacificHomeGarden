@@ -1,0 +1,14 @@
+﻿@using pCMS.Framework
+@model FormConfirmationModel
+@using (Html.BeginForm(Model.ActionName, Model.ControllerName, new { id = Model.Id }))
+{
+    <div>
+        <p>
+            @Model.Message
+        </p>
+        <div class="form-actions">
+            <span class="t-button" onclick="closeModalWindow();">No</span>
+            <input type="submit" class="t-button" value="Yes" />
+        </div>
+    </div>
+}

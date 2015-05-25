@@ -1,0 +1,72 @@
+﻿@using pCMS.Utils
+@model pCMS.Models.CategoryDetailModel
+@{
+    if(Request.Url != null)
+    {
+        SessionManager.ContinueShoppingUrl = Request.Url.AbsoluteUri;
+    }
+    ViewBag.Title = "CategoryDetail";
+}
+<link href="@Url.Content("~/Content/catalog.css")" rel="stylesheet" type="text/css">
+<style type="text/css" media="screen">
+    #gallary li
+    {
+        float: left;
+        padding-right: 15px;
+        height: 220px;
+        
+    }
+    #gallary
+    {
+        list-style: none;
+        padding-left: 25px;
+    }
+    #gallary .imgwrap
+    {
+        width: 110px;
+        height: 150px;
+        vertical-align: middle;
+        display: table;
+        border: 3px #EEE solid;
+    }
+    #gallary .imgwrap:hover
+    {
+        color: #333;
+        text-decoration: underline;
+        border: 3px #cccc99 solid;
+    }
+    .title
+    {
+        font-weight: bold;
+        font-family: Corbel;
+        font-size: 22px;
+        padding-left: 20px;
+        padding-top: 20px;
+    }
+</style>
+<div id="LeftPic" style="background: url(@Model.PictureUrl) no-repeat left top;">
+</div>
+<div class="GroupTitle" style="text-transform: capitalize; ">
+    @Model.Title Catalog</div>
+<div class="Group">
+    <ul id="gallary">
+        @foreach (var cat in Model.ChildCategories)
+        {
+            
+            <li>
+                    <a href="@Url.Action("ProductList",new {id = cat.Alias})" title="@cat.Title">
+                        <div class="imgwrap" style="background-image: url(@cat.PictureUrl);background-size: cover;" >
+                    
+                        </div>
+                    </a>
+                    <div style="width: 110px; text-align: center;" class="TextLink">
+                        @cat.Title
+                    </div>
+            </li>
+        }
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $("ul.Menu2 a[cid='@Model.Alias']").addClass("selected").attr("href","#");
+</script>

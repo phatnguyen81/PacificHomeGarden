@@ -1,0 +1,170 @@
+﻿@using pCMS.Framework
+@model pCMS.Admin.Models.AccountListModel
+@{
+    ViewBag.Title = T("Admin.Accounts.ListAccounts");
+    
+}
+@using (Html.BeginForm("List", "Account", FormMethod.Get))
+{
+    
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Content/admin/images/ico-customers.png")" alt="" />
+            @ViewBag.Title
+        </div>
+        <div class="options">
+            <a href="@Url.Action("ExportExcelAll")" class="t-button" id="ExportToExcel">@T("Admin.Common.ExportAllToExcel")</a>
+            <a href="@Url.Action("Create")" class="t-button">@T("Admin.Common.AddNew")</a>
+        </div>
+    </div>
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.Keyword)
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(model => model.SearchType,Model.SearchTypes)
+                    @Html.TextBoxFor(model => model.Keyword, new {@style="width : 250px;"})
+                </td>
+            </tr>
+            
+            <tr>
+                <td colspan="2">
+                    <button type="submit" id="search-articles" value="search-articles" class="t-button">
+                        Search</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="adminContent">
+        <tr>
+            <td>
+                @(Html.Telerik().Grid(Model.Accounts.Data)
+                      .Name("UserList")
+                      .DataKeys(key => key.Add(q => q.UserName))
+                      .DataBinding(dataBinding => dataBinding.Ajax().Select("Accounts", "Account", new { SearchType = Model.SearchType, Keyword = Model.Keyword }))
+                      .Columns(columns =>
+                                   {
+                                       columns.Template(@<input  type="checkbox" name="rowitem" value="@item.UserName"/>)
+                                           .ClientTemplate("<input  type='checkbox' name='rowitem' value='<#=UserName#>'/>")
+                                           .Title("")
+                                           .HtmlAttributes(new { @style = "text-align: center;" })
+                                           .Width(50);
+                                       columns.Bound(o => o.UserName).Width(150);
+                                       columns.Bound(o => o.FullName);
+                                       columns.Bound(o => o.Email).Width(80);
+                                       columns.Bound(o => o.IsApproved)
+                                           .Template(@<text>
+                                                          @Html.Raw(item.IsApproved?"<b>Approved</b>":"<span style='color:red'>Not approved</span>")
+                                                      </text>)
+                                           .ClientTemplate("<#if(IsApproved){#><b>Approved</b><#}else{#><span style='color:red'>Not approved</span><#}#>")
+                                           .Width(80).Centered();
+                                       columns.Bound(o => o.IsLockedOut).Template(@<text>@if (item.IsLockedOut)
+                                                                                         {
+                                                                                             <a name="unlockRow" uid="@item.UserName" href="#" title="Unlock">
+                                                                                                 <img src="@Url.Content("~/Content/admin/icons/lock.png")" alt="lock"/></a>
+                                                                                         }
+                                                                                   </text>).Width(50).HtmlAttributes(new { @style = "text-align : center;" })
+                                           .ClientTemplate("<#if(IsLockedOut == true) {#><a name='unlockRow' uid='<#=UserName#>' href='#' title='Unlock'><img src='" + @Url.Content("~/Content/admin/icons/lock.png") + "' alt='lock'/></a><#}#>")
+                                           .HtmlAttributes(new { @style = "text-align : center;" });
+                                       columns.Bound(o => o.CreationDate).Format("{0:MM/dd/yyyy HH:mm}").Width(100);
+                                       columns.Template(@<text>
+                                                             @Html.ActionLink(T("Admin.Common.Edit"), "Edit", new { id = item.UserName })
+                                                         </text>)
+                                           .ClientTemplate("<a href='" + @Url.Action("Edit", "Account") + "/<#=UserName#>'>" + T("Admin.Common.Edit") + "</a>")
+                                           .Title("").Width(70).HtmlAttributes(new { @style = "text-align: center;" });
+
+
+                                   })
+                      .Selectable()
+                        .Sortable(sorting => sorting.Enabled(true).OrderBy(sortOrder => sortOrder.Add(o => o.CreationDate).Descending()))
+                      .EnableCustomBinding(true)
+                      .Pageable(page => page.PageSize(20).Total(Model.Accounts.Total).Position(GridPagerPosition.Both	))
+                      .ClientEvents(events => events.OnDataBound("onDataBound").OnDataBinding("onDataBinding"))
+                      .HtmlAttributes(new { @style = "margin-bottom: 20px;" }))
+            </td>
+        </tr>
+    </table>
+    <input type="hidden" id="sortedColumn"/>
+}    
+
+<script type="text/javascript">
+    function UnlockUser(row) {
+        var username = $(row).attr("uid");
+        var obj = $(row);
+        if (!confirm("Do you want unlock user '" + username + "'?")) return false;
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Unlock", "Account")',
+            data: { id: username },
+            success: function (data) {
+                if (data.Success) {
+                    $(obj).fadeOut("slow");
+                }
+                else {
+                    alert("Error : " + data.Message);
+                }
+            },
+            dataType: 'json'
+        });
+        return false;
+    }
+    function onDataBound(e) {
+        $("a[name=unlockRow]").bind('click',function(){
+            UnlockUser(this);
+            return false;
+         });
+     }
+
+     function onDataBinding(e) {
+         if (e.sortedColumns.length > 0) {
+             $("#sortedColumn").val(e.sortedColumns[0].member + e.sortedColumns[0].order);
+         }
+         
+  
+    }
+    
+</script>
+
+@{ Html.Telerik().ScriptRegistrar().OnDocumentReady(
+       @<text>
+            var exportUrl = "@Url.Action("ExportExcelAll")"; 
+            $("#ExportToExcel").click(function(){
+            $(this).attr("href",exportUrl + "?order=" +$("#sortedColumn").val()) ;
+            });
+            $("a[name=deleteRow]").click(function(){
+
+            var username = $(this).attr("uid");
+            if(!confirm("Do you want delete user '" + username + "'?")) return false;
+            $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Delete", "Account")',
+            data: {id:username},
+            success: function(data)
+            {
+            if(data.Success)
+            {
+            //alert("Delete user '" + username + "' successful");
+            
+            location.reload();
+            }
+            else
+            {
+            alert("Error : " + data.Message);
+            }
+            },
+            dataType: 'json'
+            });
+            return false;
+            });
+            $("a[name=unlockRow]").click(function(){
+            UnlockUser(this);
+            return false;
+            });
+    
+            $("#deleteSelectedRow").click(function(){
+            return confirm("Do you want delete selected rows?");
+            });
+        </text>); 
+}

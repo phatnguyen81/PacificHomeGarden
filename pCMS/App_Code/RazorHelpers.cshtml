@@ -1,0 +1,42 @@
+﻿@using System.Globalization
+@using System.Web.Mvc
+@using pCMS.Core
+@using pCMS.Services
+@helper ToNowDateTimeVietnamese()
+{
+    @DateTime.Now.ToString(CultureInfo.InvariantCulture)
+}
+@helper ToDateTimeVietnamese(DateTime dateTime)
+{
+    var result = string.Empty;
+    //switch (dateTime.DayOfWeek)
+    //{
+    //    case DayOfWeek.Monday:
+    //        result += "Thứ Hai,";
+    //        break;
+    //    case DayOfWeek.Tuesday:
+    //        result += "Thứ Ba,";
+    //        break;
+    //    case DayOfWeek.Wednesday:
+    //        result += "Thứ Tư,";
+    //        break;
+    //    case DayOfWeek.Thursday:
+    //        result += "Thứ Năm,";
+    //        break;
+    //    case DayOfWeek.Friday:
+    //        result += "Thứ Sáu,";
+    //        break;
+    //    case DayOfWeek.Saturday:
+    //        result += "Thứ Bảy,";
+    //        break;
+    //    case DayOfWeek.Sunday:
+    //        result += "Chủ Nhật,";
+    //        break;
+    //}
+
+    result += dateTime.ToString("dddd") + ", " + dateTime.ToString() + " - " + TimeZoneInfo.FindSystemTimeZoneById(WorkContext.UserLoginInfo == null || String.IsNullOrWhiteSpace(WorkContext.UserLoginInfo.TimeZoneId)
+                                                        ? TimeZone.CurrentTimeZone.StandardName
+                                                        : WorkContext.UserLoginInfo.TimeZoneId);
+    @result
+}
+Nguyen 

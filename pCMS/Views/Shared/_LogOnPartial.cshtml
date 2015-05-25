@@ -1,0 +1,12 @@
+﻿@if(Request.IsAuthenticated) {
+    <text>Welcome <strong>@User.Identity.Name</strong>!
+        [ 
+        @if(User.IsInRole("Administrators"))
+        {
+            <text>@Html.ActionLink("Admin", "Index", "Home", new {Area = "Admin"}, null),</text> 
+        }
+        @Html.ActionLink("Change Password", "ChangePassword", "Account") , @Html.ActionLink("Log Off", "LogOff", "Account") ]</text>
+}
+else {
+    @:[ @Html.ActionLink("Customer Log In", "LogOn", "Account"), @Html.ActionLink("Register", "Register", "Account") ]
+}

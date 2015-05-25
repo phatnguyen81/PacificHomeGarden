@@ -1,0 +1,116 @@
+﻿@using pCMS.Admin.Models
+@using pCMS.Framework
+@model pCMS.Admin.Models.OrderEditModel
+
+@Html.HiddenFor(model => model.Id)
+@(Html.Telerik()
+.TabStrip()
+.Name("Order-Tab")
+.Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Sale.Order.Tabs.Info")).Content(TabInfo().ToHtmlString());
+    var tabPicture = x.Add().Text(T("Admin.Sale.Order.Tabs.OrderItems")).Content(TabOrderItem().ToHtmlString());
+    var selectedTab = (string)ViewData["selectedTab"];
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+}))
+
+@helper TabInfo()
+{
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.UserName):
+            </td>
+            <td class="adminData">
+                <strong>@Html.DisplayFor(model => model.UserName)</strong>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.FullName):
+            </td>
+            <td class="adminData">
+                <strong>@Html.DisplayFor(model => model.FullName)</strong>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Email):
+            </td>
+            <td class="adminData">
+                <strong>@Html.DisplayFor(model => model.Email)</strong>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.PhoneNumber):
+            </td>
+            <td class="adminData">
+                <strong>@Html.DisplayFor(model => model.PhoneNumber)</strong>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Address):
+            </td>
+            <td class="adminData">
+                <strong>@Html.DisplayFor(model => model.Address)</strong>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.OrderDate):
+            </td>
+            <td class="adminData">
+                <strong>@Html.DisplayFor(model => model.OrderDate)</strong>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Status):
+            </td>
+            <td class="adminData">
+                <strong>@Html.DisplayFor(model => model.Status)</strong>
+            </td>
+        </tr>
+    </table>
+}
+@helper TabOrderItem()
+{
+    <table class="adminContent">
+        <tr>
+            <td>
+                @(Html.Telerik().Grid<OrderEditModel.OrderItemModel>()
+                    .Name("GridOrderItem")
+                    .DataKeys(x =>
+                                    {
+                                        x.Add(y => y.ProductId).RouteKey("ProductId");
+                                        x.Add(y => y.PictureId).RouteKey("PictureId");
+                                    })
+                    .Columns(columns =>
+                                {
+                                    columns.Bound(o => o.ProductTitle);
+                                    columns.Bound(o => o.PictureTitle);
+                                    columns.Bound(o => o.PictureId).ClientTemplate("<img src='<#=ThumbnailPictureUrl#>' alt='<#=PictureTitle#>' title='<#=PictureTitle#>'/>").Width(110);
+                                    columns.Bound(o => o.Qtty).Width(100);
+                                    columns.Bound(o => o.UnitPrice).Format("{0:c}").Width(100);
+                                    })
+                    .DataBinding(dataBinding => dataBinding.Ajax()
+                                                            .Select("OrderItems", "Order", new { id = Model.Id })
+                    )
+                    .Pageable(paging => paging.PageSize(20))
+                    .Scrollable(c => c.Height("300px"))
+
+                        )
+            </td>
+        </tr>
+    </table>
+}

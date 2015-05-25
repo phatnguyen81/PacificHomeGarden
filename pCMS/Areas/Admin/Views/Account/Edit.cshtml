@@ -1,0 +1,32 @@
+﻿@using pCMS.Framework
+@model pCMS.Admin.Models.AccountCreateOrUpdateModel
+
+@{
+    ViewBag.Title = @T("Admin.Accounts.EditAccount");
+}
+
+@using (Html.BeginForm())
+{
+    <div class="section-header">
+        <div class="title">
+        <img src="@Url.Content("~/Content/admin/images/ico-customers.png")" alt="" />
+             @ViewBag.Title @Html.ActionLink("(" + T("Admin.Configuration.Languages.BackToList") + ")", "List")
+        </div>
+        <div class="options">
+            @if(!Model.IsApproved)
+            {
+                <span id="user-approve" class="t-button">@T("Admin.Common.Approve")</span>   
+            }
+            <button type="submit" name="save" value="save" class="t-button">@T("Admin.Common.Save")</button>
+            <button type="submit" name="save" value="save-continue" class="t-button">@T("Admin.Common.SaveContinue")</button>
+            <span id="user-delete" class="t-button">@T("Admin.Common.Delete")</span>
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate", Model)
+}
+@Html.DeleteConfirmation(Model.UserName, "user-delete")
+@if (!Model.IsApproved)
+{
+    @Html.FormConfirmation("Approve", "Account", Model.UserName, "Do you want to approve this user?", "user-approve")
+}
+

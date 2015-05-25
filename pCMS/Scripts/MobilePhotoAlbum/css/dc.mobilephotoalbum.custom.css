@@ -1,0 +1,20 @@
+
+/* Main Background */
+
+.dc_ui{
+    background-color: #333333;
+}
+
+/* Main Toolbar */
+
+.UIToolbar .title {
+    color:#FFF;
+    text-align: center;
+}
+
+/* Caption of each icon */
+
+.dc_ui .UIImageRenderer .caption {
+    color:#FFF;
+    /*background-color: rgba(128,0,0,.5);*/
+}

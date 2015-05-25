@@ -1,0 +1,13 @@
+﻿@model pCMS.Models.PageModel
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.MetaDescription = Model.MetaDescription;
+    ViewBag.MetaKeywords = Model.MetaKeywords; 
+}
+<div id="DivCompany" style="width: 681px; height: 536px; margin: 7px;">
+    <div class="DivPageContent" style="height: 534px; border: 1px #efefef solid;">
+        <div align="justify" class="ContentInfo" style="height: 493px; overflow: auto;">
+                @Html.Raw(Model.Body)
+        </div>
+    </div>
+</div>

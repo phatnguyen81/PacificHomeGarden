@@ -1,0 +1,272 @@
+﻿@using pCMS.Admin.Models
+
+@using pCMS.Framework
+@model pCMS.Admin.Models.ArticleItemModel
+@Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.Id)
+@(Html.Telerik()
+.TabStrip()
+.Name("Article-Tab")
+.Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Content.Article.Tabs.Info")).Content(TabInfo().ToHtmlString());
+    var tabSEO = x.Add().Text(T("Admin.Content.Article.Tabs.SEO")).Content(TabSEO().ToHtmlString());
+    var tabChannel = x.Add().Text(T("Admin.Content.Article.Tabs.Channels")).Content(TabChannels().ToHtmlString());
+    var selectedTab = (string)ViewData["selectedTab"];
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+        case "seo":
+            tabSEO.Selected(true);
+            break;
+        case "channel":
+            tabChannel.Selected(true);
+            break;
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+}))
+
+@helper TabInfo()
+    {
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Title):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Title)
+                @Html.ValidationMessageFor(model => model.Title)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Alias):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Alias)
+                @Html.ValidationMessageFor(model => model.Alias)
+                <i>(Tự phát sinh khi để trống)</i>
+            </td>
+        </tr>
+       <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.IsPublished)
+            </td>
+            <td class="adminData">
+               @Html.CheckBoxFor(model => model.IsPublished)
+                @Html.ValidationMessageFor(model => model.IsPublished)
+            </td>
+        </tr>
+         <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Quote):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.Quote, new { style = "Width: 500px; Height: 150px;" })
+                @Html.ValidationMessageFor(model => model.Quote)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Body):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Body)
+                @Html.ValidationMessageFor(model => model.Body)
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.IsFeature):
+            </td>
+            <td class="adminData">
+                @Html.CheckBoxFor(model => model.IsFeature)
+                @Html.ValidationMessageFor(model => model.IsFeature)
+            </td>
+        </tr>
+         <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.PublishedDate):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PublishedDate)
+                @Html.ValidationMessageFor(model => model.PublishedDate)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.ExpiredDate):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.ExpiredDate)
+                @Html.ValidationMessageFor(model => model.ExpiredDate)
+            </td>
+        </tr>
+        @if (Model.Id != Guid.Empty)
+        {
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.CreatedUser):
+                </td>
+                <td class="adminData">
+                    @Html.DisplayFor(model => model.CreatedUser)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.CreatedDate):
+                </td>
+                <td class="adminData">
+                    @Html.DisplayFor(model => model.CreatedDate)
+                </td>
+            </tr>
+            if (Model.ModifiedDate != null)
+            {
+                <tr>
+                    <td class="adminTitle">
+                        @Html.LabelFor(model => model.ModifiedUser):
+                    </td>
+                    <td class="adminData">
+                        @Html.DisplayFor(model => model.ModifiedUser)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.LabelFor(model => model.ModifiedDate):
+                    </td>
+                    <td class="adminData">
+                        @Html.DisplayFor(model => model.ModifiedDate)
+                    </td>
+                </tr>     
+            }
+            if (Model.DeletedDate != null)
+            {
+                <tr>
+                    <td class="adminTitle">
+                        @Html.LabelFor(model => model.DeletedUser):
+                    </td>
+                    <td class="adminData">
+                        @Html.DisplayFor(model => model.DeletedUser)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.LabelFor(model => model.DeletedDate):
+                    </td>
+                    <td class="adminData">
+                        @Html.DisplayFor(model => model.DeletedDate)
+                    </td>
+                </tr>     
+            }
+        }
+    </table>
+}
+@helper TabSEO()
+{
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.MetaKeywords):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.MetaKeywords)
+                @Html.ValidationMessageFor(model => model.MetaKeywords)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.MetaDescription):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.MetaDescription)
+                @Html.ValidationMessageFor(model => model.MetaDescription)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.MetaTitle):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.MetaTitle)
+                @Html.ValidationMessageFor(model => model.MetaTitle)
+            </td>
+        </tr>
+    </table>
+}
+@helper TabChannels()
+    {
+        if (Model.Id != Guid.Empty)
+        {
+        @(Html.Telerik().Grid<ArticleItemModel.ArticleChannelModel>()
+            .Name("articlechannels-grid")
+                            .DataKeys(x =>
+                            {
+                                x.Add(y => y.ArticleId).RouteKey("ArticleId");
+                                x.Add(y => y.ChannelId).RouteKey("ChannelId");
+                            })
+                .DataBinding(dataBinding => dataBinding.Ajax()
+                            .Select("ArticleChannelList", "Article", new { ArticleId = Model.Id })
+                            .Insert("ArticleChannelInsert", "Article", new { ArticleId = Model.Id })
+                            .Update("ArticleChannelUpdate", "Article")
+                            .Delete("ArticleChannelDelete", "Article")
+                            )
+            .Editable(x => x.Mode(GridEditMode.InLine))
+            .Selectable()
+                .Columns(columns =>
+                {
+                    columns.Bound(x => x.ChannelTitle);
+                    columns.Bound(x => x.ArticleChannelIsFeatured)
+                        .Width(100)
+                        .Centered();
+                    columns.Command(commands =>
+                    {
+                        commands.Edit();
+                        commands.Delete();
+                    })
+                    .Width(180);
+                })
+                .Pageable(page => page.PageSize(20))
+                .ToolBar(commands => commands.Insert())
+                .ClientEvents(events => events.OnEdit("onArticleChannelEdit").OnError("onArticleChannelError"))
+                .EnableCustomBinding(true)
+                )
+    
+        <script type="text/javascript">
+            function onArticleChannelEdit(e) {
+                $(e.form).find('#NewChannelId').data('tDropDownList').select(function (dataItem) {
+                    return dataItem.Value == e.dataItem['ChannelId'];
+                });
+            }
+            function onArticleChannelError(args) {
+                if (args.textStatus == "modelstateerror" && args.modelState) {
+                    // accumulate the error messages in the "message" variable
+                    var message = "Errors:\n";
+
+                    // iterate over each key value pair
+                    $.each(args.modelState, function (key, value) {
+                        if (value.errors) {
+                            // iterate over all errors and accumulate them in the "message" variable
+                            $.each(value.errors, function (index, error) {
+                                message += error + "\n";
+                            });
+                        }
+                    });
+                    args.preventDefault();
+                    alert(message);
+                } else {
+                    args.preventDefault();
+                    alert(args.XMLHttpRequest.responseText);
+                }
+            }
+        </script>
+        }
+        else
+        {
+            <text>Save article before add channel</text>
+        }
+}

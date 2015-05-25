@@ -1,0 +1,2195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="pCMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="Album">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Alias" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="2000" />
+          <Property Name="IsPublished" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Album_Picture">
+          <Key>
+            <PropertyRef Name="AlbumId" />
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Name="AlbumId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PictureId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Alias" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Quote" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Body" Type="ntext" />
+          <Property Name="IsPublished" Type="bit" Nullable="false" />
+          <Property Name="CreatedUser" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="ModifiedUser" Type="nvarchar" MaxLength="256" />
+          <Property Name="DeletedUser" Type="nchar" MaxLength="10" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="PublishedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ExpiredDate" Type="datetime" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="IsFeature" Type="bit" Nullable="false" />
+          <Property Name="MetaKeywords" Type="nvarchar" MaxLength="400" />
+          <Property Name="MetaDescription" Type="nvarchar(max)" />
+          <Property Name="MetaTitle" Type="nvarchar" MaxLength="400" />
+          <Property Name="AllowCustomerComments" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ParentId" Type="uniqueidentifier" />
+          <Property Name="ProductTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PictureId" Type="uniqueidentifier" />
+          <Property Name="Alias" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="MetaKeywords" Type="nvarchar" MaxLength="400" />
+          <Property Name="MetaDescription" Type="nvarchar(max)" />
+          <Property Name="MetaTitle" Type="nvarchar" MaxLength="400" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="ShowInMenu" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category_Picture">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Name="CategoryId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PictureId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Channel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Alias" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="MetaKeywords" Type="nvarchar" MaxLength="400" />
+          <Property Name="MetaDescription" Type="nvarchar(max)" />
+          <Property Name="MetaTitle" Type="nvarchar" MaxLength="400" />
+        </EntityType>
+        <EntityType Name="ChannelArticle">
+          <Key>
+            <PropertyRef Name="ChannelId" />
+            <PropertyRef Name="ArticleId" />
+          </Key>
+          <Property Name="ChannelId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ArticleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsFeatured" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Collection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Alias" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="ShortDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="FullDescription" Type="nvarchar(max)" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="PictureId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FileDownloadId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfigLanguage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" />
+          <Property Name="IsDefault" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfigResource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Key" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" />
+          <Property Name="LanguageCode" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfigSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Key" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" />
+          <Property Name="LanguageCode" Type="varchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="DateBegin" Type="datetime" Nullable="false" />
+          <Property Name="DateEnd" Type="datetime" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="500" />
+          <Property Name="City" Type="nvarchar" MaxLength="500" />
+          <Property Name="Booth" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsPublished" Type="bit" Nullable="false" />
+          <Property Name="PublishedDate" Type="datetime" Nullable="false" />
+          <Property Name="ExpiredDate" Type="datetime" />
+          <Property Name="LocationLink" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="FileDownload">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MimeType" Type="varchar" MaxLength="100" />
+          <Property Name="SeoFilename" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LevelId" Type="tinyint" />
+          <Property Name="ShortMessage" Type="nvarchar(max)" />
+          <Property Name="FullMessage" Type="ntext" />
+          <Property Name="IpAddress" Type="varchar" MaxLength="200" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="500" />
+          <Property Name="PageUrl" Type="nvarchar(max)" />
+          <Property Name="ReferrerUrl" Type="nvarchar(max)" />
+          <Property Name="CreatedOnUtc" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Alias" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="PictureId" Type="uniqueidentifier" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="MetaKeywords" Type="nvarchar" MaxLength="400" />
+          <Property Name="MetaDescription" Type="nvarchar(max)" />
+          <Property Name="MetaTitle" Type="nvarchar" MaxLength="400" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="500" />
+          <Property Name="OrderDate" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="char" MaxLength="1" />
+          <Property Name="TotalPrice" Type="decimal" Precision="20" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrderId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PictureId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Qtty" Type="int" Nullable="false" />
+          <Property Name="UnitPrice" Type="decimal" Precision="20" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Page">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Alias" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Body" Type="ntext" />
+          <Property Name="ShowInSiteMap" Type="bit" Nullable="false" />
+          <Property Name="MetaKeywords" Type="nvarchar(max)" />
+          <Property Name="MetaDescription" Type="nvarchar(max)" />
+          <Property Name="MetaTitle" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PictureBinary" Type="image" />
+          <Property Name="MimeType" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsNew" Type="bit" Nullable="false" />
+          <Property Name="SeoFilename" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Poll">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="IsPublished" Type="bit" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PollAnswer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PollId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="NumberOfVote" Type="bigint" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ManufacturerId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Alias" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Quote" Type="nvarchar(max)" />
+          <Property Name="Body" Type="ntext" />
+          <Property Name="MetaKeywords" Type="nchar" MaxLength="10" />
+          <Property Name="MetaDescription" Type="nchar" MaxLength="10" />
+          <Property Name="MetaTitle" Type="nchar" MaxLength="10" />
+          <Property Name="CallForPrice" Type="bit" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="20" Scale="4" />
+          <Property Name="OldPrice" Type="decimal" Precision="20" Scale="4" />
+          <Property Name="IsPublished" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="UserCreated" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product_Category">
+          <Key>
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CategoryId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsFeatured" Type="bit" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product_Picture">
+          <Key>
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PictureId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="IsAvatar" Type="bit" Nullable="false" />
+          <Property Name="IsDefault" Type="bit" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Price" Type="decimal" Precision="20" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product_ProductAttribute">
+          <Key>
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="ProductAttribute" />
+          </Key>
+          <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductAttribute" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DataValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ProductAttribute">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="DataType" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="AllowFilter" Type="bit" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductAttributeOption">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductAttributeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DataValue" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Description" Type="ntext" />
+        </EntityType>
+        <EntityType Name="ProductType_ProductAttribute">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+            <PropertyRef Name="ProductAttributeId" />
+          </Key>
+          <Property Name="ProductTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductAttributeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" />
+          <Property Name="AllowFilter" Type="bit" />
+          <Property Name="DataValue" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_Album_Picture_Album">
+          <End Role="Album" Type="Self.Album" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Album_Picture" Type="Self.Album_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Album">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Album_Picture">
+              <PropertyRef Name="AlbumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Album_Picture_Picture">
+          <End Role="Picture" Type="Self.Picture" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Album_Picture" Type="Self.Album_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Picture">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Album_Picture">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_Picture_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Category_Picture" Type="Self.Category_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category_Picture">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_Picture_Picture">
+          <End Role="Picture" Type="Self.Picture" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Category_Picture" Type="Self.Category_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Picture">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category_Picture">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_ProductType">
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChannelArticle_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ChannelArticle" Type="Self.ChannelArticle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChannelArticle">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChannelArticle_Channel">
+          <End Role="Channel" Type="Self.Channel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ChannelArticle" Type="Self.ChannelArticle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Channel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChannelArticle">
+              <PropertyRef Name="ChannelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Picture">
+          <End Role="Picture" Type="Self.Picture" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Picture">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PollAnswer_Poll">
+          <End Role="Poll" Type="Self.Poll" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PollAnswer" Type="Self.PollAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poll">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PollAnswer">
+              <PropertyRef Name="PollId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Category_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product_Category" Type="Self.Product_Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Category">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Category_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product_Category" Type="Self.Product_Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Category">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Manufacturer">
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Picture_Picture">
+          <End Role="Picture" Type="Self.Picture" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product_Picture" Type="Self.Product_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Picture">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Picture">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Picture_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product_Picture" Type="Self.Product_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Picture">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductAttribute_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product_ProductAttribute" Type="Self.Product_ProductAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_ProductAttribute">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductAttribute_ProductAttribute">
+          <End Role="ProductAttribute" Type="Self.ProductAttribute" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product_ProductAttribute" Type="Self.Product_ProductAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductAttribute">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_ProductAttribute">
+              <PropertyRef Name="ProductAttribute" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductAttribute_ProductType">
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
+          <End Role="ProductAttribute" Type="Self.ProductAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductAttribute">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductAttributeOption_ProductAttribute">
+          <End Role="ProductAttribute" Type="Self.ProductAttribute" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductAttributeOption" Type="Self.ProductAttributeOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductAttribute">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductAttributeOption">
+              <PropertyRef Name="ProductAttributeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductType_ProductAttribute_ProductAttribute">
+          <End Role="ProductAttribute" Type="Self.ProductAttribute" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductType_ProductAttribute" Type="Self.ProductType_ProductAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductAttribute">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductType_ProductAttribute">
+              <PropertyRef Name="ProductAttributeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductType_ProductAttribute_ProductType">
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductType_ProductAttribute" Type="Self.ProductType_ProductAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductType_ProductAttribute">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_GetAllCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GetAllCategories_Paging" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageIndex" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_GetAllCategoriesExcludeNode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CurrentNode" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <EntityContainer Name="pCMSModelStoreContainer">
+          <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Album_Picture" EntityType="Self.Album_Picture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category_Picture" EntityType="Self.Category_Picture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Channel" EntityType="Self.Channel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChannelArticle" EntityType="Self.ChannelArticle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Collection" EntityType="Self.Collection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigLanguage" EntityType="Self.ConfigLanguage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigResource" EntityType="Self.ConfigResource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigSetting" EntityType="Self.ConfigSetting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FileDownload" EntityType="Self.FileDownload" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Page" EntityType="Self.Page" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Picture" EntityType="Self.Picture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Poll" EntityType="Self.Poll" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PollAnswer" EntityType="Self.PollAnswer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Category" EntityType="Self.Product_Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Picture" EntityType="Self.Product_Picture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_ProductAttribute" EntityType="Self.Product_ProductAttribute" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductAttribute" EntityType="Self.ProductAttribute" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductAttributeOption" EntityType="Self.ProductAttributeOption" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductType_ProductAttribute" EntityType="Self.ProductType_ProductAttribute" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Album_Picture_Album" Association="Self.FK_Album_Picture_Album">
+            <End Role="Album" EntitySet="Album" />
+            <End Role="Album_Picture" EntitySet="Album_Picture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Album_Picture_Picture" Association="Self.FK_Album_Picture_Picture">
+            <End Role="Picture" EntitySet="Picture" />
+            <End Role="Album_Picture" EntitySet="Album_Picture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_Picture_Category" Association="Self.FK_Category_Picture_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Category_Picture" EntitySet="Category_Picture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_Picture_Picture" Association="Self.FK_Category_Picture_Picture">
+            <End Role="Picture" EntitySet="Picture" />
+            <End Role="Category_Picture" EntitySet="Category_Picture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_ProductType" Association="Self.FK_Category_ProductType">
+            <End Role="ProductType" EntitySet="ProductType" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChannelArticle_Article" Association="Self.FK_ChannelArticle_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="ChannelArticle" EntitySet="ChannelArticle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChannelArticle_Channel" Association="Self.FK_ChannelArticle_Channel">
+            <End Role="Channel" EntitySet="Channel" />
+            <End Role="ChannelArticle" EntitySet="ChannelArticle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Order" Association="Self.FK_OrderDetail_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Picture" Association="Self.FK_OrderDetail_Picture">
+            <End Role="Picture" EntitySet="Picture" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Product" Association="Self.FK_OrderDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PollAnswer_Poll" Association="Self.FK_PollAnswer_Poll">
+            <End Role="Poll" EntitySet="Poll" />
+            <End Role="PollAnswer" EntitySet="PollAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Category_Category" Association="Self.FK_Product_Category_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product_Category" EntitySet="Product_Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Category_Product" Association="Self.FK_Product_Category_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Product_Category" EntitySet="Product_Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Manufacturer" Association="Self.FK_Product_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Picture_Picture" Association="Self.FK_Product_Picture_Picture">
+            <End Role="Picture" EntitySet="Picture" />
+            <End Role="Product_Picture" EntitySet="Product_Picture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Picture_Product" Association="Self.FK_Product_Picture_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Product_Picture" EntitySet="Product_Picture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductAttribute_Product" Association="Self.FK_Product_ProductAttribute_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Product_ProductAttribute" EntitySet="Product_ProductAttribute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductAttribute_ProductAttribute" Association="Self.FK_Product_ProductAttribute_ProductAttribute">
+            <End Role="ProductAttribute" EntitySet="ProductAttribute" />
+            <End Role="Product_ProductAttribute" EntitySet="Product_ProductAttribute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductAttribute_ProductType" Association="Self.FK_ProductAttribute_ProductType">
+            <End Role="ProductType" EntitySet="ProductType" />
+            <End Role="ProductAttribute" EntitySet="ProductAttribute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductAttributeOption_ProductAttribute" Association="Self.FK_ProductAttributeOption_ProductAttribute">
+            <End Role="ProductAttribute" EntitySet="ProductAttribute" />
+            <End Role="ProductAttributeOption" EntitySet="ProductAttributeOption" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductType_ProductAttribute_ProductAttribute" Association="Self.FK_ProductType_ProductAttribute_ProductAttribute">
+            <End Role="ProductAttribute" EntitySet="ProductAttribute" />
+            <End Role="ProductType_ProductAttribute" EntitySet="ProductType_ProductAttribute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductType_ProductAttribute_ProductType" Association="Self.FK_ProductType_ProductAttribute_ProductType">
+            <End Role="ProductType" EntitySet="ProductType" />
+            <End Role="ProductType_ProductAttribute" EntitySet="ProductType_ProductAttribute" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="pCMSModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="pCMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Channels" EntityType="pCMSModel.Channel" />
+          <EntitySet Name="ChannelArticles" EntityType="pCMSModel.ChannelArticle" />
+          <AssociationSet Name="FK_ChannelArticle_Channel" Association="pCMSModel.FK_ChannelArticle_Channel">
+            <End Role="Channel" EntitySet="Channels" />
+            <End Role="ChannelArticle" EntitySet="ChannelArticles" />
+          </AssociationSet>
+          <EntitySet Name="PollAnswers" EntityType="pCMSModel.PollAnswer" />
+          <EntitySet Name="Polls" EntityType="pCMSModel.Poll" />
+          <AssociationSet Name="FK_PollAnswer_Poll" Association="pCMSModel.FK_PollAnswer_Poll">
+            <End Role="Poll" EntitySet="Polls" />
+            <End Role="PollAnswer" EntitySet="PollAnswers" />
+          </AssociationSet>
+          <EntitySet Name="Manufacturers" EntityType="pCMSModel.Manufacturer" />
+          <EntitySet Name="Product_ProductAttribute" EntityType="pCMSModel.Product_ProductAttribute" />
+          <EntitySet Name="ProductAttributeOptions" EntityType="pCMSModel.ProductAttributeOption" />
+          <EntitySet Name="ProductAttributes" EntityType="pCMSModel.ProductAttribute" />
+          <EntitySet Name="ProductType_ProductAttribute" EntityType="pCMSModel.ProductType_ProductAttribute" />
+          <AssociationSet Name="FK_Product_ProductAttribute_ProductAttribute" Association="pCMSModel.FK_Product_ProductAttribute_ProductAttribute">
+            <End Role="ProductAttribute" EntitySet="ProductAttributes" />
+            <End Role="Product_ProductAttribute" EntitySet="Product_ProductAttribute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductAttributeOption_ProductAttribute" Association="pCMSModel.FK_ProductAttributeOption_ProductAttribute">
+            <End Role="ProductAttribute" EntitySet="ProductAttributes" />
+            <End Role="ProductAttributeOption" EntitySet="ProductAttributeOptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductType_ProductAttribute_ProductAttribute" Association="pCMSModel.FK_ProductType_ProductAttribute_ProductAttribute">
+            <End Role="ProductAttribute" EntitySet="ProductAttributes" />
+            <End Role="ProductType_ProductAttribute" EntitySet="ProductType_ProductAttribute" />
+          </AssociationSet>
+          <EntitySet Name="ProductTypes" EntityType="pCMSModel.ProductType" />
+          <AssociationSet Name="FK_ProductAttribute_ProductType" Association="pCMSModel.FK_ProductAttribute_ProductType">
+            <End Role="ProductType" EntitySet="ProductTypes" />
+            <End Role="ProductAttribute" EntitySet="ProductAttributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductType_ProductAttribute_ProductType" Association="pCMSModel.FK_ProductType_ProductAttribute_ProductType">
+            <End Role="ProductType" EntitySet="ProductTypes" />
+            <End Role="ProductType_ProductAttribute" EntitySet="ProductType_ProductAttribute" />
+          </AssociationSet>
+          <FunctionImport Name="sp_GetAllCategoriesExcludeNode" ReturnType="Collection(pCMSModel.CategoryResult)">
+          <Parameter Name="CurrentNode" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <EntitySet Name="Product_Category" EntityType="pCMSModel.Product_Category" />
+          <EntitySet Name="Albums" EntityType="pCMSModel.Album" />
+          <EntitySet Name="Album_Picture" EntityType="pCMSModel.Album_Picture" />
+          <AssociationSet Name="FK_Album_Picture_Album" Association="pCMSModel.FK_Album_Picture_Album">
+            <End Role="Album" EntitySet="Albums" />
+            <End Role="Album_Picture" EntitySet="Album_Picture" />
+          </AssociationSet>
+          <EntitySet Name="Categories" EntityType="pCMSModel.Category" />
+          <AssociationSet Name="FK_Category_ProductType" Association="pCMSModel.FK_Category_ProductType">
+            <End Role="ProductType" EntitySet="ProductTypes" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Category_Category" Association="pCMSModel.FK_Product_Category_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product_Category" EntitySet="Product_Category" />
+          </AssociationSet>
+          <EntitySet Name="Pictures" EntityType="pCMSModel.Picture" />
+          <AssociationSet Name="FK_Album_Picture_Picture" Association="pCMSModel.FK_Album_Picture_Picture">
+            <End Role="Picture" EntitySet="Pictures" />
+            <End Role="Album_Picture" EntitySet="Album_Picture" />
+          </AssociationSet>
+          <FunctionImport Name="sp_GetAllCategories" ReturnType="Collection(pCMSModel.CategoryResult)" />
+          <EntitySet Name="Category_Picture" EntityType="pCMSModel.Category_Picture" />
+          <AssociationSet Name="FK_Category_Picture_Category" Association="pCMSModel.FK_Category_Picture_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Category_Picture" EntitySet="Category_Picture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_Picture_Picture" Association="pCMSModel.FK_Category_Picture_Picture">
+            <End Role="Picture" EntitySet="Pictures" />
+            <End Role="Category_Picture" EntitySet="Category_Picture" />
+          </AssociationSet>
+          <EntitySet Name="Articles" EntityType="pCMSModel.Article" />
+          <AssociationSet Name="FK_ChannelArticle_Article" Association="pCMSModel.FK_ChannelArticle_Article">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="ChannelArticle" EntitySet="ChannelArticles" />
+          </AssociationSet>
+          <EntitySet Name="Events" EntityType="pCMSModel.Event" />
+          <EntitySet Name="ConfigLanguages" EntityType="pCMSModel.ConfigLanguage" />
+          <EntitySet Name="ConfigResources" EntityType="pCMSModel.ConfigResource" />
+          <EntitySet Name="ConfigSettings" EntityType="pCMSModel.ConfigSetting" />
+          <EntitySet Name="Products" EntityType="pCMSModel.Product" />
+          <AssociationSet Name="FK_Product_Manufacturer" Association="pCMSModel.FK_Product_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturers" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Category_Product" Association="pCMSModel.FK_Product_Category_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Product_Category" EntitySet="Product_Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductAttribute_Product" Association="pCMSModel.FK_Product_ProductAttribute_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Product_ProductAttribute" EntitySet="Product_ProductAttribute" />
+          </AssociationSet>
+          <EntitySet Name="Product_Picture" EntityType="pCMSModel.Product_Picture" />
+          <AssociationSet Name="FK_Product_Picture_Picture" Association="pCMSModel.FK_Product_Picture_Picture">
+            <End Role="Picture" EntitySet="Pictures" />
+            <End Role="Product_Picture" EntitySet="Product_Picture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Picture_Product" Association="pCMSModel.FK_Product_Picture_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Product_Picture" EntitySet="Product_Picture" />
+          </AssociationSet>
+          <EntitySet Name="OrderDetails" EntityType="pCMSModel.OrderDetail" />
+          <AssociationSet Name="FK_OrderDetail_Picture" Association="pCMSModel.FK_OrderDetail_Picture">
+            <End Role="Picture" EntitySet="Pictures" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Product" Association="pCMSModel.FK_OrderDetail_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <EntitySet Name="Orders" EntityType="pCMSModel.Order" />
+          <AssociationSet Name="FK_OrderDetail_Order" Association="pCMSModel.FK_OrderDetail_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <EntitySet Name="Logs" EntityType="pCMSModel.Log" />
+          <FunctionImport Name="sp_GetAllCategories_Paging" ReturnType="Collection(pCMSModel.CategoryResult)">
+            <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Pages" EntityType="pCMSModel.Page" />
+          <EntitySet Name="FileDownloads" EntityType="pCMSModel.FileDownload" />
+          <EntitySet Name="Collections" EntityType="pCMSModel.Collection" />
+          </EntityContainer>
+        <EntityType Name="Channel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Alias" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ChannelArticles" Relationship="pCMSModel.FK_ChannelArticle_Channel" FromRole="Channel" ToRole="ChannelArticle" />
+          <Property Type="String" Name="MetaKeywords" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaDescription" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaTitle" MaxLength="400" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ChannelArticle">
+          <Key>
+            <PropertyRef Name="ChannelId" />
+            <PropertyRef Name="ArticleId" />
+          </Key>
+          <Property Type="Guid" Name="ChannelId" Nullable="false" />
+          <Property Type="Guid" Name="ArticleId" Nullable="false" />
+          <Property Type="Boolean" Name="IsFeatured" Nullable="false" />
+          <NavigationProperty Name="Channel" Relationship="pCMSModel.FK_ChannelArticle_Channel" FromRole="ChannelArticle" ToRole="Channel" />
+          <NavigationProperty Name="Article" Relationship="pCMSModel.FK_ChannelArticle_Article" FromRole="ChannelArticle" ToRole="Article" />
+        </EntityType>
+        <Association Name="FK_ChannelArticle_Channel">
+          <End Type="pCMSModel.Channel" Role="Channel" Multiplicity="1" />
+          <End Type="pCMSModel.ChannelArticle" Role="ChannelArticle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Channel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChannelArticle">
+              <PropertyRef Name="ChannelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PollAnswer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="Guid" Name="PollId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="NumberOfVote" Nullable="false" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <NavigationProperty Name="Poll" Relationship="pCMSModel.FK_PollAnswer_Poll" FromRole="PollAnswer" ToRole="Poll" />
+        </EntityType>
+        <EntityType Name="Poll">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsPublished" Nullable="false" />
+          <Property Type="DateTime" Name="StartDate" Precision="3" />
+          <Property Type="DateTime" Name="EndDate" Precision="3" />
+          <NavigationProperty Name="PollAnswers" Relationship="pCMSModel.FK_PollAnswer_Poll" FromRole="Poll" ToRole="PollAnswer" />
+        </EntityType>
+        <Association Name="FK_PollAnswer_Poll">
+          <End Type="pCMSModel.Poll" Role="Poll" Multiplicity="1" />
+          <End Type="pCMSModel.PollAnswer" Role="PollAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poll">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PollAnswer">
+              <PropertyRef Name="PollId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Alias" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="PictureId" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <Property Type="String" Name="MetaKeywords" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaDescription" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaTitle" MaxLength="400" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="pCMSModel.FK_Product_Manufacturer" FromRole="Manufacturer" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product_ProductAttribute">
+          <Key>
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="ProductAttribute" />
+          </Key>
+          <Property Type="Guid" Name="ProductId" Nullable="false" />
+          <Property Type="Guid" Name="ProductAttribute" Nullable="false" />
+          <Property Type="String" Name="DataValue" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductAttribute1" Relationship="pCMSModel.FK_Product_ProductAttribute_ProductAttribute" FromRole="Product_ProductAttribute" ToRole="ProductAttribute" />
+          <NavigationProperty Name="Product" Relationship="pCMSModel.FK_Product_ProductAttribute_Product" FromRole="Product_ProductAttribute" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="ProductAttributeOption">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="Guid" Name="ProductAttributeId" Nullable="false" />
+          <Property Type="String" Name="DataValue" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <NavigationProperty Name="ProductAttribute" Relationship="pCMSModel.FK_ProductAttributeOption_ProductAttribute" FromRole="ProductAttributeOption" ToRole="ProductAttribute" />
+        </EntityType>
+        <EntityType Name="ProductAttribute">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="Guid" Name="ProductTypeId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DataType" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="AllowFilter" Nullable="false" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <NavigationProperty Name="Product_ProductAttribute" Relationship="pCMSModel.FK_Product_ProductAttribute_ProductAttribute" FromRole="ProductAttribute" ToRole="Product_ProductAttribute" />
+          <NavigationProperty Name="ProductAttributeOptions" Relationship="pCMSModel.FK_ProductAttributeOption_ProductAttribute" FromRole="ProductAttribute" ToRole="ProductAttributeOption" />
+          <NavigationProperty Name="ProductType_ProductAttribute" Relationship="pCMSModel.FK_ProductType_ProductAttribute_ProductAttribute" FromRole="ProductAttribute" ToRole="ProductType_ProductAttribute" />
+          <NavigationProperty Name="ProductType" Relationship="pCMSModel.FK_ProductAttribute_ProductType" FromRole="ProductAttribute" ToRole="ProductType" />
+        </EntityType>
+        <EntityType Name="ProductType_ProductAttribute">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+            <PropertyRef Name="ProductAttributeId" />
+          </Key>
+          <Property Type="Guid" Name="ProductTypeId" Nullable="false" />
+          <Property Type="Guid" Name="ProductAttributeId" Nullable="false" />
+          <Property Type="Int32" Name="DisplayOrder" />
+          <Property Type="Boolean" Name="AllowFilter" />
+          <Property Type="String" Name="DataValue" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductAttribute" Relationship="pCMSModel.FK_ProductType_ProductAttribute_ProductAttribute" FromRole="ProductType_ProductAttribute" ToRole="ProductAttribute" />
+          <NavigationProperty Name="ProductType" Relationship="pCMSModel.FK_ProductType_ProductAttribute_ProductType" FromRole="ProductType_ProductAttribute" ToRole="ProductType" />
+        </EntityType>
+        <Association Name="FK_Product_ProductAttribute_ProductAttribute">
+          <End Type="pCMSModel.ProductAttribute" Role="ProductAttribute" Multiplicity="1" />
+          <End Type="pCMSModel.Product_ProductAttribute" Role="Product_ProductAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductAttribute">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_ProductAttribute">
+              <PropertyRef Name="ProductAttribute" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductAttributeOption_ProductAttribute">
+          <End Type="pCMSModel.ProductAttribute" Role="ProductAttribute" Multiplicity="1" />
+          <End Type="pCMSModel.ProductAttributeOption" Role="ProductAttributeOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductAttribute">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductAttributeOption">
+              <PropertyRef Name="ProductAttributeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductType_ProductAttribute_ProductAttribute">
+          <End Type="pCMSModel.ProductAttribute" Role="ProductAttribute" Multiplicity="1" />
+          <End Type="pCMSModel.ProductType_ProductAttribute" Role="ProductType_ProductAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductAttribute">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductType_ProductAttribute">
+              <PropertyRef Name="ProductAttributeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductAttributes" Relationship="pCMSModel.FK_ProductAttribute_ProductType" FromRole="ProductType" ToRole="ProductAttribute" />
+          <NavigationProperty Name="ProductType_ProductAttribute" Relationship="pCMSModel.FK_ProductType_ProductAttribute_ProductType" FromRole="ProductType" ToRole="ProductType_ProductAttribute" />
+          <NavigationProperty Name="Categories" Relationship="pCMSModel.FK_Category_ProductType" FromRole="ProductType" ToRole="Category" />
+        </EntityType>
+        <Association Name="FK_ProductAttribute_ProductType">
+          <End Type="pCMSModel.ProductType" Role="ProductType" Multiplicity="1" />
+          <End Type="pCMSModel.ProductAttribute" Role="ProductAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductAttribute">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductType_ProductAttribute_ProductType">
+          <End Type="pCMSModel.ProductType" Role="ProductType" Multiplicity="1" />
+          <End Type="pCMSModel.ProductType_ProductAttribute" Role="ProductType_ProductAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductType_ProductAttribute">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="CategoryResult">
+          <Property Type="Guid" Name="Id" Nullable="true" />
+          <Property Type="Guid" Name="ParentId" Nullable="true" />
+          <Property Type="String" Name="ParentTitle" Nullable="true" />
+          <Property Type="Guid" Name="ProductTypeId" Nullable="true" />
+          <Property Type="String" Name="ProductTypeTitle" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Alias" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Title" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="FullTitle" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="true" />
+          <Property Type="Int32" Name="Level" Nullable="true" />
+          <Property Type="Boolean" Name="ShowInMenu" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="Product_Category">
+          <Key>
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Type="Guid" Name="ProductId" Nullable="false" />
+          <Property Type="Guid" Name="CategoryId" Nullable="false" />
+          <Property Type="Boolean" Name="IsFeatured" Nullable="false" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="pCMSModel.FK_Product_Category_Category" FromRole="Product_Category" ToRole="Category" />
+          <NavigationProperty Name="Product" Relationship="pCMSModel.FK_Product_Category_Product" FromRole="Product_Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Album">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Alias" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsPublished" Nullable="false" />
+          <NavigationProperty Name="Album_Picture" Relationship="pCMSModel.FK_Album_Picture_Album" FromRole="Album" ToRole="Album_Picture" />
+        </EntityType>
+        <EntityType Name="Album_Picture">
+          <Key>
+            <PropertyRef Name="AlbumId" />
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Type="Guid" Name="AlbumId" Nullable="false" />
+          <Property Type="Guid" Name="PictureId" Nullable="false" />
+          <Property Type="String" Name="Description" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <NavigationProperty Name="Album" Relationship="pCMSModel.FK_Album_Picture_Album" FromRole="Album_Picture" ToRole="Album" />
+          <NavigationProperty Name="Picture" Relationship="pCMSModel.FK_Album_Picture_Picture" FromRole="Album_Picture" ToRole="Picture" />
+        </EntityType>
+        <Association Name="FK_Album_Picture_Album">
+          <End Type="pCMSModel.Album" Role="Album" Multiplicity="1" />
+          <End Type="pCMSModel.Album_Picture" Role="Album_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Album">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Album_Picture">
+              <PropertyRef Name="AlbumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="Guid" Name="ParentId" />
+          <Property Type="Guid" Name="ProductTypeId" Nullable="false" />
+          <Property Type="Guid" Name="PictureId" />
+          <Property Type="String" Name="Alias" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaKeywords" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaDescription" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaTitle" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <NavigationProperty Name="ProductType" Relationship="pCMSModel.FK_Category_ProductType" FromRole="Category" ToRole="ProductType" />
+          <NavigationProperty Name="Product_Category" Relationship="pCMSModel.FK_Product_Category_Category" FromRole="Category" ToRole="Product_Category" />
+          <Property Type="Boolean" Name="ShowInMenu" Nullable="false" />
+          <NavigationProperty Name="Category_Picture" Relationship="pCMSModel.FK_Category_Picture_Category" FromRole="Category" ToRole="Category_Picture" />
+        </EntityType>
+        <Association Name="FK_Category_ProductType">
+          <End Type="pCMSModel.ProductType" Role="ProductType" Multiplicity="1" />
+          <End Type="pCMSModel.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Category_Category">
+          <End Type="pCMSModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="pCMSModel.Product_Category" Role="Product_Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Category">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="Binary" Name="PictureBinary" MaxLength="Max" FixedLength="false" />
+          <Property Type="String" Name="MimeType" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="IsNew" Nullable="false" />
+          <Property Type="String" Name="SeoFilename" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Album_Picture" Relationship="pCMSModel.FK_Album_Picture_Picture" FromRole="Picture" ToRole="Album_Picture" />
+          <NavigationProperty Name="Category_Picture" Relationship="pCMSModel.FK_Category_Picture_Picture" FromRole="Picture" ToRole="Category_Picture" />
+          <NavigationProperty Name="Product_Picture" Relationship="pCMSModel.FK_Product_Picture_Picture" FromRole="Picture" ToRole="Product_Picture" />
+          <NavigationProperty Name="OrderDetails" Relationship="pCMSModel.FK_OrderDetail_Picture" FromRole="Picture" ToRole="OrderDetail" />
+        </EntityType>
+        <Association Name="FK_Album_Picture_Picture">
+          <End Type="pCMSModel.Picture" Role="Picture" Multiplicity="1" />
+          <End Type="pCMSModel.Album_Picture" Role="Album_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Picture">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Album_Picture">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Category_Picture">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Type="Guid" Name="CategoryId" Nullable="false" />
+          <Property Type="Guid" Name="PictureId" Nullable="false" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <Property Type="String" Name="Title" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Category" Relationship="pCMSModel.FK_Category_Picture_Category" FromRole="Category_Picture" ToRole="Category" />
+          <NavigationProperty Name="Picture" Relationship="pCMSModel.FK_Category_Picture_Picture" FromRole="Category_Picture" ToRole="Picture" />
+        </EntityType>
+        <Association Name="FK_Category_Picture_Category">
+          <End Type="pCMSModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="pCMSModel.Category_Picture" Role="Category_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category_Picture">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_Picture_Picture">
+          <End Type="pCMSModel.Picture" Role="Picture" Multiplicity="1" />
+          <End Type="pCMSModel.Category_Picture" Role="Category_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Picture">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category_Picture">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Alias" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Quote" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Body" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsPublished" Nullable="false" />
+          <Property Type="String" Name="CreatedUser" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ModifiedUser" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DeletedUser" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="PublishedDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="ModifiedDate" Precision="3" />
+          <Property Type="DateTime" Name="ExpiredDate" Precision="3" />
+          <Property Type="DateTime" Name="DeletedDate" Precision="3" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="Boolean" Name="IsFeature" Nullable="false" />
+          <Property Type="String" Name="MetaKeywords" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaDescription" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaTitle" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="AllowCustomerComments" Nullable="false" />
+          <NavigationProperty Name="ChannelArticles" Relationship="pCMSModel.FK_ChannelArticle_Article" FromRole="Article" ToRole="ChannelArticle" />
+        </EntityType>
+        <Association Name="FK_ChannelArticle_Article">
+          <End Type="pCMSModel.Article" Role="Article" Multiplicity="1" />
+          <End Type="pCMSModel.ChannelArticle" Role="ChannelArticle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChannelArticle">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="DateBegin" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateEnd" Nullable="false" Precision="3" />
+          <Property Type="String" Name="Location" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="City" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Booth" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsPublished" Nullable="false" />
+          <Property Type="DateTime" Name="PublishedDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="ExpiredDate" Precision="3" />
+          <Property Type="String" Name="LocationLink" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ConfigLanguage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Title" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDefault" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfigResource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Key" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Value" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LanguageCode" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ConfigSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Key" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Value" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LanguageCode" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="Guid" Name="ManufacturerId" Nullable="false" />
+          <Property Type="String" Name="Alias" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Quote" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Body" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaKeywords" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="MetaDescription" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="MetaTitle" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Type="Boolean" Name="CallForPrice" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Precision="20" Scale="4" />
+          <Property Type="Decimal" Name="OldPrice" Precision="20" Scale="4" />
+          <Property Type="Boolean" Name="IsPublished" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="String" Name="UserCreated" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Manufacturer" Relationship="pCMSModel.FK_Product_Manufacturer" FromRole="Product" ToRole="Manufacturer" />
+          <NavigationProperty Name="Product_Category" Relationship="pCMSModel.FK_Product_Category_Product" FromRole="Product" ToRole="Product_Category" />
+          <NavigationProperty Name="Product_ProductAttribute" Relationship="pCMSModel.FK_Product_ProductAttribute_Product" FromRole="Product" ToRole="Product_ProductAttribute" />
+          <NavigationProperty Name="Product_Picture" Relationship="pCMSModel.FK_Product_Picture_Product" FromRole="Product" ToRole="Product_Picture" />
+          <NavigationProperty Name="OrderDetails" Relationship="pCMSModel.FK_OrderDetail_Product" FromRole="Product" ToRole="OrderDetail" />
+        </EntityType>
+        <Association Name="FK_Product_Manufacturer">
+          <End Type="pCMSModel.Manufacturer" Role="Manufacturer" Multiplicity="1" />
+          <End Type="pCMSModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Category_Product">
+          <End Type="pCMSModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="pCMSModel.Product_Category" Role="Product_Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Category">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductAttribute_Product">
+          <End Type="pCMSModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="pCMSModel.Product_ProductAttribute" Role="Product_ProductAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_ProductAttribute">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Product_Picture">
+          <Key>
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Type="Guid" Name="ProductId" Nullable="false" />
+          <Property Type="Guid" Name="PictureId" Nullable="false" />
+          <Property Type="String" Name="Title" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <Property Type="Boolean" Name="IsAvatar" Nullable="false" />
+          <Property Type="Boolean" Name="IsDefault" Nullable="false" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Picture" Relationship="pCMSModel.FK_Product_Picture_Picture" FromRole="Product_Picture" ToRole="Picture" />
+          <NavigationProperty Name="Product" Relationship="pCMSModel.FK_Product_Picture_Product" FromRole="Product_Picture" ToRole="Product" />
+          <Property Type="Decimal" Name="Price" Precision="20" Scale="4" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Product_Picture_Picture">
+          <End Type="pCMSModel.Picture" Role="Picture" Multiplicity="1" />
+          <End Type="pCMSModel.Product_Picture" Role="Product_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Picture">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Picture">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Picture_Product">
+          <End Type="pCMSModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="pCMSModel.Product_Picture" Role="Product_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Picture">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="Guid" Name="OrderId" Nullable="false" />
+          <Property Type="Guid" Name="ProductId" Nullable="false" />
+          <Property Type="Guid" Name="PictureId" Nullable="false" />
+          <Property Type="Int32" Name="Qtty" Nullable="false" />
+          <NavigationProperty Name="Picture" Relationship="pCMSModel.FK_OrderDetail_Picture" FromRole="OrderDetail" ToRole="Picture" />
+          <NavigationProperty Name="Product" Relationship="pCMSModel.FK_OrderDetail_Product" FromRole="OrderDetail" ToRole="Product" />
+          <NavigationProperty Name="Order" Relationship="pCMSModel.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
+          <Property Type="Decimal" Name="UnitPrice" Nullable="false" Precision="20" Scale="4" />
+        </EntityType>
+        <Association Name="FK_OrderDetail_Picture">
+          <End Type="pCMSModel.Picture" Role="Picture" Multiplicity="1" />
+          <End Type="pCMSModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Picture">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Product">
+          <End Type="pCMSModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="pCMSModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="UserName" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="OrderDate" Nullable="false" Precision="3" />
+          <Property Type="String" Name="Status" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="OrderDetails" Relationship="pCMSModel.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="20" Scale="4" />
+        </EntityType>
+        <Association Name="FK_OrderDetail_Order">
+          <End Type="pCMSModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="pCMSModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="Byte" Name="LevelId" />
+          <Property Type="String" Name="ShortMessage" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FullMessage" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IpAddress" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="UserName" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PageUrl" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ReferrerUrl" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOnUtc" Precision="3" />
+        </EntityType>
+        <EntityType Name="Page">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Alias" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Body" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="ShowInSiteMap" Nullable="false" />
+          <Property Type="String" Name="MetaKeywords" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaDescription" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaTitle" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="FileDownload">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="MimeType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SeoFilename" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Collection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Alias" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ShortDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="FullDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="PictureId" Type="Guid" Nullable="false" />
+          <Property Name="FileDownloadId" Type="Guid" Nullable="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="pCMSModelStoreContainer" CdmEntityContainer="pCMSEntities">
+          <EntitySetMapping Name="Channels">
+            <EntityTypeMapping TypeName="pCMSModel.Channel">
+              <MappingFragment StoreEntitySet="Channel">
+                <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaKeywords" ColumnName="MetaKeywords" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChannelArticles">
+            <EntityTypeMapping TypeName="pCMSModel.ChannelArticle">
+              <MappingFragment StoreEntitySet="ChannelArticle">
+                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+                <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PollAnswers">
+            <EntityTypeMapping TypeName="pCMSModel.PollAnswer">
+              <MappingFragment StoreEntitySet="PollAnswer">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="NumberOfVote" ColumnName="NumberOfVote" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PollId" ColumnName="PollId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Polls">
+            <EntityTypeMapping TypeName="pCMSModel.Poll">
+              <MappingFragment StoreEntitySet="Poll">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manufacturers">
+            <EntityTypeMapping TypeName="pCMSModel.Manufacturer">
+              <MappingFragment StoreEntitySet="Manufacturer">
+                <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaKeywords" ColumnName="MetaKeywords" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_ProductAttribute">
+            <EntityTypeMapping TypeName="pCMSModel.Product_ProductAttribute">
+              <MappingFragment StoreEntitySet="Product_ProductAttribute">
+                <ScalarProperty Name="DataValue" ColumnName="DataValue" />
+                <ScalarProperty Name="ProductAttribute" ColumnName="ProductAttribute" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductAttributeOptions">
+            <EntityTypeMapping TypeName="pCMSModel.ProductAttributeOption">
+              <MappingFragment StoreEntitySet="ProductAttributeOption">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="DataValue" ColumnName="DataValue" />
+                <ScalarProperty Name="ProductAttributeId" ColumnName="ProductAttributeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductAttributes">
+            <EntityTypeMapping TypeName="pCMSModel.ProductAttribute">
+              <MappingFragment StoreEntitySet="ProductAttribute">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="AllowFilter" ColumnName="AllowFilter" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductType_ProductAttribute">
+            <EntityTypeMapping TypeName="pCMSModel.ProductType_ProductAttribute">
+              <MappingFragment StoreEntitySet="ProductType_ProductAttribute">
+                <ScalarProperty Name="DataValue" ColumnName="DataValue" />
+                <ScalarProperty Name="AllowFilter" ColumnName="AllowFilter" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="ProductAttributeId" ColumnName="ProductAttributeId" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTypes">
+            <EntityTypeMapping TypeName="pCMSModel.ProductType">
+              <MappingFragment StoreEntitySet="ProductType">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetAllCategoriesExcludeNode" FunctionName="pCMSModel.Store.sp_GetAllCategoriesExcludeNode">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="pCMSModel.CategoryResult">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ParentTitle" ColumnName="ParentTitle" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="ProductTypeTitle" ColumnName="ProductTypeTitle" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FullTitle" ColumnName="FullTitle" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Product_Category">
+            <EntityTypeMapping TypeName="pCMSModel.Product_Category">
+              <MappingFragment StoreEntitySet="Product_Category">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Albums">
+            <EntityTypeMapping TypeName="pCMSModel.Album">
+              <MappingFragment StoreEntitySet="Album">
+                <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Album_Picture">
+            <EntityTypeMapping TypeName="pCMSModel.Album_Picture">
+              <MappingFragment StoreEntitySet="Album_Picture">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+                <ScalarProperty Name="AlbumId" ColumnName="AlbumId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="pCMSModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="ShowInMenu" ColumnName="ShowInMenu" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaKeywords" ColumnName="MetaKeywords" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pictures">
+            <EntityTypeMapping TypeName="pCMSModel.Picture">
+              <MappingFragment StoreEntitySet="Picture">
+                <ScalarProperty Name="SeoFilename" ColumnName="SeoFilename" />
+                <ScalarProperty Name="IsNew" ColumnName="IsNew" />
+                <ScalarProperty Name="MimeType" ColumnName="MimeType" />
+                <ScalarProperty Name="PictureBinary" ColumnName="PictureBinary" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetAllCategories" FunctionName="pCMSModel.Store.sp_GetAllCategories">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="pCMSModel.CategoryResult">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ParentTitle" ColumnName="ParentTitle" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="ProductTypeTitle" ColumnName="ProductTypeTitle" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FullTitle" ColumnName="FullTitle" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="ShowInMenu" ColumnName="ShowInMenu" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Category_Picture">
+            <EntityTypeMapping TypeName="pCMSModel.Category_Picture">
+              <MappingFragment StoreEntitySet="Category_Picture">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Articles">
+            <EntityTypeMapping TypeName="pCMSModel.Article">
+              <MappingFragment StoreEntitySet="Article">
+                <ScalarProperty Name="AllowCustomerComments" ColumnName="AllowCustomerComments" />
+                <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaKeywords" ColumnName="MetaKeywords" />
+                <ScalarProperty Name="IsFeature" ColumnName="IsFeature" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="PublishedDate" ColumnName="PublishedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="DeletedUser" ColumnName="DeletedUser" />
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Quote" ColumnName="Quote" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="pCMSModel.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="LocationLink" ColumnName="LocationLink" />
+                <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+                <ScalarProperty Name="PublishedDate" ColumnName="PublishedDate" />
+                <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+                <ScalarProperty Name="Booth" ColumnName="Booth" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="DateBegin" ColumnName="DateBegin" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigLanguages">
+            <EntityTypeMapping TypeName="pCMSModel.ConfigLanguage">
+              <MappingFragment StoreEntitySet="ConfigLanguage">
+                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigResources">
+            <EntityTypeMapping TypeName="pCMSModel.ConfigResource">
+              <MappingFragment StoreEntitySet="ConfigResource">
+                <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigSettings">
+            <EntityTypeMapping TypeName="pCMSModel.ConfigSetting">
+              <MappingFragment StoreEntitySet="ConfigSetting">
+                <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="pCMSModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="UserCreated" ColumnName="UserCreated" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+                <ScalarProperty Name="OldPrice" ColumnName="OldPrice" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CallForPrice" ColumnName="CallForPrice" />
+                <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaKeywords" ColumnName="MetaKeywords" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Quote" ColumnName="Quote" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Picture">
+            <EntityTypeMapping TypeName="pCMSModel.Product_Picture">
+              <MappingFragment StoreEntitySet="Product_Picture">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+                <ScalarProperty Name="IsAvatar" ColumnName="IsAvatar" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="pCMSModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Qtty" ColumnName="Qtty" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="pCMSModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="pCMSModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="CreatedOnUtc" ColumnName="CreatedOnUtc" />
+                <ScalarProperty Name="ReferrerUrl" ColumnName="ReferrerUrl" />
+                <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+                <ScalarProperty Name="FullMessage" ColumnName="FullMessage" />
+                <ScalarProperty Name="ShortMessage" ColumnName="ShortMessage" />
+                <ScalarProperty Name="LevelId" ColumnName="LevelId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetAllCategories_Paging" FunctionName="pCMSModel.Store.sp_GetAllCategories_Paging">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="pCMSModel.CategoryResult">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ParentTitle" ColumnName="ParentTitle" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="ProductTypeTitle" ColumnName="ProductTypeTitle" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FullTitle" ColumnName="FullTitle" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="ShowInMenu" ColumnName="ShowInMenu" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Pages">
+            <EntityTypeMapping TypeName="pCMSModel.Page">
+              <MappingFragment StoreEntitySet="Page">
+                <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaKeywords" ColumnName="MetaKeywords" />
+                <ScalarProperty Name="ShowInSiteMap" ColumnName="ShowInSiteMap" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FileDownloads">
+            <EntityTypeMapping TypeName="pCMSModel.FileDownload">
+              <MappingFragment StoreEntitySet="FileDownload">
+                <ScalarProperty Name="SeoFilename" ColumnName="SeoFilename" />
+                <ScalarProperty Name="MimeType" ColumnName="MimeType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Collections">
+            <EntityTypeMapping TypeName="pCMSModel.Collection">
+              <MappingFragment StoreEntitySet="Collection">
+                <ScalarProperty Name="FileDownloadId" ColumnName="FileDownloadId" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="pCMSModel" ZoomLevel="86">
+        <EntityTypeShape EntityType="pCMSModel.Channel" Width="1.5" PointX="8.75" PointY="8.875" Height="2.364889322916667" IsExpanded="false" />
+        <EntityTypeShape EntityType="pCMSModel.ChannelArticle" Width="1.5" PointX="11" PointY="8.875" Height="1.9802864583333331" IsExpanded="false" />
+        <AssociationConnector Association="pCMSModel.FK_ChannelArticle_Channel" >
+          <ConnectorPoint PointX="8.75" PointY="2.1151432291666667" />
+          <ConnectorPoint PointX="8.125" PointY="2.1151432291666667" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="pCMSModel.PollAnswer" Width="1.5" PointX="13" PointY="0.875" Height="2.1725878906249996" IsExpanded="false" />
+        <EntityTypeShape EntityType="pCMSModel.Poll" Width="1.5" PointX="10.75" PointY="0.875" Height="2.1725878906249996" IsExpanded="false" />
+        <AssociationConnector Association="pCMSModel.FK_PollAnswer_Poll" >
+          <ConnectorPoint PointX="2" PointY="1.9612939453124998" />
+          <ConnectorPoint PointX="2.75" PointY="1.9612939453124998" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="pCMSModel.Manufacturer" Width="1.5" PointX="0.75" PointY="2.75" Height="2.9417936197916674" IsExpanded="false" />
+        <EntityTypeShape EntityType="pCMSModel.Product_ProductAttribute" Width="1.5" PointX="5.25" PointY="2.75" Height="1.9802864583333317" IsExpanded="false" />
+        <EntityTypeShape EntityType="pCMSModel.ProductAttributeOption" Width="1.5" PointX="5.25" PointY="10.75" Height="1.9802864583333353" IsExpanded="false" />
+        <EntityTypeShape EntityType="pCMSModel.ProductAttribute" Width="1.5" PointX="3" PointY="4.75" Height="2.9417936197916674" IsExpanded="false" />
+        <EntityTypeShape EntityType="pCMSModel.ProductType_ProductAttribute" Width="1.5" PointX="8.25" PointY="0.875" Height="2.3648893229166674" IsExpanded="false" />
+        <AssociationConnector Association="pCMSModel.FK_Product_ProductAttribute_ProductAttribute" >
+          <ConnectorPoint PointX="4.625" PointY="13.751152846153847" />
+          <ConnectorPoint PointX="5.0011528461538468" PointY="13.375" />
+          <ConnectorPoint PointX="7.25" PointY="13.375" />
+          <ConnectorPoint PointX="7.25" PointY="12.481439304487179" />
+          <ConnectorPoint PointX="7.6261528461538441" PointY="12.105286458333334" />
+        </AssociationConnector>
+        <AssociationConnector Association="pCMSModel.FK_ProductAttributeOption_ProductAttribute" >
+          <ConnectorPoint PointX="4.625" PointY="14.302643229166666" />
+          <ConnectorPoint PointX="7.197916666666667" PointY="14.302643229166664" />
+          <ConnectorPoint PointX="7.458333333333333" PointY="14.302643229166666" />
+          <ConnectorPoint PointX="7.625" PointY="14.302643229166666" />
+        </AssociationConnector>
+        <AssociationConnector Association="pCMSModel.FK_ProductType_ProductAttribute_ProductAttribute" >
+          <ConnectorPoint PointX="4.625" PointY="15.845896809895834" />
+          <ConnectorPoint PointX="5.375" PointY="15.845896809895834" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="pCMSModel.ProductType" Width="1.5" PointX="0.75" PointY="1.125" Height="2.1725878906250031" IsExpanded="false" />
+        <AssociationConnector Association="pCMSModel.FK_ProductAttribute_ProductType" >
+          <ConnectorPoint PointX="2.375" PointY="16.408396809895834" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="16.408396809895834" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="16.408396809895834" />
+          <ConnectorPoint PointX="3.125" PointY="16.408396809895834" />
+        </AssociationConnector>
+        <AssociationConnector Association="pCMSModel.FK_ProductType_ProductAttribute_ProductType" >
+          <ConnectorPoint PointX="2.375" PointY="17.059591471354167" />
+          <ConnectorPoint PointX="5.375" PointY="17.059591471354167" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="pCMSModel.Product_Category" Width="1.5" PointX="5.25" PointY="0.75" Height="2.172587890624996" IsExpanded="false" />
+        <EntityTypeShape EntityType="pCMSModel.Album" Width="1.5" PointX="6" PointY="8.75" Height="2.1725878906249996" IsExpanded="false" />
+        <EntityTypeShape EntityType="pCMSModel.Album_Picture" Width="1.5" PointX="8.25" PointY="6.75" Height="2.172587890624996" IsExpanded="false" />
+        <AssociationConnector Association="pCMSModel.FK_Album_Picture_Album" >
+          <ConnectorPoint PointX="7.25" PointY="5.797587890625" />
+          <ConnectorPoint PointX="7.25" PointY="9.3314925130208337" />
+          <ConnectorPoint PointX="10" PointY="9.3314925130208337" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="pCMSModel.Category" Width="1.5" PointX="3" PointY="1.125" Height="3.7109993489583388" IsExpanded="false" />
+        <AssociationConnector Association="pCMSModel.FK_Category_ProductType" >
+          <ConnectorPoint PointX="2.34375" PointY="16.125" />
+          <ConnectorPoint PointX="2.34375" PointY="10.706492513020834" />
+          <ConnectorPoint PointX="3.125" PointY="10.706492513020834" />
+        </AssociationConnector>
+        <AssociationConnector Association="pCMSModel.FK_Product_Category_Category" >
+          <ConnectorPoint PointX="4.625" PointY="9.8195756953125" />
+          <ConnectorPoint PointX="5.125" PointY="9.8195756953125" />
+          <ConnectorPoint PointX="5.125" PointY="12.864889322916667" />
+          <ConnectorPoint PointX="7.166666666666667" PointY="12.864889322916667" />
+          <ConnectorPoint PointX="7.364583333333333" PointY="12.864889322916667" />
+          <ConnectorPoint PointX="7.375" PointY="12.864889322916667" />
+          <ConnectorPoint PointX="7.375" PointY="15.105286458333335" />
+          <ConnectorPoint PointX="8.375" PointY="15.105286458333335" />
+          <ConnectorPoint PointX="8.375" PointY="15.625" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="pCMSModel.Picture" Width="1.5" PointX="6" PointY="6.75" Height="2.5571907552083246" IsExpanded="false" />
+        <AssociationConnector Association="pCMSModel.FK_Album_Picture_Picture" >
+          <ConnectorPoint PointX="2.25" PointY="13.119944661458334" />
+          <ConnectorPoint PointX="2.2604166666666665" PointY="13.119944661458334" />
+          <ConnectorPoint PointX="2.4270833333333335" PointY="13.119944661458334" />
+          <ConnectorPoint PointX="7.166666666666667" PointY="13.119944661458332" />
+          <ConnectorPoint PointX="7.458333333333333" PointY="13.119944661458334" />
+          <ConnectorPoint PointX="7.5" PointY="13.119944661458334" />
+          <ConnectorPoint PointX="7.5" PointY="12.625" />
+          <ConnectorPoint PointX="10.125" PointY="12.625" />
+          <ConnectorPoint PointX="10.125" PointY="11.5" />
+          <ConnectorPoint PointX="10.75" PointY="11.5" />
+          <ConnectorPoint PointX="10.75" PointY="10.422587890624996" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="pCMSModel.Category_Picture" Width="1.5" PointX="8.25" PointY="3.875" Height="2.3648893229166674" IsExpanded="false" />
+        <AssociationConnector Association="pCMSModel.FK_Category_Picture_Category" >
+          <ConnectorPoint PointX="4.625" PointY="11.264150390625" />
+          <ConnectorPoint PointX="5.041666666666667" PointY="11.264150390625" />
+          <ConnectorPoint PointX="5.208333333333333" PointY="11.264150390625" />
+          <ConnectorPoint PointX="5.375" PointY="11.264150390625" />
+        </AssociationConnector>
+        <AssociationConnector Association="pCMSModel.FK_Category_Picture_Picture" >
+          <ConnectorPoint PointX="2.25" PointY="12.477845052083334" />
+          <ConnectorPoint PointX="2.2604166666666665" PointY="12.477845052083334" />
+          <ConnectorPoint PointX="2.4270833333333335" PointY="12.477845052083334" />
+          <ConnectorPoint PointX="5.041666666666667" PointY="12.477845052083334" />
+          <ConnectorPoint PointX="5.208333333333333" PointY="12.477845052083334" />
+          <ConnectorPoint PointX="5.375" PointY="12.477845052083334" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="pCMSModel.Article" Width="1.5" PointX="8.75" PointY="10.875" Height="5.057109374999996" IsExpanded="false" />
+        <AssociationConnector Association="pCMSModel.FK_ChannelArticle_Article" >
+          <ConnectorPoint PointX="11.375" PointY="6.0210986328124969" />
+          <ConnectorPoint PointX="7.333333333333333" PointY="6.021098632812496" />
+          <ConnectorPoint PointX="7.166666666666667" PointY="6.0210986328124969" />
+          <ConnectorPoint PointX="6.65625" PointY="6.0210986328124969" />
+          <ConnectorPoint PointX="6.65625" PointY="3.1052864583333331" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="pCMSModel.Event" Width="1.5" PointX="0.75" PointY="8.75" Height="2.7494921875000031" IsExpanded="false" />
+        <EntityTypeShape EntityType="pCMSModel.ConfigLanguage" Width="1.5" PointX="2.75" PointY="8.75" Height="1.7879850260416674" IsExpanded="false" />
+        <EntityTypeShape EntityType="pCMSModel.ConfigResource" Width="1.5" PointX="0.75" PointY="10.75" Height="1.7879850260416674" IsExpanded="false" />
+        <EntityTypeShape EntityType="pCMSModel.ConfigSetting" Width="1.5" PointX="10.75" PointY="2.75" Height="1.5923063151041674" IsExpanded="false" />
+        <EntityTypeShape EntityType="pCMSModel.Product" Width="1.5" PointX="3" PointY="2.75" Height="4.8648079427083246" IsExpanded="false" />
+        <AssociationConnector Association="pCMSModel.FK_Product_Manufacturer" >
+          <ConnectorPoint PointX="4.625" PointY="22.970896809895834" />
+          <ConnectorPoint PointX="5.375" PointY="22.970896809895834" />
+        </AssociationConnector>
+        <AssociationConnector Association="pCMSModel.FK_Product_Category_Product" >
+          <ConnectorPoint PointX="6.875" PointY="20.52653746153846" />
+          <ConnectorPoint PointX="7.375" PointY="20.02653746153846" />
+          <ConnectorPoint PointX="7.375" PointY="16.711293945312498" />
+          <ConnectorPoint PointX="7.625" PointY="16.711293945312498" />
+        </AssociationConnector>
+        <AssociationConnector Association="pCMSModel.FK_Product_ProductAttribute_Product" >
+          <ConnectorPoint PointX="6.875" PointY="20.50807592307692" />
+          <ConnectorPoint PointX="7.28125" PointY="20.10182592307692" />
+          <ConnectorPoint PointX="7.28125" PointY="11.115143229166666" />
+          <ConnectorPoint PointX="7.625" PointY="11.115143229166666" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="pCMSModel.Product_Picture" Width="1.5" PointX="8.25" PointY="2.75" Height="2.7494921875000102" IsExpanded="false" />
+        <AssociationConnector Association="pCMSModel.FK_Product_Picture_Picture" >
+          <ConnectorPoint PointX="0.7734375" PointY="14.6244921875" />
+          <ConnectorPoint PointX="0.7734375" PointY="19.84375" />
+          <ConnectorPoint PointX="7.197916666666667" PointY="19.84375" />
+          <ConnectorPoint PointX="7.458333333333333" PointY="19.84375" />
+          <ConnectorPoint PointX="7.625" PointY="19.84375" />
+        </AssociationConnector>
+        <AssociationConnector Association="pCMSModel.FK_Product_Picture_Product" >
+          <ConnectorPoint PointX="6.875" PointY="21.294267324519229" />
+          <ConnectorPoint PointX="7.625" PointY="21.294267324519229" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="pCMSModel.OrderDetail" Width="1.5" PointX="5.25" PointY="4.75" Height="2.5571907552083246" IsExpanded="false" />
+        <AssociationConnector Association="pCMSModel.FK_OrderDetail_Picture" >
+          <ConnectorPoint PointX="0.79296875" PointY="14.6244921875" />
+          <ConnectorPoint PointX="0.79296875" PointY="18.7737939453125" />
+          <ConnectorPoint PointX="7.197916666666667" PointY="18.7737939453125" />
+          <ConnectorPoint PointX="7.458333333333333" PointY="18.7737939453125" />
+          <ConnectorPoint PointX="10.625" PointY="18.7737939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="pCMSModel.FK_OrderDetail_Product" >
+          <ConnectorPoint PointX="6.875" PointY="23.809550781250003" />
+          <ConnectorPoint PointX="11.375" PointY="23.809550781250003" />
+          <ConnectorPoint PointX="11.375" PointY="19.932190755208335" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="pCMSModel.Order" Width="1.5" PointX="3" PointY="6.75" Height="1.9802864583333246" IsExpanded="false" />
+        <AssociationConnector Association="pCMSModel.FK_OrderDetail_Order" >
+          <ConnectorPoint PointX="12.375" PointY="8.03125" />
+          <ConnectorPoint PointX="12.03125" PointY="8.03125" />
+          <ConnectorPoint PointX="12.03125" PointY="17.375" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="pCMSModel.Log" Width="1.5" PointX="10.75" PointY="4.75" Height="2.7494921875000102" IsExpanded="false" />
+        <EntityTypeShape EntityType="pCMSModel.Page" Width="1.5" PointX="10.75" PointY="6.75" Height="2.5571907552083246" IsExpanded="false" />
+        <EntityTypeShape EntityType="pCMSModel.FileDownload" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="pCMSModel.Collection" Width="1.5" PointX="11.375" PointY="10.75" />
+        </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

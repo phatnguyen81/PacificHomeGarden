@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>pCMS - @ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/admin/styles.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/fileuploader.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery-1.5.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/MicrosoftAjax.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/MicrosoftMvcAjax.js")" type="text/javascript"></script>
+    
+    <script src="@Url.Content("~/Scripts/fileuploader.js")" type="text/javascript"></script>
+
+    
+    <script type="text/javascript">
+        var ajaxloadimg = '@Url.Content("~/Content/admin/images/ajax-loading.gif")';
+    </script>
+    <script src="@Url.Content("~/Scripts/admin.js")" type="text/javascript"></script>
+    @(Html.Telerik().StyleSheetRegistrar().DefaultGroup(group => group.Add("telerik.common.css").Add("telerik.default.css")
+        ))
+</head>
+<body>
+    <div class="master-wrapper-page">
+        <div class="master-wrapper-content">
+            <div class="header">
+                    <div class="logo">
+                    </div>
+                    <div class="languageselector">
+                    </div>
+                    <div class="links">
+                        @Html.ActionLink(T("Admin.HomePage"), "Index", "Home", new { area = "" }, null)
+                    </div>
+                    <div class="login-info">
+                        Logged in as: @HttpContext.Current.User.Identity.Name , @Html.ActionLink(T("Admin.Logout") + "?","LogOff","Account", new {Area = ""}, null)
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="header-menu">
+                    @Html.Partial("Menu")
+                </div>
+            @if (IsSectionDefined("statusbar"))
+            {
+                @RenderSection("statusbar")
+            }
+            else
+            {
+                <div class="status-bar">
+                    <div class="help">
+                        @RazorHelpers.ToDateTimeVietnamese(DateTime.Now)
+                    </div>
+                    <div class="breadcrumb">
+                        <!-- SiteMapPath here-->
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            }
+            <div class="content">
+                @Html.Partial("_Notifications")
+                <div class="cph">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--These need to be at the end of the page to ensure that all the controls requiring scripts have been rendered-->
+    @(Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false))
+</body>
+</html>

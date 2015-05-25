@@ -1,0 +1,4 @@
+﻿@model System.Int32
+@using Telerik.Web.Mvc.UI
+
+@Html.Telerik().IntegerTextBoxFor(model => model).MinValue(0).HtmlAttributes(new { @style = "width:80px;" }).InputHtmlAttributes(new { @style = "width:80px;" })

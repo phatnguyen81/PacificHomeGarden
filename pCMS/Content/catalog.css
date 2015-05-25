@@ -1,0 +1,77 @@
+/* CSS Document */
+#CatalogContent {
+	float:left; width:970px; height:500px;
+}
+#LeftPic{
+	float:left; width:245px; height:550px;
+}
+.GroupContent{
+	float:left; width:420px; height:500px; padding:15px; background:#fff;
+}
+.GroupTitle{
+	float:left;	width:400px; padding:20px 0 10px 20px;
+	font-family:Corbel;	font-size:22px; font-weight:nonal;
+	
+}
+.Group{
+	float:left; width:420px;
+}
+.TableList {
+	float:left; width:140px; height:200px; margin-top:10px; border:0px; text-align:center;
+}
+.ImageLink{
+	border:3px #eee solid; cursor:pointer;
+}
+.ImageLink:hover{
+	border:3px #cccc99 solid; cursor:pointer;
+}
+.TextLink {
+	font-weight:bold; text-decoration:none; cursor:pointer;
+	display:block;
+}
+.TextLink:hover{
+	text-decoration:underline;
+}
+
+#CatalogRightContent {
+	float:left; width:420px; height:520px;
+	background:#fff; padding:15px;
+}
+
+.ImageGroup{
+	float:left; width:665px; height:525px; padding:15px; padding-bottom:5px; background:#fff;
+}
+.ImageGroupTitle{
+	float:left;	width:650px; padding:5px 0 10px 15px;
+	font-family:Corbel;	font-size:22px; font-weight:nonal;
+}
+.ImageGroupView{
+	float:left; width:665px;
+}
+.TableImageViewer{
+	float:left; width:96px; height:150px; margin:0 20px 0 17px;
+}
+.tdImageViewer{	
+	width:90px; height:114px; border:3px #eee solid;
+}
+.tdNameImage{
+	text-align:center; height:34px;
+}
+.tdNameImage a{
+	font-weight:normal;
+}
+.pageNumber{
+	float:left; text-align:center; width:665px; padding:5px 0;
+}
+.pageNumber span{
+	color:#999999;
+}
+.pageNumber a{
+	font-weight:bold; text-decoration:none; margin:0 2px;
+}
+.pageNumber a:hover{
+	font-weight:bold; text-decoration:underline;
+}
+.pageNumber a.selected{
+	font-weight:bold; color:#e42c08; text-decoration:underline;
+}

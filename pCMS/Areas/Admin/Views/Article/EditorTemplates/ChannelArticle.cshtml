@@ -1,0 +1,16 @@
+﻿@using Telerik.Web.Mvc.UI;
+@using pCMS
+@using pCMS.Services
+@{    
+    var channelList = new List<SelectListItem>();
+    var channelService = DependencyResolver.Current.GetService<IChannelService>();
+    var allChannels = channelService.GetAll();
+
+    channelList.AddRange(allChannels.Select(c => new SelectListItem()
+                                                         {
+                                                             Text = c.Title,
+                                                             Value = c.Id.ToString()
+                                                         }));
+}
+
+@Html.Telerik().DropDownList().Name("NewChannelId").BindTo(channelList)

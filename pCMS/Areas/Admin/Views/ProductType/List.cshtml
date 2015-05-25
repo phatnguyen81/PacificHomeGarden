@@ -1,0 +1,40 @@
+﻿@model pCMS.Admin.Models.ProductTypeListModel
+
+@{
+    ViewBag.Title = T("Admin.Catalog.ProductType.ProductTypeList");
+    
+}
+@using (Html.BeginForm())
+{
+     <div class="section-header">
+         <div class="title">
+             <img src="@Url.Content("~/Content/admin/images/ico-catalog.png")" alt="" />
+             @ViewBag.Title
+         </div>
+         <div class="options">
+             <a href="@Url.Action("Create")" class="t-button">@T("Admin.Common.AddNew")</a>
+         </div>
+     </div>
+     <table class="adminContent">
+         <tr>
+             <td>
+                @(Html.Telerik().Grid(Model.ProductTypes.Data)
+                        .Name("ProductTypeList")
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("ProductTypes", "ProductType"))
+                        .Columns(columns =>
+                                     {
+                                         columns.Bound(o => o.Title);
+                                         columns.Template(@<text>
+                                            @Html.ActionLink(T("Admin.Common.Edit"), "Edit", new { id = item.Id })
+                                        </text>).Title("").Width(70).HtmlAttributes(new { @style = "text-align: center;" });
+                                     })
+                        .Sortable()
+                        .Selectable()
+                        .EnableCustomBinding(true)
+                        .Pageable(page => page.PageSize(20).Total(Model.ProductTypes.Total))
+                                .HtmlAttributes(new { @style = "margin-bottom: 20px;" })
+                )
+             </td>
+         </tr>
+     </table>
+}

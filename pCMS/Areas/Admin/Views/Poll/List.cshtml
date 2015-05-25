@@ -1,0 +1,44 @@
+﻿@using pCMS.Framework
+@model pCMS.Admin.Models.PollListModel
+
+@{
+    ViewBag.Title = T("Admin.Content.Poll.PollList");
+    
+}
+@using (Html.BeginForm())
+{
+     <div class="section-header">
+         <div class="title">
+             <img src="@Url.Content("~/Content/admin/images/ico-content.png")" alt="" />
+             @ViewBag.Title
+         </div>
+         <div class="options">
+             <a href="@Url.Action("Create")" class="t-button">@T("Admin.Common.AddNew")</a>
+         </div>
+     </div>
+     <table class="adminContent">
+         <tr>
+             <td>
+                @(Html.Telerik().Grid(Model.Polls.Data)
+                        .Name("PollList")
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("Polls", "Poll"))
+                        .Columns(columns =>
+                                     {
+                                         columns.Bound(o => o.Title);
+                                         columns.Bound(o => o.IsPublished).Width(80).Centered();
+                                         columns.Bound(o => o.NumberOfAnswer).Width(100).Centered();
+                                         columns.Bound(o => o.StartDate).Width(100).Format("{0:dd/MM/yyyy}").Centered();
+                                         columns.Bound(o => o.EndDate).Width(100).Format("{0:dd/MM/yyyy}").Centered();
+                                         columns.Template(@<text>
+                                            @Html.ActionLink(T("Admin.Common.Edit"), "Edit", new { id = item.Id })
+                                        </text>).Title("").Width(70).HtmlAttributes(new { @style = "text-align: center;" });
+                                     })
+                        .Selectable()
+                        .EnableCustomBinding(true)
+                        .Pageable(page => page.PageSize(20).Total(Model.Polls.Total))
+                                .HtmlAttributes(new { @style = "margin-bottom: 20px;" })
+                )
+             </td>
+         </tr>
+     </table>
+}

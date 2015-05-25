@@ -1,0 +1,28 @@
+﻿@model pCMS.Models.PageModel
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.MetaDescription = Model.MetaDescription;
+    ViewBag.MetaKeywords = Model.MetaKeywords; 
+    
+}
+<div id="DivCompany" style="width: 681px; height: 536px; margin: 7px;">
+    <div class="DivPageContent" style="position: relative; background: url(@Url.Content("~/Images/bg_company.gif"));
+        height: 536px;">
+        <div align="justify" class="ContentInfo" style="position: absolute; top: 10px; left: 10px;
+            width: 450px; height: auto; min-height: 250px; background: url(@Url.Content("~/Images/bg_transparent.png"));">
+            @*<span style="font-family: Corbel; font-size: 19px; font-weight: nonal;">Pacific Home
+                and Garden Company</span><p>
+                    We are a pottery importing and wholesaling company based in Hayward, California
+                    and Decatur, Georgia USA. We have been designing, developing, and manufacturing
+                    our own line of pottery since 2002. With great care for workers, we reshaped, helped
+                    and partnered with our factories in China and Vietnam to achieve our high standard
+                    of quality and exquisite designs. Our reputation for exceptionally beautiful products
+                    and reliable, professional service has won buyers from all over the world.
+                    <br />
+                    <br />
+            In addition to pottery, we offer contemporary stone fountains, hand-carved Japanese
+            stone lanterns, bamboo, and garden accessories.*@
+            @Html.Raw(Model.Body)
+        </div>
+    </div>
+</div>

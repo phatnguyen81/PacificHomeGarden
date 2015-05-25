@@ -1,0 +1,411 @@
+﻿@model pCMS.Admin.Models.AccountCreateOrUpdateModel
+@Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.ProviderUserKey)
+@(Html.Telerik()
+.TabStrip()
+.Name("Customer-Tab")
+.Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Account.User.Tabs.Info")).Content(TabInfo().ToHtmlString());
+    //var tabBusinessInfo = x.Add().Text(T("Admin.Account.User.Tabs.BusinessInfo")).Content(BusinessInfo().ToHtmlString());
+    var tabRoles = x.Add().Text(T("Admin.Account.User.Tabs.Roles")).Content(TabRoles().ToHtmlString());
+    //var tabPermissions = x.Add().Text("Phân quyền").Content(TabPermissions().ToHtmlString());
+    var selectedTab = (string)ViewData["selectedTab"];
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+}))
+
+@helper TabInfo()
+{
+    <table class="adminContent">
+        @if (Model.ProviderUserKey == Guid.Empty)
+        {
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.UserName):
+                </td>
+                <td class="adminData">
+                    @Html.TextBoxFor(model => model.UserName)
+                    @Html.ValidationMessageFor(model => model.UserName)
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.UserName):
+                </td>
+                <td class="adminData">
+                    @Html.HiddenFor(model => model.UserName)
+                    @Model.UserName
+                </td>
+            </tr>
+        }
+        
+
+        @if (Model.ProviderUserKey == Guid.Empty)
+        {
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.Password):
+                </td>
+                <td class="adminData">
+                    @Html.PasswordFor(model => model.Password)
+                    @Html.ValidationMessageFor(model => model.Password)
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.NewPassword):
+                </td>
+                <td class="adminData">
+                    @Html.PasswordFor(model => model.NewPassword)
+                    @Html.ValidationMessageFor(model => model.NewPassword)
+                </td>
+            </tr>
+        }
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.FullName):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.FullName)
+                @Html.ValidationMessageFor(model => model.FullName)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Email):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Resale)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Resale, new { @style = "width:300px; border:1px #999999 solid;" })
+                @Html.ValidationMessageFor(model => model.Resale)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.BusinessName)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.BusinessName, new { @style = "width:300px; border:1px #999999 solid;" })
+                @Html.ValidationMessageFor(model => model.BusinessName)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Title)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Title, new { @style = "width:300px; border:1px #999999 solid;" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Address)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Address, new { @style = "width:300px; border:1px #999999 solid;" })
+                @Html.ValidationMessageFor(model => model.Address)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.PhoneNumber)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(m => m.PhoneNumber) 
+                @Html.ValidationMessageFor(m => m.PhoneNumber)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.BusinessDescription)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.BusinessDescription, new { @style = "width:300px; border:1px #999999 solid;" })
+                @Html.ValidationMessageFor(model => model.BusinessDescription)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.TaxpaperId)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.TaxpaperId, new { @style = "width:300px; border:1px #999999 solid;" })
+                @Html.ValidationMessageFor(model => model.TaxpaperId)
+            </td>
+        </tr>
+
+
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.TimeZoneId):
+            </td>
+            <td class="adminData">
+                @(Html.Telerik().DropDownListFor(model => model.TimeZoneId)
+                                   .BindTo(Model.AllTimeZones).Value(Model.TimeZoneId == string.Empty ? TimeZone.CurrentTimeZone.StandardName : Model.TimeZoneId)
+                                   .DropDownHtmlAttributes(new {@style="width:400px;"})
+                                   .HtmlAttributes(new { @style = "width:400px;" })
+                      )
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.ActivationType):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.ActivationType, Model.ActivationTypes, new { @style = "width : 200px;" })
+                @Html.ValidationMessageFor(model => model.ActivationType)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.CreationDate):
+            </td>
+            <td class="adminData">
+                @Html.DisplayTextFor(m => m.CreationDate)
+            </td>
+        </tr>
+    </table>
+}
+@*@helper BusinessInfo()
+{
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.CompanyName)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(m => m.CompanyName)
+                @Html.ValidationMessageFor(m => m.CompanyName)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.DBA) (if any)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(m => m.DBA) 
+                @Html.ValidationMessageFor(m => m.DBA)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.ApplicantFirstName)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(m => m.ApplicantFirstName) 
+                @Html.ValidationMessageFor(m => m.ApplicantFirstName)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.ApplicantLastName)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(m => m.ApplicantLastName) 
+                @Html.ValidationMessageFor(m => m.ApplicantLastName)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.CompanyAddress1)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(m => m.CompanyAddress1) 
+                @Html.ValidationMessageFor(m => m.CompanyAddress1)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.CompanyAddress2)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(m => m.CompanyAddress2) 
+                @Html.ValidationMessageFor(m => m.CompanyAddress2)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.CompanyCity)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(m => m.CompanyCity) 
+                @Html.ValidationMessageFor(m => m.CompanyCity)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.StateProvince)
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.StateProvince, Model.StateProvinces)
+                @Html.ValidationMessageFor(m => m.StateProvince)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                Country
+            </td>
+            <td class="adminData">
+                <strong>United States</strong>
+                <br/>
+                Note: If outside the US please call +1 (440)238-9150 for assistance. 
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.ZipCode)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(m => m.ZipCode) 
+                @Html.ValidationMessageFor(m => m.ZipCode)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.Email)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(m => m.Email) 
+                @Html.ValidationMessageFor(m => m.Email)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.PhoneNumber)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(m => m.PhoneNumber) 
+                @Html.ValidationMessageFor(m => m.PhoneNumber)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.FaxNumber)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(m => m.FaxNumber) 
+                @Html.ValidationMessageFor(m => m.FaxNumber)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.AdditionalEmail)<br/>
+                (to receive copies of order confirmations)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(m => m.AdditionalEmail) 
+                @Html.ValidationMessageFor(m => m.AdditionalEmail)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.FederalID)
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(m => m.FederalID) 
+                @Html.ValidationMessageFor(m => m.FederalID)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.CompanyType)
+            </td>
+            <td class="adminData">
+                @foreach (var item in Model.CompanyTypes)
+                {
+                    <text>
+                        @Html.RadioButtonFor(m => m.CompanyType, item.Value, new { id = "CompanyType[" + item.Value + "]" })<label for="CompanyType[@item.Value]">@item.Text</label>
+                        <br/>
+                    </text>
+                }
+                @Html.ValidationMessageFor(m => m.FederalID)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.BusinessType)
+            </td>
+            <td class="adminData">
+                @foreach (var item in Model.BusinessTypes)
+                {
+                    <text>
+                        
+                        <input type="checkbox" name="BusinessType" value="@item.Value" id="BusinessType-@item.Value" @(Model.BusinessType.Contains(int.Parse(item.Value))? "checked=\"checked\"" : string.Empty)/>
+                        <label for="BusinessType-@item.Value">@item.Text</label>
+                        <br/>
+                    </text>
+                }
+                @Html.ValidationMessageFor(m => m.FederalID)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(m => m.PurcharseType)
+            </td>
+            <td class="adminData">
+                @foreach (var item in Model.PurcharseTypes)
+                {
+                    <text>
+                        @Html.RadioButtonFor(m => m.PurcharseType, item.Value, new { id = "PurcharseType[" + item.Value + "]" })<label for="PurcharseType[@item.Value]">@item.Text</label>
+                        <br/>
+                    </text>
+                }
+                @Html.ValidationMessageFor(m => m.FederalID)
+            </td>
+        </tr>
+    </table>
+}*@
+@helper TabRoles()
+{
+    @(Html.Telerik().Grid(Model.AllRoles)
+    .Name("AllRoles")
+            .Columns(columns =>
+            {
+                columns.Template(@<text><input  type="checkbox" name="rowitem" value="@item" id="item-@item" @(Model.SelectedRoles.Contains(item)?"checked":string.Empty)/></text>)
+                    .Title("")
+                    .HtmlAttributes(new { @style = "text-align: center;" })
+                    .Width(50);
+                columns.Template(@<text><label for="item-@item">@item</label></text>).Title(T("Admin.Roles.Fields.RoleName"));
+            })
+    .Footer(false)
+    )
+}
+@helper TabPermissions()
+{
+    @(Html.Telerik().PanelBar()
+        .Name("PermissionPanelBar")
+        .Items(parent => {
+            parent.Add()
+                .Text("N")
+                .Content(@<text> 
+                    aaaaaaaaaaaaaaaaaa
+                    </text>)
+                .Expanded(true);
+              
+        })
+    )
+}

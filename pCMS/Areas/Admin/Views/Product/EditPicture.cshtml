@@ -1,0 +1,103 @@
+﻿@using pCMS.Framework
+@model pCMS.Admin.Models.ProductItemModel.ProductPictureModel
+
+@{
+    ViewBag.Title = T("Admin.Catalog.Product.ProductPictureEdit");
+}
+
+@using (Html.BeginForm())
+{
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Content/admin/images/ico-content.png")" alt="" />
+            @ViewBag.Title @Html.ActionLink("(" + T("Admin.Configuration.Languages.BackToList") + ")", "Edit", new { id = Model.ProductId, selectedTab = "picture" })
+        </div>
+        <div class="options">
+            <button type="submit" name="save" value="save" class="t-button">@T("Admin.Common.Save")</button>
+            <button type="submit" name="save" value="save-continue" class="t-button">@T("Admin.Common.SaveContinue")</button>
+        </div>
+    </div>
+    <text>
+    @Html.HiddenFor(model => model.ProductId)
+    @Html.HiddenFor(model => model.PictureId)
+    @(Html.Telerik()
+    .TabStrip()
+    .Name("ProductPicture-Tab")
+    .Items(x =>
+    {
+        var tabInfo = x.Add().Text(T("Admin.Catalog.Product.Picture.Tabs.Info")).Content(TabInfo().ToHtmlString());
+        var selectedTab = (string)ViewData["selectedTab"];
+        switch (selectedTab)
+        {
+            case "info":
+                tabInfo.Selected(true);
+                break;
+            default:
+                tabInfo.Selected(true);
+                break;
+        }
+    }))
+
+    @helper TabInfo()
+        {
+        <table class="adminContent">
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.Title):
+                </td>
+                <td class="adminData">
+                    @Html.TextBoxFor(model => model.Title, new { @style = "width : 250px" })
+                    @Html.ValidationMessageFor(model => model.Title)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.Description):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.Description)
+                    @Html.ValidationMessageFor(model => model.Description)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.Price):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.Price)
+                    @Html.ValidationMessageFor(model => model.Price)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.IsAvatar):
+                </td>
+                <td class="adminData">
+                    @Html.CheckBoxFor(model => model.IsAvatar)
+                    @Html.ValidationMessageFor(model => model.IsAvatar)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.IsDefault):
+                </td>
+                <td class="adminData">
+                    @Html.CheckBoxFor(model => model.IsDefault)
+                    @Html.ValidationMessageFor(model => model.IsDefault)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.DisplayOrderPicture):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.DisplayOrderPicture)
+                    @Html.ValidationMessageFor(model => model.DisplayOrderPicture)
+                </td>
+            </tr>
+          
+        </table>
+    }
+    </text>
+}
+

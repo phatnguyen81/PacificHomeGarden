@@ -1,0 +1,91 @@
+﻿@using pCMS.Framework
+@model pCMS.Admin.Models.ArticleListModel
+
+@{
+    ViewBag.Title = T("Admin.Content.Article.ArticleList");
+    
+}
+
+@using (Html.BeginForm("List", "Article", FormMethod.Get))
+{
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Content/admin/images/ico-content.png")" alt="" />
+            @ViewBag.Title
+        </div>
+        <div class="options">
+            <a href="@Url.Action("Create")" class="t-button">@T("Admin.Common.AddNew")</a>
+        </div>
+    </div>
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.Keywords)
+                </td>
+                <td class="adminData">
+                    @Html.TextBoxFor(model => model.Keywords)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.Published)
+                </td>
+                <td class="adminData">
+                    @Html.Telerik().DropDownListFor(model => model.Published).BindTo(Model.PublishedOptions).HtmlAttributes(new { @style = "width : 100px;" })
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.Featured)
+                </td>
+                <td class="adminData">
+                    @Html.Telerik().DropDownListFor(model => model.Featured).BindTo(Model.FeaturedOptions).HtmlAttributes(new { @style = "width : 100px;" })
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.UserName)
+                </td>
+                <td class="adminData">
+                    @Html.TextBoxFor(model => model.UserName)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit" id="search-articles" value="search-articles" class="t-button">
+                        Search</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+     <table class="adminContent">
+         <tr>
+             <td>
+                @(Html.Telerik().Grid(Model.Articles.Data)
+                        .Name("ArticleList")
+                        .DataKeys(key => key.Add(q => q.Id))
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("Articles", "Article"))
+                        .Columns(columns =>
+                        {
+                            columns.Bound(o => o.Title);
+                            columns.Bound(o => o.Alias);
+                            columns.Bound(o => o.CreatedDate).Width(150);
+                            columns.Bound(o => o.CreatedUser).Width(100);
+                            columns.Bound(o => o.IsPublished).Width(80).Centered();
+                            columns.Bound(o => o.IsFeature).Width(80).Centered();
+                            columns.Template(@<text>
+                                            @Html.ActionLink(T("Admin.Common.Edit"), "Edit", new { id = item.Id })
+                                        </text>).Title("").Width(70).HtmlAttributes(new { @style = "text-align: center;" });
+                        })
+                        .Sortable()
+                        .Selectable()
+                        .EnableCustomBinding(true)
+                        .Pageable(page => page.PageSize(20).Total(Model.Articles.Total))
+                                .HtmlAttributes(new { @style = "margin-bottom: 20px;" })
+                )
+             </td>
+         </tr>
+     </table>
+}
+

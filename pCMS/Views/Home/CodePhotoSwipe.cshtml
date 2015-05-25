@@ -1,0 +1,63 @@
+﻿@model pCMS.Models.CatalogSlideShow
+@{
+    ViewBag.Title = "Slide Show";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>@Model.Title</title>
+	<meta name="author" content="Ste Brennan - Code Computerlove - http://www.codecomputerlove.com/" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<link href="@Url.Content("~/Scripts/code.photoswipe/styles.css")" type="text/css" rel="stylesheet" />
+	
+	<link href="@Url.Content("~/Scripts/code.photoswipe/photoswipe.css")" type="text/css" rel="stylesheet" />
+	
+	<script type="text/javascript" src="@Url.Content("~/Scripts/code.photoswipe/lib/klass.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/code.photoswipe/code.photoswipe-3.0.4.min.js")"></script>
+	
+	
+<script type="text/javascript">
+
+    (function (window, PhotoSwipe) {
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var 
+					options = {
+					    allowUserZoom :true,
+					    imageScaleMethod : 'fitNoUpscale',
+					    preventHide: true,
+					    getImageSource: function (obj) {
+					        return obj.url;
+					    },
+					    getImageCaption: function (obj) {
+					        return obj.caption;
+					    }
+					},
+					instance = PhotoSwipe.attach(
+						[
+						    @foreach (var picture in Model.Pictures)
+                            {
+                                <text>
+                                { url: '@picture.PictureUrl', caption: '@picture.Description' },
+                                </text>
+                            }
+						],
+						options
+					);
+
+            instance.show(0);
+
+        }, false);
+
+
+    } (window, window.Code.PhotoSwipe));
+		
+	</script>
+	
+</head>
+<body>
+</body>
+</html>

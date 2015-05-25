@@ -1,0 +1,44 @@
+﻿@using pCMS.Framework
+@model IEnumerable<pCMS.Admin.Models.LanguageListModel>
+
+@{
+    ViewBag.Title = @T("Admin.Configuration.Languages.ListLanguage");
+    
+}
+@using (Html.BeginForm())
+{
+     <div class="section-header">
+         <div class="title">
+             <img src="@Url.Content("~/Content/admin/images/ico-configuration.png")" alt="" />
+             @ViewBag.Title
+         </div>
+         <div class="options">
+             <a href="@Url.Action("Create")" class="t-button">@T("Admin.Common.AddNew")</a>
+         </div>
+     </div>
+     <table class="adminContent">
+         <tr>
+             <td>
+                @(Html.Telerik().Grid(Model)
+                        .Name("LanguageList")
+                        .DataKeys(key=>key.Add(q=>q.Id))
+                        .Columns(columns =>
+                                     {
+                                         columns.Bound(o => o.Code).Width(100);
+                                         columns.Bound(o => o.Title);
+                                         columns.Bound(o => o.IsDefault).Centered().Width(30);
+                                         columns.Bound(o => o.Code).Template(o => Html.ActionLink(T("Admin.Configuration.Languages.Fields.ViewResourceString"), "Resources", new { id = o.Code })).Title("").Width(150);
+                                         columns.Template(@<text>
+                                            @Html.ActionLink(T("Admin.Common.Edit"), "Edit", new { id = item.Id })
+                                        </text>).Title("").Width(70).Centered();
+                                     })
+                        .Sortable()
+                        .Selectable()
+                        .Pageable(page => page.PageSize(20))
+                                .HtmlAttributes(new { @style = "margin-bottom: 20px;" })
+                      )
+
+             </td>
+         </tr>
+     </table>
+}

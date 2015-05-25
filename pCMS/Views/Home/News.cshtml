@@ -1,0 +1,42 @@
+﻿@using PagedList.Mvc
+@model pCMS.Models.NewsPagingModel
+@{
+    ViewBag.Title = "News";
+}
+<div id="DivCompany" style="width: 681px; height: 536px; margin: 7px;">
+    <div class="DivPageContent" style="position: relative; background: url(@Url.Content("~/Images/bg_news.gif"));
+        height: 536px;">
+        <div class="ContentInfo" style="position: absolute; top: 10px; left: 10px;
+                             width: 620px; height: 475px; min-height: 250px; background: url(@Url.Content("~/Images/bg_transparent.png"));">
+            <h2>Pacific Home and Garden News</h2>
+            <div class="newslist">
+                <ul>
+                    @foreach(var item in Model.SearchResults)
+                    {
+                        <li>
+                            <div style="height: 65px;">
+                                <div class="title">
+                                    @Html.ActionLink(item.Title, "NewsDetail",new {id = item.Alias})
+                                </div>
+                                @item.Quote
+                            </div>
+                            <div style="width:100%;text-align: right; font-size: 90%;font-style: italic;">@Html.ActionLink("Read more...", "NewsDetail",new {id = item.Alias})</div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div style="height:30px; position:absolute; bottom:10px; float: left;" >
+                @if (Model.SearchResults != null && Model.SearchResults.Count > 0)
+                {
+                    @Html.PagedListPager(Model.SearchResults,
+                                               page => Url.Action("News", new RouteValueDictionary()
+                                                                              {
+                                                                                  {"Page", page}
+                                                                              }),
+                                               PagedListRenderOptions.PageNumbersOnly)
+                }
+            </div>
+        </div>
+        
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿@using pCMS.Admin.Models
+@using pCMS.Framework
+@model CollectionListModel
+
+@{
+    ViewBag.Title = T("Admin.Catalog.Collection.ListCollection");
+}
+@using (Html.BeginForm("List", "Collection", FormMethod.Get))
+{
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Content/admin/images/ico-catalog.png")" alt="" />
+            @ViewBag.Title
+        </div>
+        <div class="options">
+            <a href="@Url.Action("Create")" class="t-button">@T("Admin.Common.AddNew")</a>
+        </div>
+    </div>
+    
+     <table class="adminContent">
+         <tr>
+             <td>
+                 @(Html.Telerik().Grid(Model.Collections.Data)
+                .Name("ProductList")
+                .DataKeys(key => key.Add(q => q.Id))
+.DataBinding(dataBinding => dataBinding.Ajax().Select("Collections", "Collection"))
+                .Columns(columns =>
+                            {
+                                columns.Bound(o => o.Title);
+                                columns.Bound(o => o.Alias);
+                             
+                                columns.Bound(o => o.Id)
+                                    .Template(o => Html.ActionLink(T("Admin.Common.Edit"),"Edit", new {o.Id}))
+                                    .ClientTemplate("<a href='" +
+                                                                        Url.Action("Edit") + "/<#=Id#>' class='t-button'>" + T("Admin.Common.Edit") + "</a>"
+                                    ).Title("").Width(70).HtmlAttributes(new { @style = "text-align: center;" });
+                            })
+                .Selectable()
+                .Pageable(settings => settings.Total(Model.Collections.Total).PageSize(20).Position(GridPagerPosition.Both))
+                .EnableCustomBinding(true)
+                .HtmlAttributes(new { @style = "margin-bottom: 20px;" }))
+             </td>
+         </tr>
+     </table>
+}
+

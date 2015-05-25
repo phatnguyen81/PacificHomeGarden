@@ -1,0 +1,18 @@
+@model decimal?
+@using Telerik.Web.Mvc.UI
+
+@if (Model == null)
+{
+    @(Html.Telerik().NumericTextBox<decimal>()
+        .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty))
+        .DecimalDigits(4)   //always display 4 digits
+    )
+}
+else
+{
+    @(Html.Telerik().NumericTextBox<decimal>()
+        .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty))
+        .DecimalDigits(4)   //always display 4 digits
+        .Value(Model.Value)
+    )
+}

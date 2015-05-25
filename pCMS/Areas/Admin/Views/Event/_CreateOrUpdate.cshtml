@@ -1,0 +1,125 @@
+﻿@model pCMS.Admin.Models.EventItemModel
+
+@Html.HiddenFor(model => model.Id)
+@(Html.Telerik()
+.TabStrip()
+.Name("Customer-Tab")
+.Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Content.Event.Tabs.Info")).Content(TabInfo().ToHtmlString());
+    var selectedTab = (string)ViewData["selectedTab"];
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+}))
+
+@helper TabInfo()
+{
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Title):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Title, new {@style="width:300px;"})
+                @Html.ValidationMessageFor(model => model.Title)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Description):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Location):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Location, new { @style = "width:300px;" })
+                @Html.ValidationMessageFor(model => model.Location)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.LocationLink):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.LocationLink, new { @style = "width:300px;" })
+                @Html.ValidationMessageFor(model => model.LocationLink)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.City):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.City, new { @style = "width:300px;" })
+                @Html.ValidationMessageFor(model => model.City)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Booth):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Booth, new { @style = "width:300px;" })
+                @Html.ValidationMessageFor(model => model.Booth)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.IsPublished):
+            </td>
+            <td class="adminData">
+                @Html.CheckBoxFor(model => model.IsPublished)
+                @Html.ValidationMessageFor(model => model.IsPublished)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.DateBegin):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.DateBegin)
+                @Html.ValidationMessageFor(model => model.DateBegin)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.DateEnd):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.DateEnd)
+                @Html.ValidationMessageFor(model => model.DateEnd)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.PublishedDate):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PublishedDate)
+                @Html.ValidationMessageFor(model => model.PublishedDate)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.ExpiredDate):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.ExpiredDate)
+                @Html.ValidationMessageFor(model => model.ExpiredDate)
+            </td>
+        </tr>
+    </table>
+}

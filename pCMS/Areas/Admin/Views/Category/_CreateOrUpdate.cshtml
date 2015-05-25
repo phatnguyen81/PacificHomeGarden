@@ -1,0 +1,246 @@
+﻿@using pCMS.Admin.Models
+
+@using pCMS.Framework
+@model pCMS.Admin.Models.CategoryItemModel
+
+@(Html.Telerik()
+.TabStrip()
+.Name("Category-Tab")
+.Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Catalog.Category.Tabs.Info")).Content(TabInfo().ToHtmlString());
+    var tabSEO = x.Add().Text(T("Admin.Catalog.Category.Tabs.SEO")).Content(TabSEO().ToHtmlString());
+    var tabPicture = x.Add().Text(T("Admin.Catalog.Category.Tabs.Pictures")).Content(TabPicture().ToHtmlString());
+    var selectedTab = (string)ViewData["selectedTab"];
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+        case "seo":
+            tabSEO.Selected(true);
+            break;
+        case "picture":
+            tabPicture.Selected(true);
+            break;
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+}))
+
+@helper TabInfo()
+{
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Title):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Title, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Alias):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Alias, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.Alias)
+                <i>(Tự phát sinh khi để trống)</i>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.PictureId):
+            </td>
+            <td class="adminData">
+                @if(Model.Id == Guid.Empty)
+                {
+                    <text>Lưu chuyên mục trước khi thêm hình</text>}
+                else
+                {
+                    <div>
+                        <img id="uploadImage" src="@Model.PictureUrl" alt="" />
+                    </div>
+                    <input type="button" id="deleteImage" value="Xóa hình" class="t-button" />
+                    @(Html.Telerik().Upload()
+                                                           .Name("attachments")
+                                                       .Async(async => async
+                                                                           .Save("UploadPicture", "Category", new { categoryId = Model.Id }
+                                                                           )).ShowFileList(false)
+                                                       .Multiple(false)
+
+                                                       .ClientEvents(events => events
+                                                                                   .OnSuccess("onSuccess")
+                                                       )
+                          )
+                    
+                }
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.CategoryId):
+            </td>
+            <td class="adminData">
+                @(Html.Telerik().DropDownListFor(model => model.CategoryId)
+                                   .BindTo(new SelectList(Model.Categories, "Value", "Text")))
+                @Html.ValidationMessageFor(model => model.CategoryId)
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.ProductTypeId):
+            </td>
+            <td class="adminData">
+                @(Html.Telerik().DropDownListFor(model => model.ProductTypeId)
+                .BindTo(new SelectList(Model.ProductTypes, "Value", "Text")))
+                @Html.ValidationMessageFor(model => model.ProductTypeId)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.DisplayOrder):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.DisplayOrder)
+                @Html.ValidationMessageFor(model => model.DisplayOrder)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.ShowInMenu):
+            </td>
+            <td class="adminData">
+                @Html.CheckBoxFor(model => model.ShowInMenu)
+                @Html.ValidationMessageFor(model => model.ShowInMenu)
+            </td>
+        </tr>
+    </table>
+}
+@helper TabSEO()
+    {
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.MetaKeywords):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.MetaKeywords)
+                @Html.ValidationMessageFor(model => model.MetaKeywords)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.MetaDescription):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.MetaDescription)
+                @Html.ValidationMessageFor(model => model.MetaDescription)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.MetaTitle):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.MetaTitle)
+                @Html.ValidationMessageFor(model => model.MetaTitle)
+            </td>
+        </tr>
+    </table>
+}
+@helper TabPicture()
+{
+    if (Model.Id != Guid.Empty)
+    {
+        <table class="adminContent">
+            <tr>
+                <td>
+                    @(Html.Telerik().Grid<CategoryItemModel.PictureListModel>()
+                                   .Name("pictures-grid")
+                                   .DataKeys(x =>
+                                                 {
+                                                     x.Add(y => y.CategoryId).RouteKey("CategoryId");
+                                                     x.Add(y => y.PictureId).RouteKey("PictureId");
+                                                 })
+                                   .Columns(columns =>
+                                                {
+                                                    columns.Bound(c => c.PictureId)
+                                                        .ClientTemplate("<img width='200' alt='<#= SeoFilename#>' src='<#= PictureUrl#>'/>")
+                                                        .Title("Picture").Width(120);
+                                                    columns.Bound(x => x.Title).Width(250);
+                                                    columns.Bound(x => x.Description);
+                                                    columns.Bound(x => x.DisplayOrderPicture).Centered().Width(100);
+                                                    columns.Bound(x => x.MineType).Width(100).Centered();
+                                                    columns.Command(commands =>
+                                                                        {
+                                                                            commands.Edit();
+                                                                            commands.Delete();
+                                                                        }).Width(180);
+
+                                                })
+                                        .Editable(x => x.Mode(GridEditMode.InLine))
+                                        .Selectable()
+                                        .Pageable(page => page.PageSize(20))
+                                        .Scrollable(scroll => scroll.Height(500))
+                                       .DataBinding(dataBinding => dataBinding.Ajax()
+                                            .Select("CategoryPictures","Category", new { categoryId = Model.Id })
+                                            .Delete("CategoryPictureDelete", "Category")
+                                            .Update("CategoryPictureUpdate", "Category")
+                           )    
+                                    .EnableCustomBinding(true)    
+                  )
+        </td>
+            </tr>
+        </table>
+    @(Html.Telerik().Upload()
+        .Name("attachments1")
+        .Async(async => async
+                    .Save("UploadPictures", "Category", new { categoryId = Model.Id }
+                    )).ShowFileList(false)
+                    
+        .ClientEvents(events => events
+                    .OnSuccess("onSuccess1")
+            )        
+    )
+    
+    }
+    else
+    {
+            <text>Lưu chuyên mục trước khi thêm hình ảnh</text>
+    }
+}
+<script type="text/javascript">
+
+    function onSuccess(e) {
+        var img = $("#uploadImage");
+        
+        img.attr("src", e.response.pictureUrl);
+    }
+    function onSuccess1(e) {
+        var grid = $("#pictures-grid").data("tGrid");
+
+        grid.rebind({ categoryId: '@Model.Id' });
+    }
+    $("#deleteImage").click(function () {
+        $.ajax({
+            url: '@Url.Action("DeletePicture")',
+            type: "POST",
+            data: { categoryId: '@Model.Id' },
+            dataType: "json",
+            success: function (data) {
+                if (data.status == "OK") {
+                    var img = $("#uploadImage");
+                    img.attr("src", data.pictureUrl);
+                    alert("Xóa hình thành công");
+                } else {
+                    alert(data.errorMessage);
+                }
+            }
+        });
+    });
+</script>

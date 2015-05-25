@@ -1,0 +1,36 @@
+﻿@model pCMS.Models.PageModel
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.MetaDescription = Model.MetaDescription;
+    ViewBag.MetaKeywords = Model.MetaKeywords; 
+}
+<div id="DivCompany" style="width: 681px; height: 536px; margin: 7px;">
+    <div class="DivPageContent" style="position: relative; background: url(@Url.Content("~/Images/bg_ourproduct.gif"));
+        height: 536px;">
+        <div align="justify" class="ContentInfo" style="position: absolute; top: 10px; left: 10px;
+            width: 450px; background: url(@Url.Content("~/Images/bg_transparent.png"));">
+            <div style="margin: 0 0; height: 390px; overflow: auto; width: 460px; padding-right: 5px;">
+                @*<span style="font-family: Corbel; font-size: 20px; font-weight: nonal;">Designs & Productions</span><p>
+                    <b>Designs</b><br />
+                    Pacific Home and Garden creates new shapes and styles regularly to meet the constantly
+                    changing tastes of the marketplace. Trends and traditions in the landscape and design
+                    industries, plus feedback from our dealers, guide our decisions in creating a viable
+                    range of new products. Each year we introduce new colors, some of which are the
+                    culmination of years of development. Many of our unique vessels are part of display
+                    groupings that afford the retailer plenty of merchandising options. Our customers
+                    tell us the freshness of the collections and the range of colors allow them to reinvent
+                    their look as often as they want.<br />
+                    <br />
+                    <b>Production</b><br />
+                    Most of our production would best be described as “handmade.” The Origins Collection
+                    is created using a meticulous, ancient, hand-built process, then burned in a “dragon”
+                    or “tunnel” kiln. The resulting pieces exhibit this artistry and appeal to a high-end
+                    sensibility, as not two pieces are exactly alike.<br />
+                Our Le Beau and Chelsea collections are similarly created, and use a material that
+                becomes very hard after firing at high temperatures. Le Beau and Chelsea are noted
+                for their thick, strong walls, excellent durability and vibrant colors.*@
+                @Html.Raw(Model.Body)
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,138 @@
+﻿@model pCMS.Admin.Models.RoleCreateOrUpdateModel
+@{
+    ViewBag.Title = "Tạo nhóm mới";
+    
+}
+@using (Html.BeginForm())
+{
+    <div class="section-header">
+        <div class="title">
+        <img src="@Url.Content("~/Content/admin/images/ico-customers.png")" alt="" />
+             @ViewBag.Title @Html.ActionLink("(" + T("Admin.Configuration.Languages.BackToList") + ")", "List")
+        </div>
+        <div class="options">
+            <button type="submit" name="save" value="save" class="t-button">@T("Admin.Common.Save")</button>
+            <button type="submit" name="save" value="save-continue" class="t-button">@T("Admin.Common.SaveContinue")</button>
+            <span id="user-delete" class="t-button">@T("Admin.Common.Delete")</span>
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate", Model)
+}
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr valign="top">
+        <td>
+            @using (Html.BeginForm("RoleCreate", "Account"))
+            {
+                <!-- start id-form -->
+                <table border="0" cellpadding="0" cellspacing="0" id="id-form">
+                    <tr>
+                        <th valign="top">
+                            @Html.LabelFor(model => model.RoleName) :
+                        </th>
+                        <td>
+                            @Html.TextBoxFor(model => model.RoleName, new { @class = "inp-form" })
+                        </td>
+                        <td>
+                            &nbsp;@Html.ValidationMessageFor(model => model.RoleName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            &nbsp;
+                        </th>
+                        <td valign="top">
+                            <input type="submit" value="" class="form-submit" />
+                            <input type="reset" value="" class="form-reset" />
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+            }
+            <!-- end id-form  -->
+        </td>
+        <td>
+            <!--  start related-activities -->
+            <div id="related-activities">
+                <!--  start related-act-top -->
+                <div id="related-act-top">
+                    <img src="@Url.Content("~/Content/admin/images/forms/header_related_act.gif")" width="271" height="43" alt="" />
+                </div>
+                <!-- end related-act-top -->
+                <!--  start related-act-bottom -->
+                <div id="related-act-bottom">
+                    <!--  start related-act-inner -->
+                    <div id="related-act-inner">
+                        <div class="left">
+                            <a href="">
+                                <img src="@Url.Content("~/Content/admin/images/forms/icon_plus.gif")" width="21" height="21" alt="" /></a></div>
+                        <div class="right">
+                            <h5>
+                                Add another product</h5>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elitsed do eiusmod tempor.
+                            <ul class="greyarrow">
+                                <li><a href="">Click here to visit</a></li>
+                                <li><a href="">Click here to visit</a> </li>
+                            </ul>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="lines-dotted-short">
+                        </div>
+                        <div class="left">
+                            <a href="">
+                                <img src="@Url.Content("~/Content/admin/images/forms/icon_minus.gif")" width="21" height="21" alt="" /></a></div>
+                        <div class="right">
+                            <h5>
+                                Delete products</h5>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elitsed do eiusmod tempor.
+                            <ul class="greyarrow">
+                                <li><a href="">Click here to visit</a></li>
+                                <li><a href="">Click here to visit</a> </li>
+                            </ul>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="lines-dotted-short">
+                        </div>
+                        <div class="left">
+                            <a href="">
+                                <img src="@Url.Content("~/Content/admin/images/forms/icon_edit.gif")" width="21" height="21" alt="" /></a></div>
+                        <div class="right">
+                            <h5>
+                                Edit categories</h5>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elitsed do eiusmod tempor.
+                            <ul class="greyarrow">
+                                <li><a href="">Click here to visit</a></li>
+                                <li><a href="">Click here to visit</a> </li>
+                            </ul>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <!-- end related-act-inner -->
+                    <div class="clear">
+                    </div>
+                </div>
+                <!-- end related-act-bottom -->
+            </div>
+            <!-- end related-activities -->
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="@Url.Content("~/Content/admin/images/shared/blank.gif")" width="695" height="1" alt="blank" />
+        </td>
+        <td>
+        </td>
+    </tr>
+</table>
+<div class="clear">
+</div>
+@{ Html.Telerik().ScriptRegistrar().DefaultGroup(group => group.Combined(true).Compress(true)
+       .Add("~/Scripts/jquery.validate.min.js")
+       .Add("~/Scripts/jquery.validate.unobtrusive.min.js")
+).OnDocumentReady(
+    @<text>
+    </text>
+); }

@@ -1,0 +1,75 @@
+﻿@using pCMS.Framework
+@model pCMS.Admin.Models.CollectionModel
+@Html.HiddenFor(model => model.Id)           
+@(Html.Telerik()
+.TabStrip()
+.Name("Collection-Tab")
+.Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Content.Collection.Tabs.Info")).Content(TabInfo().ToHtmlString());
+   string selectedTab = ViewBag.SelectedTab;
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+  
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+}))
+
+@helper TabInfo()
+    {
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Title):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Title, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Alias):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Alias, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.Alias)
+                <i>(@T("Admin.Content.Collection.Messages.GenWhenEmpty"))</i>
+            </td>
+        </tr>
+     
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.ShortDescription):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.ShortDescription, new { style = "Width: 500px; Height: 150px;" })
+                @Html.ValidationMessageFor(model => model.ShortDescription)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.FullDescription):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.FullDescription, "RichEditor")
+                @Html.ValidationMessageFor(model => model.FullDescription)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.PictureId):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PictureId, "Picture")
+                @Html.ValidationMessageFor(model => model.PictureId)
+            </td>
+        </tr>
+    </table>
+}
+

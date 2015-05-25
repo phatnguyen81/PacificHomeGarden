@@ -1,0 +1,59 @@
+﻿@model pCMS.Admin.Models.LanguageItemModel
+
+
+@Html.HiddenFor(model => model.Id)
+@(Html.Telerik()
+.TabStrip()
+.Name("Language-Tab")
+.Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Configuration.Languages.Resources.Tabs.Info")).Content(TabInfo().ToHtmlString());
+    var selectedTab = (string)ViewData["selectedTab"];
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+}))
+
+@helper TabInfo()
+{
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Code):
+            </td>
+            <td class="adminData">
+                @(Html.Telerik().DropDownListFor(model => model.Code)
+                    .BindTo(Model.AllCultures)
+                                   .HtmlAttributes(new { @style = "width:300px;" })
+                                   .DropDownHtmlAttributes(new { @style = "width:300px;" })
+                                   .Value(Model.Code)
+                    )
+                @Html.ValidationMessageFor(model => model.Code)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Title):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Title, new {@style="width:300px;"})
+                @Html.ValidationMessageFor(model => model.Title)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.IsDefault):
+            </td>
+            <td class="adminData">
+                @Html.CheckBoxFor(model => model.IsDefault)
+                @Html.ValidationMessageFor(model => model.IsDefault)
+            </td>
+        </tr>
+    </table>
+}

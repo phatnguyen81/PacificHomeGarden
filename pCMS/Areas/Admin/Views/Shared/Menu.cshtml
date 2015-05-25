@@ -1,0 +1,35 @@
+﻿@using Telerik.Web.Mvc.UI;
+@{
+    if (!Telerik.Web.Mvc.SiteMapManager.SiteMaps.ContainsKey("admin"))
+    {
+        Telerik.Web.Mvc.SiteMapManager.SiteMaps.Register<Telerik.Web.Mvc.XmlSiteMap>("admin", sitemap =>
+            sitemap.LoadFrom("~/Areas/Admin/adminsitemap.xml"));
+    }
+}
+@{
+    Html.Telerik().Menu().Name("Admin")
+    .BindTo("admin", (item, siteMapNode) =>
+    {
+        var imageUrl = ((Telerik.Web.Mvc.SiteMapNode)siteMapNode).Attributes["ImageUrl"];
+        if (imageUrl != null && !string.IsNullOrEmpty(imageUrl.ToString()))
+        {
+            item.ImageUrl = imageUrl.ToString();
+        }
+        
+        if (ViewBag.SelectedMenuItem == item.Text)
+        {
+            item.Selected = true;
+        }
+
+        var resourceName = siteMapNode.Attributes["pCmsResource"];
+        if (resourceName != null && !string.IsNullOrEmpty(resourceName.ToString()))
+        {
+            item.Text = T(resourceName.ToString());
+        }
+
+    
+    })
+    .OpenOnClick(false)
+
+    .Render();
+}

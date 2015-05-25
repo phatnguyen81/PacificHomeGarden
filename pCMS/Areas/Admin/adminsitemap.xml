@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap>
+    <siteMapNode title="Home" controller="Home" action="Overview">
+        <siteMapNode title="Dashboard" pCmsResource="Admin.Dashboard" controller="Home" action="Index" ImageUrl="~/Content/admin/images/ico-dashboard.png" />
+        <siteMapNode title="Account" pCmsResource="Admin.Account" PermissionNames="ManageCatalog" ImageUrl="~/Content/admin/images/ico-customers.png" >
+          <siteMapNode title="Roles" pCmsResource="Admin.Role" controller="Role" action="List"/>
+          <siteMapNode title="Users" pCmsResource="Admin.User" controller="Account" action="List"/>
+        </siteMapNode>
+           
+
+        <siteMapNode title="Content" pCmsResource="Admin.Content" ImageUrl="~/Content/admin/images/ico-content.png">
+          <siteMapNode title="Poll" pCmsResource="Admin.Poll" controller="Poll" action="List" />
+          <siteMapNode title="News" pCmsResource="Admin.News">
+            <siteMapNode title="Channel" pCmsResource="Admin.Channel" controller="Channel" action="List" />
+            <siteMapNode title="Article" pCmsResource="Admin.Article" controller="Article" action="List"/>
+          </siteMapNode>
+          <siteMapNode title="Event" pCmsResource="Admin.Event" controller="Event" action="List" />
+          <siteMapNode title="Album" pCmsResource="Admin.Album" controller="Album" action="List" />
+          <siteMapNode title="Page" pCmsResource="Admin.Page" controller="Page" action="List" />
+          <siteMapNode title="Collections" pCmsResource="Admin.Collections" controller="Collection" action="List" />
+        </siteMapNode>
+      <siteMapNode title="Catalog" pCmsResource="Admin.Catalog" ImageUrl="~/Content/admin/images/ico-catalog.png">
+        <siteMapNode title="Manufacturer" pCmsResource="Admin.Manufacturer" controller="Manufacturer" action="List" />
+        <siteMapNode title="Product Type" pCmsResource="Admin.ProductType" controller="ProductType" action="List" />
+        <siteMapNode title="Category" pCmsResource="Admin.Category">
+          <siteMapNode title="List" pCmsResource="Admin.Category.List" controller="Category" action="List" />
+          <siteMapNode title="Tree" pCmsResource="Admin.Category.Tree" controller="Category" action="Tree"/>
+        </siteMapNode>
+        <siteMapNode title="Product" pCmsResource="Admin.Product" controller="Product" action="List"/>
+      </siteMapNode>
+      <siteMapNode title="Sales" pCmsResource="Admin.Sales" ImageUrl="~/Content/admin/images/ico-sales.png">
+        <siteMapNode title="Orders" pCmsResource="Admin.Sale.Order" controller="Order" action="List" />
+      </siteMapNode>
+        <siteMapNode title="Configuration" pCmsResource="Admin.Configuration" PermissionNames="ManageCountries,ManageLanguages,ManageSettings,ManagePaymentMethods,ManageExternalAuthenticationMethods,ManageTaxSettings,ManageShippingSettings,ManageCurrencies,ManageMeasures,ManageActivityLog,ManageACL,ManageSMSProviders,ManageEmailAccounts,ManagePlugins" 
+					 ImageUrl="~/Content/admin/images/ico-configuration.png">
+          <!--<siteMapNode title="Settings" pCmsResource="Admin.Configuration.Settings" PermissionNames="ManageSettings" >
+            <siteMapNode title="General and common settings" pCmsResource="Admin.Configuration.Settings.GeneralCommon" controller="Setting" action="GeneralCommon"/>
+            <siteMapNode title="Catalog settings" pCmsResource="Admin.Configuration.Settings.Catalog" controller="Setting" action="Catalog"/>
+            <siteMapNode title="Customer and user settings" pCmsResource="Admin.Configuration.Settings.CustomerUser" controller="Setting" action="CustomerUser" />
+            <siteMapNode title="Shopping cart settings" pCmsResource="Admin.Configuration.Settings.ShoppingCart" controller="Setting" action="ShoppingCart"/>
+            <siteMapNode title="Order settings" pCmsResource="Admin.Configuration.Settings.Order" controller="Setting" action="Order"/>
+            <siteMapNode title="Media settings" pCmsResource="Admin.Configuration.Settings.Media" controller="Setting" action="Media" />
+            <siteMapNode title="Tax settings" pCmsResource="Admin.Configuration.Settings.Tax" controller="Setting" action="Tax"/>
+            <siteMapNode title="Shipping settings" pCmsResource="Admin.Configuration.Settings.Shipping" controller="Setting" action="Shipping"/>
+            <siteMapNode title="Reward points" pCmsResource="Admin.Configuration.Settings.RewardPoints" controller="Setting" action="RewardPoints"/>
+            <siteMapNode title="Blog settings" pCmsResource="Admin.Configuration.Settings.Blog" controller="Setting" action="Blog" />
+            <siteMapNode title="News settings" pCmsResource="Admin.Configuration.Settings.News" controller="Setting" action="News" />
+            <siteMapNode title="Forums settings" pCmsResource="Admin.Configuration.Settings.Forums" controller="Setting" action="Forum" />
+            <siteMapNode title="All settings (settings)" pCmsResource="Admin.Configuration.Settings.AllSettings" controller="Setting" action="AllSettings"/>
+          </siteMapNode>
+          <siteMapNode title="Countries" pCmsResource="Admin.Configuration.Countries" PermissionNames="ManageCountries" controller="Country" action="List"/>-->
+          <siteMapNode title="Languages" pCmsResource="Admin.Configuration.Languages" controller="Language" action="Index" />
+          <siteMapNode title="Settings" pCmsResource="Admin.Configuration.Settings" controller="Setting" action="Index" />
+          <!--<siteMapNode title="Currencies" pCmsResource="Admin.Configuration.Currencies" PermissionNames="ManageCurrencies" controller="Currency" action="List"/>
+          <siteMapNode title="Measures" pCmsResource="Admin.Configuration.Measures" PermissionNames="ManageMeasures">
+            <siteMapNode title="Weights" pCmsResource="Admin.Configuration.Measures.Weights" controller="Measure" action="Weights"/>
+            <siteMapNode title="Dimensions" pCmsResource="Admin.Configuration.Measures.Dimensions" controller="Measure" action="Dimensions"/>
+          </siteMapNode>
+          <siteMapNode title="EmailAccounts" pCmsResource="Admin.Configuration.EmailAccounts" PermissionNames="ManageEmailAccounts" controller="EmailAccount" action="List"/>
+          <siteMapNode title="Payment methods" pCmsResource="Admin.Configuration.Payment.Methods" PermissionNames="ManagePaymentMethods" controller="Payment" action="Methods"/>
+          <siteMapNode title="Tax" pCmsResource="Admin.Configuration.Tax" PermissionNames="ManageTaxSettings">
+            <siteMapNode title="Tax providers" pCmsResource="Admin.Configuration.Tax.Providers" controller="Tax" action="Providers"/>
+            <siteMapNode title="Tax categories" pCmsResource="Admin.Configuration.Tax.Categories" controller="Tax" action="Categories"/>
+          </siteMapNode>
+          <siteMapNode title="Shipping" pCmsResource="Admin.Configuration.Shipping" PermissionNames="ManageShippingSettings">
+            <siteMapNode title="Shipping methods" pCmsResource="Admin.Configuration.Shipping.Methods" controller="Shipping" action="Methods"/>
+            <siteMapNode title="Shipping method restrictions" pCmsResource="Admin.Configuration.Shipping.Restrictions" controller="Shipping" action="Restrictions"/>
+            <siteMapNode title="Shipping providers" pCmsResource="Admin.Configuration.Shipping.Providers" controller="Shipping" action="Providers"/>
+          </siteMapNode>
+          <siteMapNode title="Activity Log" pCmsResource="Admin.Configuration.ActivityLog" PermissionNames="ManageActivityLog">
+            <siteMapNode title="Activity Types" pCmsResource="Admin.Configuration.ActivityLog.ActivityLogType" controller="ActivityLog" action="ListTypes"/>
+            <siteMapNode title="Activity Log" pCmsResource="Admin.Configuration.ActivityLog.ActivityLog" controller="ActivityLog" action="ListLogs"/>
+          </siteMapNode>
+          <siteMapNode title="Access control list" pCmsResource="Admin.Configuration.ACL" PermissionNames="ManageACL" controller="Security" action="Permissions" />
+          <siteMapNode title="SMS providers" pCmsResource="Admin.Configuration.SMSProviders" PermissionNames="ManageSMSProviders" controller="SMS" action="Providers" />
+          <siteMapNode title="External authentication methods" pCmsResource="Admin.Configuration.ExternalAuthenticationMethods" PermissionNames="ManageExternalAuthenticationMethods" controller="ExternalAuthentication" action="Methods"/>
+          <siteMapNode title="Plugins" pCmsResource="Admin.Configuration.Plugins" PermissionNames="ManagePlugins" controller="Plugin" action="List"/>-->
+        </siteMapNode>
+        <!--<siteMapNode title="System" pCmsResource="Admin.System" ImageUrl="~/Content/admin/images/ico-system.png">
+            <siteMapNode title="Log" pCmsResource="Admin.System.Log" PermissionNames="ManageSystemLog" controller="Log" action="List" />
+            <siteMapNode title="QueuedEmails" pCmsResource="Admin.System.QueuedEmails" PermissionNames="ManageMessageQueue" controller="QueuedEmail" action="List" />
+            <siteMapNode title="Maintenance" pCmsResource="Admin.System.Maintenance" PermissionNames="ManageMaintenance" controller="Common" action="Maintenance" />
+            <siteMapNode title="Warnings" pCmsResource="Admin.System.Warnings" controller="Common" action="Warnings" />
+            <siteMapNode title="System information" pCmsResource="Admin.System.SystemInfo" controller="Common" action="SystemInfo" />
+        </siteMapNode>
+        <siteMapNode title="Help" pCmsResource="Admin.Help" ImageUrl="~/Content/admin/images/ico-help.png">
+          <siteMapNode title="Help topics" pCmsResource="Admin.Help.Topics" url="http://www.nopcommerce.com/documentation.aspx" />
+          <siteMapNode title="Community forums" pCmsResource="Admin.Help.Forums" url="http://www.nopcommerce.com/boards/" />
+        </siteMapNode>-->
+    </siteMapNode>
+</siteMap>
+

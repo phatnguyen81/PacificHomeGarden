@@ -1,0 +1,92 @@
+﻿@model pCMS.Models.PageModel
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.MetaDescription = Model.MetaDescription;
+    ViewBag.MetaKeywords = Model.MetaKeywords; 
+}
+<div id="DivCompany" style="width: 681px; height: 536px; margin: 7px;">
+    <div class="DivPageContent" style="height: 534px; border: 1px #efefef solid;">
+        <div align="justify" class="ContentInfo" style="height: 493px; overflow: auto;">
+            @*<span style="font-family: Corbel; font-size: 20px; font-weight: nonal;">Terms & Conditions</span><p>
+                <b>Pottery</b><br />
+                Every piece of our hand-made, hand-glazed pottery is unique. Variations or “imperfections”
+                may occur due to the fact that they are kiln-fired. (Some kilns are over three-hundred
+                years old!). We will be happy to help you learn more about the processes involved
+                in making our pottery.
+                <br />
+                <br />
+                <b>Granite</b><br />
+                Granite can vary in color and grain, and slight size differences are possible, depending
+                upon the individual artists. Such differences actually enhance the beauty of the
+                piece. Each piece in The Pacific Home and Garden granite collection is carved with
+                the original and detailed craftsmanship of its artist.<br />
+                <br />
+                The impressive weight of granite demands that lanterns be made a manageable size.
+                It is therefore recommended that in assembling a lantern, the pieces be joined by
+                an epoxy cement. This is most advisable if the piece is to be permanently secured
+                in an area where children are at play. Also, pieces carved with pedestal bases can
+                easily be made stable if set in concrete or gravel. We have pictured many antiques
+                in our catalogue, and please note that we ship items with their natural granite
+                finish. If you would like us to reproduce an “antique finish,” we will be happy
+                to accommodate your request for a ten-percent (10%) additional charge. There can
+                be no guarantee of an exact match with the picture in the catalogue… (example: there
+                will be no moss or lichen on the granite as is sometimes pictured).
+                <br />
+                <br />
+                <b>Bamboo</b><br />
+                In time --- depending upon the climatic or environmental conditions to which it
+                is exposed---bamboo will naturally crack. There can be no guarantee against such
+                cracking. Our bamboo pieces are made from <i>Arundinaria amablis and Phallostachys pubescens
+                    (Moso)</i> -- the best quality in the market.<br />
+                <br />
+                <b>Fountains</b><br />
+                We are pleased to offer fountain “kits” to our customers who wish to create their
+                own fountains. Please inquire if you want to know if a “kit’ is provided with your
+                purchase. All fountains are intended for outdoor use, and since they are made of
+                natural materials, water seepage may occur.<br />
+                <br />
+                <b>Custom Orders</b><br />
+                If you are ordering a custom-designed item, it is necessary that we have a sketch
+                or photograph indicating dimensions and color. Large pieces for public gardens and
+                commercial sites can be ordered. (Such orders apply only to bamboo and granite products.)
+                A fifty-percent (50%) deposit is required up front on all special orders. Three
+                months lead-time is also required.<br />
+                <br />
+                <b>Terms And Fees</b><br />
+                <span style="line-height: 26px;">A prepayment is required for first time orders. We
+                    accept VISA, Master Card and American Express.<br />
+                    Credit terms, such as Net 30 Days, can be established upon credit approval.<br />
+                    Late payments incur a 2% monthly service charge for past-due accounts.<br />
+                    There is a $25.00 charge for returned checks.<br />
+                    Prices and designs are subject to change without notice. All prices are FOB Oakland.</span><br />
+                <br />
+                <b>Minimum Orders</b><br />
+                <span style="line-height: 26px;">UPS-able products: $200.00, subject to packaging charges.<br />
+                    Trucking/Common Carrier: $500.00.<br />
+                    Orders will be shipped out ASAP in the order which we received. Please allow 1-2
+                    weeks for delivery.</span><br />
+                <br />
+                <b>Freight Charges</b><br />
+                There are no packaging charges for trucking. A charge may apply for special shipping
+                needs. “Drop-ship” is available for a nominal fee upon request. Discount rates on
+                freight from 55% to 85% will be passed on to customers prepaying shipments.<br />
+                <br />
+                <b>Canceling Orders</b><br />
+                A written notice is required in advance for canceling any orders. Cancellation may
+                not be accepted once we have shipped the merchandise. A 15% restocking fee plus
+                related freight charges will apply.<br />
+                <br />
+                <b>Damages</b><br />
+                All items must be inspected upon arrival when delivered. Please note damages on
+                the driver’s delivery receipt or bill of lading for credit consideration. Full credit
+                will not be given to those who do not make notations on the driver’s delivery receipt.
+                A damage report must be filed within 48 hours.<br />
+                <br />
+                <b>Returns</b><br />
+                Merchandise may not be returned or refused without prior authorization and may be
+                subject to a 15% restocking fee and any freight charges incurred. Returns will not
+                be accepted after 10 days of receipt of merchandise.<br />*@
+                @Html.Raw(Model.Body)
+        </div>
+    </div>
+</div>

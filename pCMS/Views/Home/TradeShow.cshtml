@@ -1,0 +1,96 @@
+﻿@using PagedList.Mvc
+@model pCMS.Models.EventPagingModel
+@{
+    ViewBag.Title = "TradeShow";
+}
+<div style="height:100%; position:relative;">
+    <div class="DivPageContent" style="height: 534px; border: 1px #efefef solid;">
+        <div align="justify" class="ContentInfo" style="height: 493px; overflow: auto;">
+            <span style="font-family: Corbel; font-size: 20px; font-weight: nonal;">Trade Show Schedule
+                </span>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: 1px #cdcdcd solid;
+                                                                                                                                                                                                                                                     margin: 15px 0;">
+                <tr style="font-weight: bold;">
+                    <td height="32" align="left" valign="middle" class="border_style1" style="background: #efefef;
+                                                                                                                                                                                                                                                                                                    width: 120px;">
+                        Event
+                    </td>
+                    <td height="32" align="center" valign="middle" class="border_style1" style="background: #efefef;
+                                                                                                                                                                                                                                                                                                                        width: 75px;">
+                        Date: begin
+                    </td>
+                    <td height="32" align="center" valign="middle" class="border_style1" style="background: #efefef;
+                                                                                                      width: 75px;">
+                        Date: end
+                    </td>
+                    <td height="32" valign="middle" class="border_style1" style="background: #efefef;">
+                        Show Location
+                    </td>
+                    <td height="32" align="left" valign="middle" class="border_style1" style="background: #efefef;">
+                        City, State
+                    </td>
+                    <td height="32" align="left" valign="middle" class="border_style2" style="background: #efefef;">
+                        Booth #
+                    </td>
+                </tr>
+                @foreach (var e in Model.SearchResults)
+                {
+                    <tr>
+                        <td align="left" class="border_style1">
+                            <strong>@e.Title</strong>
+                        </td>
+                        <td align="center" class="border_style1">
+                            @e.DateBegin.ToString("MM/dd/yyyy")
+                        </td>
+                        <td align="center" class="border_style1">
+                            @e.DateEnd.ToString("MM/dd/yyyy")
+                        </td>
+                        <td align="left" class="border_style1">
+                            @if(string.IsNullOrWhiteSpace(e.LocationLink))
+                            {
+                                @e.Location
+                            }
+                            else
+                            {
+                                <a href="@e.LocationLink" target="_blank" style="color:blue;">@e.Location</a>
+                            }
+                            
+                        </td>
+                        <td align="left" class="border_style1">
+                            @e.City
+                        </td>
+                        <td align="left" class="border_style2">
+                            @e.Booth
+                        </td>
+                    </tr>
+                }
+            
+            </table>
+            <div >
+            @Html.PagedListPager(Model.SearchResults,
+                        page => Url.Action("TradeShow", new RouteValueDictionary() {
+                           { "Page", page }
+                        }),
+                        PagedListRenderOptions.PageNumbersOnly)
+            </div>    
+            <div style="height:30px; position:absolute; bottom:100px; float: left;" >
+                <div style="width: 300px; float: left; margin-top: 15px;">
+                    <a href="http://www.pacifichomegarden.com/" style="color: #0000CC; font-style: italic;">
+                        www.pacifichomegarden.com</a><br />
+                    2195 Alpine Way<br />
+                    Hayward, CA 94545<br />
+                    Tel: 510-259-0199<br />
+                    Tel: 510-259-1183
+                </div>
+                <div style="width: 300px; float: left; margin-top: 15px;">
+                    Email: <a href="mailto:info@pacifichomeandgarden.net" style="color: #0000CC; font-style: italic;">
+                               info@pacifichomeandgarden.com</a><br />
+                    5252 Snapfinger Woods Dr.<br />
+                    Decatur, GA 30035<br />
+                    Tel: 678-518-8471<br />
+                    Tel: 678-518-8493
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

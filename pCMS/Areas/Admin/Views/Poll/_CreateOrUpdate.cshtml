@@ -1,0 +1,119 @@
+﻿@using pCMS.Admin.Models
+
+@using pCMS.Framework
+@model pCMS.Admin.Models.PollItemModel
+@using Telerik.Web.Mvc.UI;
+@Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.Id)
+@(Html.Telerik()
+.TabStrip()
+.Name("Poll-Tab")
+.Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Content.Poll.Tabs.Info")).Content(TabInfo().ToHtmlString());
+    var tabAnswer = x.Add().Text(T("Admin.Content.Poll.Tabs.Answers")).Content(TabAnswers().ToHtmlString());
+    var selectedTab = (string)ViewBag.SelectedTab;
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+        case "answer":
+            tabAnswer.Selected(true);
+            break;
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+}))
+
+@helper TabInfo()
+    {
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Title):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Title, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.IsPublished):
+            </td>
+            <td class="adminData">
+                @Html.CheckBoxFor(model => model.IsPublished)
+                @Html.ValidationMessageFor(model => model.IsPublished)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.StartDate):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.StartDate)
+                @Html.ValidationMessageFor(model => model.StartDate)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.EndDate):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.EndDate)
+                @Html.ValidationMessageFor(model => model.EndDate)
+            </td>
+        </tr>
+    </table>
+}
+
+@helper TabAnswers()
+    {
+        if (Model.Id != Guid.Empty)
+        {
+    <table class="adminContent">
+        <tr>
+            <td>
+                @(Html.Telerik().Grid<PollAnswerModel>()
+                    .Name("answers-grid")
+                    .DataKeys(x => x.Add(y => y.Id).RouteKey("Id"))
+                    .Columns(columns =>
+                    {
+                        columns.Bound(x => x.AnswerTitle);
+                        columns.Bound(x => x.NumberOfVote)
+                            .ReadOnly()
+                            .Centered()
+                            .Width(100);
+                        columns.Bound(x => x.DisplayOrder).Width(100);
+                        columns.Command(commands =>
+                        {
+                            commands.Edit();
+                            commands.Delete();
+                        }).Width(180);
+
+                    })
+                    .ToolBar(x => x.Insert())
+                    .Editable(x => x.Mode(GridEditMode.InLine))
+                    .DataBinding(dataBinding => dataBinding.Ajax().Select("PollAnswers", "Poll", new { id = Model.Id })
+                                                    .Update("PollAnswerUpdate", "Poll")
+                                                    .Delete("PollAnswerDelete", "Poll")
+                                                    .Insert("PollAnswerAdd", "Poll", new { id = Model.Id }))
+                    .ClientEvents(x => x.OnError("grid_onError"))                                                    
+                                   .EnableCustomBinding(true))
+                                   <script type="text/javascript">
+                                       function grid_onError(e) {
+                                           alert(e.XMLHttpRequest.responseText);
+                                           e.preventDefault();
+                                       }
+                </script>
+            </td>
+        </tr>
+    </table>
+        }
+        else
+        {
+            <text>Lưu bình chọn trước khi thêm câu trả lời</text>
+        }
+}

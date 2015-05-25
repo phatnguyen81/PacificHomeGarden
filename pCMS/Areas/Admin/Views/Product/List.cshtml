@@ -1,0 +1,76 @@
+﻿@using pCMS.Admin.Models
+@using pCMS.Framework
+@model ProductListModel
+
+@{
+    ViewBag.Title = T("Admin.Catalog.Product.ListProduct");
+}
+@using (Html.BeginForm("List", "Product", FormMethod.Get))
+{
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Content/admin/images/ico-catalog.png")" alt="" />
+            @ViewBag.Title
+        </div>
+        <div class="options">
+            <a href="@Url.Action("Create")" class="t-button">@T("Admin.Common.AddNew")</a>
+        </div>
+    </div>
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.Keywords)
+                </td>
+                <td class="adminData">
+                    @Html.TextBoxFor(model => model.Keywords)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.LabelFor(model => model.CategoryId)
+                </td>
+                <td class="adminData">
+                    @Html.Telerik().DropDownListFor(model => model.CategoryId).BindTo(Model.Categories).HtmlAttributes(new {@style="width : 300px;"})
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit" id="search-products" value="search-products" class="t-button">
+                        Search</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+     <table class="adminContent">
+         <tr>
+             <td>
+                 @(Html.Telerik().Grid(Model.Products.Data)
+                .Name("ProductList")
+                .DataKeys(key => key.Add(q => q.Id))
+.DataBinding(dataBinding => dataBinding.Ajax().Select("Products", "Product", new { keywords = Model.Keywords, categoryId = Model.CategoryId }))
+                .Columns(columns =>
+                            {
+                                columns.Bound(o => o.Title);
+                                columns.Bound(o => o.Alias);
+                                columns.Bound(o => o.CategoryTitle);
+                                columns.Bound(o => o.ManufacturerTitle);
+                                columns.Bound(o => o.IsPublished).Width(100).Centered();
+                                columns.Bound(o => o.IsDeleted).Width(100).Centered();
+                                columns.Bound(o => o.UserCreated).Width(100).Centered();
+                                columns.Bound(o => o.DateCreated).Width(100).Centered();
+                                columns.Bound(o => o.Id)
+                                    .Template(o => Html.ActionLink(T("Admin.Common.Edit"),"Edit", new {o.Id}))
+                                    .ClientTemplate("<a href='" +
+                                                                        Url.Action("Edit") + "/<#=Id#>' class='t-button'>" + T("Admin.Common.Edit") + "</a>"
+                                    ).Title("").Width(70).HtmlAttributes(new { @style = "text-align: center;" });
+                            })
+                .Selectable()
+                .Pageable(settings => settings.Total(Model.Products.Total).PageSize(20).Position(GridPagerPosition.Both))
+                .EnableCustomBinding(true)
+                .HtmlAttributes(new { @style = "margin-bottom: 20px;" }))
+             </td>
+         </tr>
+     </table>
+}
+

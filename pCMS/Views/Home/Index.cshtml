@@ -1,0 +1,171 @@
+﻿@{
+    ViewBag.Title = "Le Beau, Chelsea Gardener, Seasons, Origins, Amphoral brands";
+}
+<script>
+
+$(document).ready(function() {		
+	
+	//Execute the slideShow
+	slideShow();
+
+});
+
+function slideShow() {
+
+	//Set the opacity of all images to 0
+	$('#gallery a').css({opacity: 0.0});
+	
+	//Get the first image and display it (set it to full opacity)
+	var current =  $('#gallery a:first').css({ opacity: 1.0 });
+	
+	//Set the caption background to semi-transparent
+	//$('#gallery .caption').css({opacity: 0.5});
+
+	//Resize the width of the caption according to the image width
+	$('#gallery .caption').css({width: '300px'});
+
+	var captiontop = current.find('img').attr('captiontop');
+	var captionleft = current.find('img').attr('captionleft');
+	$('#gallery .caption').css("top", captiontop + "px");
+	$('#gallery .caption').css("left", captionleft + "px");
+    
+	//Get the caption of the first image from REL attribute and display it
+	$('#gallery .content').css({ opacity: 0.0 });
+	$('#gallery .content').html($('#gallery a:first').find('div').html())
+	.animate({opacity: 1}, 4000);
+	
+	//Call the gallery function to run the slideshow, 6000 = change to next image after 6 seconds
+	setInterval('gallery()',10000);
+	
+}
+
+function gallery() {
+	
+	//if no IMGs have the show class, grab the first image
+	var current = ($('#gallery a.show')?  $('#gallery a.show') : $('#gallery a:first'));
+
+	//Get next image, if it reached the end of the slideshow, rotate it back to the first image
+	var next = ((current.next().length) ? ((current.next().hasClass('caption'))? $('#gallery a:first') :current.next()) : $('#gallery a:first'));	
+	
+	//Get next image caption
+	//var caption = next.find('img').attr('rel');	
+	var caption = next.find('div').html();	
+	
+	//Set the fade in effect for the next image, show class has higher z-index
+	next.css({opacity: 0.0})
+	.addClass('show')
+	.animate({opacity: 1.0}, 2000);
+
+	//Hide the current image
+	current.animate({opacity: 0.0}, 2000)
+	.removeClass('show');
+	
+	//Set the opacity to 0 and height to 1px
+	//$('#gallery .caption').animate({opacity: 0.0}, { queue:false, duration:0 }).animate({ queue:true, duration:300 });	
+
+	//Animate the caption, opacity to 0.7 and heigth to 100px, a slide up effect
+	var captiontop = next.find('img').attr('captiontop');
+	var captionleft = next.find('img').attr('captionleft');
+	$('#gallery .caption').css("top", captiontop + "px");
+	$('#gallery .caption').css("left", captionleft + "px");
+	//$('#gallery .caption').animate({opacity: 1},4000 );
+	
+	//Display the content
+	//$('#gallery .content').html(caption);
+	$('#gallery .content').css({ opacity: 0.0 });
+	$('#gallery .content').html(caption)
+	.animate({ opacity: 1 }, 4000);
+}
+
+
+</script>
+<style type="text/css">
+   
+    .clear {
+        clear:both
+    }
+
+    #gallery {
+        position:relative;
+        height:360px
+    }
+    #gallery a {
+        float:left;
+        position:absolute;
+    }
+	
+    #gallery a img {
+        border:none;
+    }
+	
+    #gallery a.show {
+        z-index:500
+    }
+
+    #gallery .caption {
+        z-index:600; 
+        color:#fff; 
+        height:100px; 
+        width:100%; 
+        position:absolute;
+        bottom:0;
+    }
+
+    #gallery .caption .content 
+    {
+        font-family: courier;
+        margin:5px
+    }
+	
+	#gallery .caption .title 
+	{
+	    font-weight: bold;
+	    font-size: 20px;
+	    color: #fff;
+    }
+	#gallery .caption p {
+	    font-size: 12px;
+	    color: #fff;
+	    margin-left: 20px;
+    }
+    #gallery .caption .content h3 {
+        margin:0;
+        padding:0;
+        color:#fff;
+    }
+	
+
+</style>
+
+<div id="gallery">
+
+	<a href="#" class="show">
+        <img src="@Url.Content("~/Images/image 14.jpg")" alt="Flowing Rock" width="695" height="550" title="" alt="" captiontop="10" captionleft="10"/>
+        <div style="visibility: hidden">
+            <span class="title">"GARDEN VESSELS ...</span>
+            <p>
+                Our architectural potteries not only function as planters but as garden sculptures. A collection of unusual and earthy garden vessels will be your design inspiration.
+            </p>
+        </div>
+        
+    </a>
+    <a href="#">
+        <img src="@Url.Content("~/Images/image 55.jpg")" alt="Flowing Rock" width="695" height="550" title="" alt="" captiontop="300" captionleft="10"/>
+        <div style="visibility: hidden">
+            <span class="title">"JAR FOUNTAINS ...</span>
+            <p>
+                These pictures illustrate what we have done with our jars and basins to give you an idea of some of the possibilities. Please make your selections from any pertinent section of the catalog. Be advised that we may not be able to duplicate the pictures you see here.
+            </p>
+        </div>
+    </a>	
+    <a href="#">
+        <img src="@Url.Content("~/Images/image 73.jpg")" alt="Flowing Rock" width="695" height="550" title="" alt="" captiontop="10" captionleft="100"/>
+        <div style="visibility: hidden">
+            <span class="title">"PLANTERS ...</span>
+            <p>
+                Our pottery has an affair with human hands and nature's touch. We take special pride in the care that goes into all our artistic shapes and luminous colors.
+            </p>
+        </div>
+    </a>
+	<div class="caption"><div class="content"></div></div>
+</div>

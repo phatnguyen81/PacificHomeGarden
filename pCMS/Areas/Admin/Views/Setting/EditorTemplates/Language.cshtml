@@ -1,0 +1,14 @@
+﻿@using Telerik.Web.Mvc.UI;
+@{    
+    var languageList = new List<SelectListItem>();
+    var languageService = DependencyResolver.Current.GetService<pCMS.Services.ILanguageService>();
+    languageList
+        .AddRange(languageService.GetAll()
+                      .Select(c => new SelectListItem()
+                                       {
+                                           Text = c.Title,
+                                           Value = c.Code
+                                       }));
+}
+
+@Html.Telerik().DropDownList().Name("LanguageCode").BindTo(languageList)

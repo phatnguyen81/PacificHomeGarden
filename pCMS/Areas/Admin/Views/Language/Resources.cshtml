@@ -1,0 +1,74 @@
+﻿@model pCMS.Admin.Models.ResourcesModel
+
+@{
+    ViewBag.Title = T("Admin.Configuration.Languages.Resources.ResourceList");
+    
+}
+
+
+
+@using (Html.BeginForm())
+{
+     <div class="section-header">
+         <div class="title">
+             <img src="@Url.Content("~/Content/admin/images/ico-configuration.png")" alt="" />
+             @ViewBag.Title
+         </div>
+         
+     </div>
+     <table class="adminContent">
+         <tr>
+            <td class="adminTitle">
+                @T("Admin.Configuration.Resources.Lable.SelectLanguage")
+            </td>
+            <td class="adminData">
+                @(Html.Telerik().DropDownListFor(o => o.LanguageCode)
+            .BindTo(Model.ListLanguage).ClientEvents(client => client.OnChange("onLanguageSelected")))
+                <script type="text/javascript">
+                    function onLanguageSelected(e) {
+                        window.location = "/Admin/Language/Resources/" + e.value;
+                    }
+                </script>
+            </td>
+         </tr>
+         <tr>
+             <td colspan="2">
+                @(Html.Telerik().Grid<pCMS.Admin.Models.ResourceListModel>()
+                        .Name("ResourceList")
+                        .DataKeys(key=>key.Add(q=>q.Id))
+                            .ToolBar(commands => commands.Insert())
+                        .DataBinding(dataBinding => dataBinding.Ajax()
+                                .Select("ResourceList", "Language", new { langCode = Model.LanguageCode })
+                                .Insert("InsertResource", "Language", new { langCode = Model.LanguageCode })
+                                .Update("SaveResource", "Language", new { langCode = Model.LanguageCode })
+                                .Delete("DeleteResource", "Language", new { langCode = Model.LanguageCode }))
+                        .Columns(columns =>
+                                     {
+                                         columns.Bound(o => o.Key).Width(200);
+                                         columns.Bound(o => o.Value);
+                                         columns.Command(commands =>
+                                         {
+                                             commands.Edit();
+                                             commands.Delete();
+                                         }).Width(180).Title("Commands");                    
+                                     })
+                        .Sortable()
+                        .ClientEvents(events => events
+                            .OnError("onError")
+                            )
+                        .Selectable()
+                        .Filterable(filtering => filtering.Enabled(true))
+                        .Pageable(page => page.PageSize(20))
+                                .HtmlAttributes(new { @style = "margin-bottom: 20px;" })
+                      )
+                      
+             </td>
+         </tr>
+     </table>
+}
+<script type="text/javascript">
+    function onError(e) {
+        alert(e.XMLHttpRequest.responseText);
+        e.preventDefault();
+    }
+</script>

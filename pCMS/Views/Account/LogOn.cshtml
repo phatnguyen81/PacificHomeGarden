@@ -1,0 +1,54 @@
+﻿@using PagedList.Mvc
+@using pCMS.Models
+@model LogOnModel
+@{
+    ViewBag.Title = "Log On";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="padding-left: 15px;padding-right: 15px;">
+    <h2>Log On</h2>
+    <p>
+        Please enter your user name and password. To set up an online account, <strong>@Html.ActionLink("click here", "Register")</strong>.
+    </p>
+
+    @Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        <div>
+            <fieldset>
+                <legend>Account Information</legend>
+
+                <div class="editor-label" style="padding-top: 10px;">
+                    @Html.LabelFor(m => m.UserName)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(m => m.UserName)
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </div>
+
+                <div class="editor-label" style="padding-top: 10px;">
+                    @Html.LabelFor(m => m.Password)
+                </div>
+                <div class="editor-field">
+                    @Html.PasswordFor(m => m.Password)
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+
+                <div class="editor-label"  style="padding-top: 10px;">
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.LabelFor(m => m.RememberMe)
+                </div>
+            
+                <p>
+                    <input type="submit" value="Log On" />
+                </p>
+                <div>
+                    @Html.ActionLink("Can't access your account?","ForgotPassword", "Account")
+                </div>
+            </fieldset>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">    $("#UserName").focus()</script>
