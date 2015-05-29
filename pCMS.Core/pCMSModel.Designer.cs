@@ -527,22 +527,6 @@ namespace pCMS.Core
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<FileDownload> FileDownloads
-        {
-            get
-            {
-                if ((_FileDownloads == null))
-                {
-                    _FileDownloads = base.CreateObjectSet<FileDownload>("FileDownloads");
-                }
-                return _FileDownloads;
-            }
-        }
-        private ObjectSet<FileDownload> _FileDownloads;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<Collection> Collections
         {
             get
@@ -555,6 +539,22 @@ namespace pCMS.Core
             }
         }
         private ObjectSet<Collection> _Collections;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<FileDownload> FileDownloads
+        {
+            get
+            {
+                if ((_FileDownloads == null))
+                {
+                    _FileDownloads = base.CreateObjectSet<FileDownload>("FileDownloads");
+                }
+                return _FileDownloads;
+            }
+        }
+        private ObjectSet<FileDownload> _FileDownloads;
 
         #endregion
 
@@ -777,19 +777,19 @@ namespace pCMS.Core
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the FileDownloads EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToFileDownloads(FileDownload fileDownload)
-        {
-            base.AddObject("FileDownloads", fileDownload);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the Collections EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToCollections(Collection collection)
         {
             base.AddObject("Collections", collection);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the FileDownloads EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFileDownloads(FileDownload fileDownload)
+        {
+            base.AddObject("FileDownloads", fileDownload);
         }
 
         #endregion
@@ -3919,48 +3919,72 @@ namespace pCMS.Core
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String MimeType
+        public global::System.String ContentType
         {
             get
             {
-                return _MimeType;
+                return _ContentType;
             }
             set
             {
-                OnMimeTypeChanging(value);
-                ReportPropertyChanging("MimeType");
-                _MimeType = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("MimeType");
-                OnMimeTypeChanged();
+                OnContentTypeChanging(value);
+                ReportPropertyChanging("ContentType");
+                _ContentType = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ContentType");
+                OnContentTypeChanged();
             }
         }
-        private global::System.String _MimeType;
-        partial void OnMimeTypeChanging(global::System.String value);
-        partial void OnMimeTypeChanged();
+        private global::System.String _ContentType;
+        partial void OnContentTypeChanging(global::System.String value);
+        partial void OnContentTypeChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String SeoFilename
+        public global::System.String Filename
         {
             get
             {
-                return _SeoFilename;
+                return _Filename;
             }
             set
             {
-                OnSeoFilenameChanging(value);
-                ReportPropertyChanging("SeoFilename");
-                _SeoFilename = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("SeoFilename");
-                OnSeoFilenameChanged();
+                OnFilenameChanging(value);
+                ReportPropertyChanging("Filename");
+                _Filename = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Filename");
+                OnFilenameChanged();
             }
         }
-        private global::System.String _SeoFilename;
-        partial void OnSeoFilenameChanging(global::System.String value);
-        partial void OnSeoFilenameChanged();
+        private global::System.String _Filename;
+        partial void OnFilenameChanging(global::System.String value);
+        partial void OnFilenameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Extension
+        {
+            get
+            {
+                return _Extension;
+            }
+            set
+            {
+                OnExtensionChanging(value);
+                ReportPropertyChanging("Extension");
+                _Extension = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Extension");
+                OnExtensionChanged();
+            }
+        }
+        private global::System.String _Extension;
+        partial void OnExtensionChanging(global::System.String value);
+        partial void OnExtensionChanged();
 
         #endregion
 

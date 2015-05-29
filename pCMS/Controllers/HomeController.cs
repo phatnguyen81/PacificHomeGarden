@@ -231,6 +231,25 @@ namespace pCMS.Controllers
                                     }).ToPagedList(pageIndex, 15);
             return View(model);
         }
+        public ActionResult SliderOnFactoryDirect(AlbumPagingModel model)
+        {
+            var albumId = AppSettings.SliderOnFactoryDirect;
+            var album = _albumService.GetById(albumId);
+            var pageIndex = model.Page ?? 1;
+            model.SearchResults = album.Album_Picture
+                .OrderBy(q => q.DisplayOrder)
+                .ThenBy(q => q.Picture.SeoFilename)
+                .Select(q => new AlbumPictureListModel
+                                    {
+                                        PictureId = q.PictureId,
+                                        Description = q.Description,
+                                        SeoFilename = q.Picture.SeoFilename,
+                                        PictureUrl = _pictureService.GetPictureUrl(q.Picture),
+                                        ThumbPictureUrl = _pictureService.GetPictureUrl(q.Picture, 90)
+                                    }).ToPagedList(pageIndex, 15);
+            return PartialView(model);
+        }
+        
 
         public ActionResult ContactUs()
         {

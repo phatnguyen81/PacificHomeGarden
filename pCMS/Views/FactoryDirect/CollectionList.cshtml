@@ -1,0 +1,32 @@
+﻿@model pCMS.Models.CollectionListModel
+@{
+    var i = 0;
+}
+
+<div class="row collection-list">
+    @foreach (var item in Model.Collections)
+    {
+        <div class="item format-collection col-sm-3">
+            <figure class="crop">
+                <a href="@Url.Action("CollectionDetail", "FactoryDirect", new {id = item.Alias})"
+                   title="Mauris accumsan nulla">
+                    <img src="@item.PictureUrl"
+                         alt="Mauris accumsan nulla" class="img-responsive" />
+                </a>
+            </figure>
+            <div class="desc">
+                <h5>
+                    <a href="@Url.Action("CollectionDetail", "FactoryDirect", new {id = item.Alias})"
+                       title="Mauris accumsan nulla">
+                        @item.Title
+                    </a>
+                </h5>
+                <p class="excerpt">
+                    @item.ShortDesciption
+                </p>
+            </div>
+        </div>
+
+    }
+
+</div>

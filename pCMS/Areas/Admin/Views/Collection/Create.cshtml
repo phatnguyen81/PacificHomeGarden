@@ -4,7 +4,7 @@
     ViewBag.Title = T("Admin.Catalog.Collection.CreateCollection");
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null,FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="section-header">
         <div class="title">

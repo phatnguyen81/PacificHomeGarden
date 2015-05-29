@@ -68,6 +68,7 @@
     <Compile Include="DownloadService.cs" />
     <Compile Include="ExportManager.cs" />
     <Compile Include="LogService.cs" />
+    <Compile Include="MediaExtentions.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="PageService.cs" />
     <Compile Include="CollectionService.cs" />

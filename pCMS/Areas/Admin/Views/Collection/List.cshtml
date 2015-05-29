@@ -1,4 +1,5 @@
-﻿@using pCMS.Admin.Models
+﻿@using System.Linq
+@using pCMS.Admin.Models
 @using pCMS.Framework
 @model CollectionListModel
 
@@ -28,17 +29,32 @@
                             {
                                 columns.Bound(o => o.Title);
                                 columns.Bound(o => o.Alias);
-                             
                                 columns.Bound(o => o.Id)
-                                    .Template(o => Html.ActionLink(T("Admin.Common.Edit"),"Edit", new {o.Id}))
-                                    .ClientTemplate("<a href='" +
-                                                                        Url.Action("Edit") + "/<#=Id#>' class='t-button'>" + T("Admin.Common.Edit") + "</a>"
-                                    ).Title("").Width(70).HtmlAttributes(new { @style = "text-align: center;" });
+                                    .Template(@<text>
+                                                  @if (!item.Equals(Model.Collections.Data.FirstOrDefault()))
+                                                  {
+                                                      @Html.ActionLink(T("Admin.Common.Up"), "Up", new {item.Id})
+                                                  }
+                                               </text>
+                                    )
+                                    .Title("").Width(70).HtmlAttributes(new {@style = "text-align: center;"});
+                                columns.Bound(o => o.Id)
+                                     .Template(@<text>
+                                        @if (!item.Equals(Model.Collections.Data.LastOrDefault()))
+                                        {
+                                            @Html.ActionLink(T("Admin.Common.Down"), "Down", new { item.Id })
+                                        }
+                                    </text>
+                                    )
+                                    .Title("").Width(70).HtmlAttributes(new { @style = "text-align: center;" });
+                                columns.Bound(o => o.Id)
+                                    .Template(o => Html.ActionLink(T("Admin.Common.Edit"), "Edit", new { o.Id }))
+                                    .Title("").Width(70).HtmlAttributes(new { @style = "text-align: center;" });
                             })
-                .Selectable()
-                .Pageable(settings => settings.Total(Model.Collections.Total).PageSize(20).Position(GridPagerPosition.Both))
-                .EnableCustomBinding(true)
-                .HtmlAttributes(new { @style = "margin-bottom: 20px;" }))
+                                               .Selectable()
+                                               .Pageable(settings => settings.Enabled(false))
+                                               .EnableCustomBinding(true)
+                                               .HtmlAttributes(new { @style = "margin-bottom: 20px;" }))
              </td>
          </tr>
      </table>

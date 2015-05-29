@@ -1,4 +1,4 @@
-﻿@model String
+﻿@model System.String
 @{
     bool useDefaultImagePlugin = false;
     var imagePluginName = useDefaultImagePlugin ? "image" : "netadvimage";
@@ -12,7 +12,7 @@
         tinyMCE.init({
 
             // General options
-            mode: "exact",
+            mode: "textareas",
             elements: "@ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty)",
             theme: "advanced",
             height: "350",

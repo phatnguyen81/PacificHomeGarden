@@ -24,13 +24,15 @@ namespace pCMS.Admin.Controllers
         private readonly ILocalizationService _localizationService;
         private readonly ICollectionService _collectionService;
         private readonly IPictureService _pictureService;
+        private readonly IDownloadService _downloadService;
 
 
-        public CollectionController(ILocalizationService localizationService, ICollectionService collectionService, IPictureService pictureService)
+        public CollectionController(ILocalizationService localizationService, ICollectionService collectionService, IPictureService pictureService, IDownloadService downloadService)
         {
             _localizationService = localizationService;
             _collectionService = collectionService;
             _pictureService = pictureService;
+            _downloadService = downloadService;
         }
 
 
@@ -87,6 +89,7 @@ namespace pCMS.Admin.Controllers
         [FormValueRequired("save", "save-continue")]
         public ActionResult Create(CollectionModel model, bool continueEditing)
         {
+            Guid downloadId = Guid.Empty;
             try
             {
 
@@ -105,7 +108,19 @@ namespace pCMS.Admin.Controllers
                         i++;
                     } while (_collectionService.CheckExistAlias(model.Alias));
                 }
-
+                var httpPostedFile = this.Request.Files["FileDownload"];
+                if ((httpPostedFile != null) && (!String.IsNullOrEmpty(httpPostedFile.FileName)))
+                {
+                    downloadId = Guid.NewGuid();
+                    var download = new FileDownload
+                    {
+                        Id = downloadId,
+                        ContentType = httpPostedFile.ContentType,
+                        Filename = Path.GetFileNameWithoutExtension(httpPostedFile.FileName),
+                        Extension = Path.GetExtension(httpPostedFile.FileName)
+                    };
+                    _downloadService.InsertDownload(download, httpPostedFile.GetDownloadBits());
+                }
                 var collection = new Collection
                 {
                     Id = Guid.NewGuid(),
@@ -114,7 +129,7 @@ namespace pCMS.Admin.Controllers
                     ShortDescription = model.ShortDescription,
                     FullDescription = model.FullDescription,
                     PictureId = model.PictureId,
-                    FileDownloadId = model.FileDownloadId
+                    FileDownloadId = downloadId
                 };
                 _collectionService.Add(collection);
                 _collectionService.SaveChanges();
@@ -126,10 +141,24 @@ namespace pCMS.Admin.Controllers
             }
             catch (Exception ex)
             {
+                _downloadService.DeleteDownload(downloadId);
                 ErrorNotification(ex.GetBaseException().Message, false);
             }
 
             return View(model);
+        }
+
+        protected void PrepareCollectionModel(CollectionModel model)
+        {
+            if (model.FileDownloadId != Guid.Empty)
+            {
+                var download = _downloadService.GetDownloadById(model.FileDownloadId);
+                if (download != null)
+                {
+                    model.FileName = download.Filename + download.Extension;
+                }
+            }
+            model.DeleteFile = false;
         }
         public ActionResult Edit(Guid id, string selectedTab)
         {
@@ -145,6 +174,7 @@ namespace pCMS.Admin.Controllers
                 PictureId = collection.PictureId,
                 FileDownloadId = collection.FileDownloadId
             };
+            PrepareCollectionModel(model);
             return View(model);
         }
 
@@ -152,6 +182,8 @@ namespace pCMS.Admin.Controllers
         [FormValueRequired("save", "save-continue")]
         public ActionResult Edit(CollectionModel model, bool continueEditing)
         {
+            var downloadId = Guid.Empty;
+            ;
             try
             {
                 if (!string.IsNullOrWhiteSpace(model.Alias) && _collectionService.CheckExistAlias(model.Alias, model.Id))
@@ -178,12 +210,14 @@ namespace pCMS.Admin.Controllers
                 collection.Alias = model.Alias;
                 collection.ShortDescription = model.ShortDescription;
                 collection.FullDescription = model.FullDescription;
-                collection.FileDownloadId = model.FileDownloadId;
+                var oldDownloadId = model.FileDownloadId;
+                //collection.FileDownloadId = model.FileDownloadId;
+                
 
 
                 collection.PictureId = model.PictureId;
 
-                _collectionService.SaveChanges();
+              
 
                 //delete an old picture (if deleted or updated)
                 if (prevPictureId !=Guid.Empty && prevPictureId != collection.PictureId)
@@ -192,7 +226,36 @@ namespace pCMS.Admin.Controllers
                     if (prevPicture != null)
                         _pictureService.DeletePicture(prevPicture);
                 }
-              
+
+                if (model.DeleteFile)
+                {
+                    _downloadService.DeleteDownload(model.FileDownloadId);
+                    oldDownloadId = Guid.Empty;
+                }
+                else
+                {
+                    var httpPostedFile = this.Request.Files["FileDownload"];
+                    if ((httpPostedFile != null) && (!String.IsNullOrEmpty(httpPostedFile.FileName)))
+                    {
+                        downloadId = Guid.NewGuid();
+                        var download = new FileDownload
+                        {
+                            Id = downloadId,
+                            ContentType = httpPostedFile.ContentType,
+                            Filename = Path.GetFileNameWithoutExtension(httpPostedFile.FileName),
+                            Extension = Path.GetExtension(httpPostedFile.FileName)
+                        };
+                        _downloadService.InsertDownload(download, httpPostedFile.GetDownloadBits());
+                    }
+                    if (oldDownloadId != Guid.Empty)
+                    {
+                        _downloadService.DeleteDownload(oldDownloadId);
+                    }
+                    oldDownloadId = downloadId;
+                }
+                collection.FileDownloadId = oldDownloadId;
+
+                _collectionService.SaveChanges();
 
                 SuccessNotification("Update collection '" + model.Title + "' successful !!!");
                 return continueEditing
@@ -201,13 +264,42 @@ namespace pCMS.Admin.Controllers
             }
             catch (Exception ex)
             {
+                _downloadService.DeleteDownload(downloadId);
                 ErrorNotification(ex.GetBaseException().Message, false);
             }
-
+            PrepareCollectionModel(model);
             return View(model);
 
         }
 
+        public ActionResult Up(Guid id)
+        {
+            try
+            {
+                _collectionService.Up(id);
+                _collectionService.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                ErrorNotification(ex.GetBaseException().Message);
+                throw;
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult Down(Guid id)
+        {
+            try
+            {
+                _collectionService.Down(id);
+                _collectionService.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                ErrorNotification(ex.GetBaseException().Message);
+                throw;
+            }
+            return RedirectToAction("Index");
+        }
         #endregion
     }
 }

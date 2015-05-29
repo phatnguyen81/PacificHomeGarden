@@ -10,13 +10,18 @@ namespace pCMS.Services
     public interface ICollectionService
     {
         IEnumerable<Collection> GetAll();
-        void Add(Collection Collection);
+        void Add(Collection collection);
         void SaveChanges();
         Collection GetById(Guid id);
+
+        Collection GetByAlias(string alias);
         void Delete(Guid id);
 
         bool CheckExistAlias(string alias);
         bool CheckExistAlias(string alias, Guid excludeId);
+        void Up(Guid id);
+        void Down(Guid id);
+        List<Collection> Arround(Guid id, int num = 2);
         IPagedList<Collection> Search(string keywords, int pageIndex = 0, int pageSize = int.MaxValue);
     }
 
@@ -41,9 +46,11 @@ namespace pCMS.Services
             return _context.Collections.All();
         }
 
-        public void Add(Collection Collection)
+        public void Add(Collection collection)
         {
-            _context.Collections.Create(Collection);
+            ReOrder();
+            collection.DisplayOrder = GetAll().Count() + 1;
+            _context.Collections.Create(collection);
         }
 
         public void SaveChanges()
@@ -56,9 +63,15 @@ namespace pCMS.Services
             return _context.Collections.Find(q => q.Id == id);
         }
 
+        public Collection GetByAlias(string alias)
+        {
+            return _context.Collections.Find(q => q.Alias == alias);
+        }
+
         public void Delete(Guid id)
         {
             _context.Collections.Delete(q => q.Id == id);
+            ReOrder();
         }
 
         public bool CheckExistAlias(string alias)
@@ -69,6 +82,58 @@ namespace pCMS.Services
         public bool CheckExistAlias(string alias, Guid excludeId)
         {
             return _context.Collections.Contains(q => q.Alias == alias && q.Id != excludeId);
+        }
+
+        public void ReOrder()
+        {
+            var collections = GetAll().OrderBy(q => q.DisplayOrder);
+            int i = 0;
+            foreach (var collection in collections)
+            {
+                collection.DisplayOrder = ++i;
+            }
+        }
+        public void Up(Guid id)
+        {
+            var collection = GetById(id);
+            var precollection =
+                GetAll()
+                    .Where(q => q.DisplayOrder < collection.DisplayOrder)
+                    .OrderByDescending(q => q.DisplayOrder)
+                    .FirstOrDefault();
+            if (precollection != null)
+            {
+                var currentpos = collection.DisplayOrder;
+                collection.DisplayOrder = precollection.DisplayOrder;
+                precollection.DisplayOrder = currentpos;
+            }
+        }
+
+        public void Down(Guid id)
+        {
+            var collection = GetById(id);
+            var nextcollection =
+                GetAll()
+                    .Where(q => q.DisplayOrder > collection.DisplayOrder)
+                    .OrderBy(q => q.DisplayOrder)
+                    .FirstOrDefault();
+            if (nextcollection != null)
+            {
+                var currentpos = collection.DisplayOrder;
+                collection.DisplayOrder = nextcollection.DisplayOrder;
+                nextcollection.DisplayOrder = currentpos;
+            }
+        }
+
+        public List<Collection> Arround(Guid id, int num = 4)
+        {
+            var collection = GetById(id);
+            return
+                GetAll()
+                    .Where(q => q.Id != id)
+                    .OrderBy(q => Math.Abs(q.DisplayOrder - collection.DisplayOrder))
+                    .Take(num)
+                    .ToList();
         }
 
 

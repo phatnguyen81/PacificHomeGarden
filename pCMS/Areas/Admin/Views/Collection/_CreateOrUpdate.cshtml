@@ -1,4 +1,5 @@
-﻿@using pCMS.Framework
+﻿@using System
+@using pCMS.Framework
 @model pCMS.Admin.Models.CollectionModel
 @Html.HiddenFor(model => model.Id)           
 @(Html.Telerik()
@@ -48,7 +49,7 @@
                 @Html.LabelFor(model => model.ShortDescription):
             </td>
             <td class="adminData">
-                @Html.TextAreaFor(model => model.ShortDescription, new { style = "Width: 500px; Height: 150px;" })
+                @Html.EditorFor(model => model.ShortDescription, "RichEditor")
                 @Html.ValidationMessageFor(model => model.ShortDescription)
             </td>
         </tr>
@@ -71,12 +72,18 @@
             </td>
         </tr>
         <tr>
-            <td class="adminTitle">
+            <td class="adminTitle"> 
                 @Html.LabelFor(model => model.FileDownloadId):
             </td>
             <td class="adminData">
+                @if (Model.FileDownloadId != Guid.Empty)
+                {
+                    @Html.ActionLink(Model.FileName, "GetFileUpload", "Download", new { downloadId = Model.FileDownloadId, Area = "" }, new {target ="_blank"})
+                    <label>@Html.CheckBoxFor(model=>model.DeleteFile) Delete file?</label>
+                    <br/>
+                }
+                @Html.HiddenFor(model => model.FileDownloadId)
                 <input type="file" name="FileDownload"/>
-                <input type="file" name="FileDownlo" />
             </td>
         </tr>
     </table>

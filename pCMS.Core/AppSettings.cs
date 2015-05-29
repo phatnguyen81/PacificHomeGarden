@@ -93,6 +93,21 @@ namespace pCMS.Core
                 }
             }
         }
+
+        public static Guid SliderOnFactoryDirect
+        {
+            get
+            {
+                try
+                {
+                    return new Guid(ConfigurationManager.AppSettings["SliderOnFactoryDirect"]);
+                }
+                catch
+                {
+                    return Guid.Empty;
+                }
+            }
+        }
         public static string EmailReceive
         {
             get

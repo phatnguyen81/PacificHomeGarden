@@ -1,0 +1,28 @@
+﻿@using PagedList.Mvc
+@model pCMS.Models.AlbumPagingModel
+
+
+<div id="parallax-slider-555eac529e951" class="parallax-slider">
+    <ul class="baseList">
+        @foreach (var item in Model.SearchResults)
+        {
+            <li data-preview="@item.PictureUrl"
+                data-thumb-url="@item.ThumbPictureUrl"
+                data-ulr-link="blog/">
+                <div class="slider_caption">
+                    @Html.Raw(item.Description)
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        jQuery('#parallax-slider-555eac529e951').parallaxSlider({
+            parallaxEffect: "parallax_effect_normal", parallaxInvert: false, animateLayout: "simple-fade-eff", duration: 1500, autoSwitcher: true, autoSwitcherDelay: 5000, scrolling_description: true, slider_navs: false, slider_pagination: "buttons_pagination", liteMode: liteModeSwitcher
+        });
+
+    });
+</script>
+

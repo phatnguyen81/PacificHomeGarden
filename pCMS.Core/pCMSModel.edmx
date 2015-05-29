@@ -161,8 +161,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="MimeType" Type="varchar" MaxLength="100" />
-          <Property Name="SeoFilename" Type="nvarchar" MaxLength="500" />
+          <Property Name="ContentType" Type="nvarchar(max)" />
+          <Property Name="Filename" Type="nvarchar(max)" />
+          <Property Name="Extension" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -910,8 +911,8 @@
             <Parameter Name="PageSize" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="Pages" EntityType="pCMSModel.Page" />
-          <EntitySet Name="FileDownloads" EntityType="pCMSModel.FileDownload" />
           <EntitySet Name="Collections" EntityType="pCMSModel.Collection" />
+          <EntitySet Name="FileDownloads" EntityType="pCMSModel.FileDownload" />
           </EntityContainer>
         <EntityType Name="Channel">
           <Key>
@@ -1558,14 +1559,6 @@
           <Property Type="String" Name="MetaDescription" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="MetaTitle" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="FileDownload">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="MimeType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="SeoFilename" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="Collection">
           <Key>
             <PropertyRef Name="Id" />
@@ -1578,6 +1571,15 @@
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="PictureId" Type="Guid" Nullable="false" />
           <Property Name="FileDownloadId" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FileDownload">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ContentType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Filename" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Extension" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1981,15 +1983,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FileDownloads">
-            <EntityTypeMapping TypeName="pCMSModel.FileDownload">
-              <MappingFragment StoreEntitySet="FileDownload">
-                <ScalarProperty Name="SeoFilename" ColumnName="SeoFilename" />
-                <ScalarProperty Name="MimeType" ColumnName="MimeType" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Collections">
             <EntityTypeMapping TypeName="pCMSModel.Collection">
               <MappingFragment StoreEntitySet="Collection">
@@ -2000,6 +1993,16 @@
                 <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
                 <ScalarProperty Name="Alias" ColumnName="Alias" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FileDownloads">
+            <EntityTypeMapping TypeName="pCMSModel.FileDownload">
+              <MappingFragment StoreEntitySet="FileDownload">
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="Filename" ColumnName="Filename" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2187,8 +2190,8 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="pCMSModel.Log" Width="1.5" PointX="10.75" PointY="4.75" Height="2.7494921875000102" IsExpanded="false" />
         <EntityTypeShape EntityType="pCMSModel.Page" Width="1.5" PointX="10.75" PointY="6.75" Height="2.5571907552083246" IsExpanded="false" />
-        <EntityTypeShape EntityType="pCMSModel.FileDownload" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="false" />
         <EntityTypeShape EntityType="pCMSModel.Collection" Width="1.5" PointX="11.375" PointY="10.75" />
+        <EntityTypeShape EntityType="pCMSModel.FileDownload" Width="1.5" PointX="0.75" PointY="12.75" />
         </Diagram>
     </Diagrams>
   </Designer>

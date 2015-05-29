@@ -44,6 +44,9 @@ namespace pCMS.Admin.Models
         [ResourceDisplayName("Admin.Content.Collection.Fields.Picture")]
         public Guid PictureId { get; set; }
 
+        public string FileName { get; set; }
+
+        public bool DeleteFile { get; set; }
        
     }
     

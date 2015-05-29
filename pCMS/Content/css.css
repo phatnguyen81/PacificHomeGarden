@@ -47,7 +47,7 @@ a:hover{
 	float:left; list-style:none;
 }
 #Menu li a{ 
-	display:block; background:#333; padding:5px 30px 5px 10px;
+	display:block; background:#333; padding:5px 15px 5px 10px;
 	font-family:"Berlin Sans FB";
 	color:#aeafa7; font-size:13px; font-weight:normal; 
 	text-transform:uppercase; text-decoration:none;

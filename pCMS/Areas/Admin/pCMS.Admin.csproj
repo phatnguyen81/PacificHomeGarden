@@ -91,7 +91,6 @@
     <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\NetAdvImageController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
-    <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\PictureController.cs" />
     <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\ProductAttributeController.cs" />
