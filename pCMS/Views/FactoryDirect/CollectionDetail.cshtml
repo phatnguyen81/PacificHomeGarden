@@ -1,0 +1,65 @@
+﻿@model pCMS.Models.CollectionModel
+@{
+    ViewBag.Title = "Le Beau, Chelsea Gardener, Seasons, Origins, Amphoral brands";
+    Layout = "~/Views/Shared/_CollectionLayout.cshtml";
+}
+<div class="motopress-wrapper content-holder clearfix collection-detail">
+    <div class="container">
+        <div class="row ">
+            <div class="col-xs-12 white-block">
+                <h1 class="title-header">
+                    @Model.Title
+                </h1>
+                <ul class="breadcrumb breadcrumb__t">
+                    <li><a href="@Url.Action("Index", "FactoryDirect")">Home</a></li>
+                    <li class="active">@Model.Title</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8 left-panel">
+                <div class="row white-block">
+                    <div class="col-xs-12">
+                        <div class="cover-image">
+                            <img src="@Model.PictureUrl" />
+                        </div>
+                        <div class="collection-content">
+                            @Html.Raw(Model.FullDescription)
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4 right-panel">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row white-block">
+                            <div class="collection-shortdesc">
+                                @Html.Raw(Model.ShortDesciption)
+                            </div>
+                            @if(Model.FileDownloadId != Guid.Empty)
+                            { 
+                            <div class="collection-content">
+                                @Html.ActionLink("Download Collection", "GetFileUpload", "Download", new { downloadId = Model.FileDownloadId }, new { target = "_blank", @class = "btn btn-primary" })
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row white-block">
+                            <h3>Other Collections</h3>
+                            @Html.Action("ArroundCollections", "FactoryDirect", new {id = Model.Id})
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style type='text/css'>
+    body {
+        background: #000 !important;
+    }
+</style>
