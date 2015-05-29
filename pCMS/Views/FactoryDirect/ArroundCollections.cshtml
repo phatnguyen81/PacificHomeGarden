@@ -1,0 +1,21 @@
+﻿@model pCMS.Models.CollectionListModel
+@{
+    var i = 0;
+}
+<ul class="arround-list unstyled">
+    @foreach (var item in Model.Collections)
+    {
+
+    <li class="clearfix">
+        <figure class="featured-thumbnail thumbnail crop">
+            <img src="@item.PictureUrl" alt="@item.Title">
+        </figure>
+        <h4><a class="collection-title" href="@Url.Action("CollectionDetail", "FactoryDirect", new {id = item.Alias})" rel="bookmark" title="@item.Title">@item.Title</a></h4>
+        <div class="excerpt">
+            @item.ShortDesciption
+        </div>
+        <a href="@Url.Action("CollectionDetail", "FactoryDirect", new {id = item.Alias})" class="btn btn-primary link">Read More</a>
+    </li>
+    }
+    
+</ul>

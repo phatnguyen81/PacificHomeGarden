@@ -2701,6 +2701,7 @@
     <Content Include="Views\FactoryDirect\CollectionList.cshtml" />
     <Content Include="Views\FactoryDirect\CollectionDetail.cshtml" />
     <Content Include="Views\FactoryDirect\ArroundCollections.cshtml" />
+    <Content Include="Views\Home\PageInline.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\EditorLocalization.bg-BG.resx">

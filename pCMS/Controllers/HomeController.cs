@@ -91,6 +91,12 @@ namespace pCMS.Controllers
         }
 
 
+        public ActionResult PageInline(string alias)
+        {
+            //return View();
+            return PartialView(GetPageModel(alias));
+        }
+
         public ActionResult Company()
         {
             //return View();
@@ -173,6 +179,8 @@ namespace pCMS.Controllers
                             };
             return View(model);
         }
+
+
 
         public ActionResult Customers(AlbumPagingModel model)
         {
