@@ -2809,9 +2809,11 @@ div.ajax-loader {
 	-moz-box-sizing:border-box;
 	box-sizing:border-box;
 }
-
+.collection-list .item {
+    margin-top: 15px;
+}
 .collection-list figure {
-    height: 260px;
+    height: 190px;
 }
 .white-block {
     background-color: #fff;

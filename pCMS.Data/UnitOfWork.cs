@@ -33,6 +33,8 @@ namespace pCMS.Data
         ILogRepository Logs { get; }
         IPageRepository Pages { get; }
         IFileDownloadRepository FileDownloads { get; }
+
+        IVideoRepository Videos { get; }
     }
 
     public class DalContext : IDalContext
@@ -61,6 +63,7 @@ namespace pCMS.Data
         private IPageRepository _pages;
         private ICollectionRepository _collections;
         private IFileDownloadRepository _filedowloads;
+        private IVideoRepository _videos;
 
         public DalContext()
         {
@@ -121,6 +124,8 @@ namespace pCMS.Data
                 _collections.Dispose();
             if(_filedowloads != null)
                 _filedowloads.Dispose();
+            if (_videos != null)
+                _videos.Dispose();
             if (_dbContext != null)
                 _dbContext.Dispose();
             GC.SuppressFinalize(this);
@@ -234,6 +239,11 @@ namespace pCMS.Data
         public IFileDownloadRepository FileDownloads
         {
             get { return _filedowloads ?? (_filedowloads = new FileDownloadRepository(_dbContext)); }
+        }
+
+        public IVideoRepository Videos
+        {
+            get { return _videos ?? (_videos = new VideoRepository(_dbContext)); }
         }
 
         public ICollectionRepository Collections

@@ -555,6 +555,22 @@ namespace pCMS.Core
             }
         }
         private ObjectSet<FileDownload> _FileDownloads;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Video> Videos
+        {
+            get
+            {
+                if ((_Videos == null))
+                {
+                    _Videos = base.CreateObjectSet<Video>("Videos");
+                }
+                return _Videos;
+            }
+        }
+        private ObjectSet<Video> _Videos;
 
         #endregion
 
@@ -790,6 +806,14 @@ namespace pCMS.Core
         public void AddToFileDownloads(FileDownload fileDownload)
         {
             base.AddObject("FileDownloads", fileDownload);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Videos EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToVideos(Video video)
+        {
+            base.AddObject("Videos", video);
         }
 
         #endregion
@@ -8049,6 +8073,167 @@ namespace pCMS.Core
 
         #endregion
 
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="pCMSModel", Name="Video")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Video : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Video object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="title">Initial value of the Title property.</param>
+        /// <param name="pictureId">Initial value of the PictureId property.</param>
+        /// <param name="videoUrl">Initial value of the VideoUrl property.</param>
+        /// <param name="displayOrder">Initial value of the DisplayOrder property.</param>
+        public static Video CreateVideo(global::System.Guid id, global::System.String title, global::System.Guid pictureId, global::System.String videoUrl, global::System.Int32 displayOrder)
+        {
+            Video video = new Video();
+            video.Id = id;
+            video.Title = title;
+            video.PictureId = pictureId;
+            video.VideoUrl = videoUrl;
+            video.DisplayOrder = displayOrder;
+            return video;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Guid _Id;
+        partial void OnIdChanging(global::System.Guid value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Title
+        {
+            get
+            {
+                return _Title;
+            }
+            set
+            {
+                OnTitleChanging(value);
+                ReportPropertyChanging("Title");
+                _Title = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Title");
+                OnTitleChanged();
+            }
+        }
+        private global::System.String _Title;
+        partial void OnTitleChanging(global::System.String value);
+        partial void OnTitleChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid PictureId
+        {
+            get
+            {
+                return _PictureId;
+            }
+            set
+            {
+                OnPictureIdChanging(value);
+                ReportPropertyChanging("PictureId");
+                _PictureId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PictureId");
+                OnPictureIdChanged();
+            }
+        }
+        private global::System.Guid _PictureId;
+        partial void OnPictureIdChanging(global::System.Guid value);
+        partial void OnPictureIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String VideoUrl
+        {
+            get
+            {
+                return _VideoUrl;
+            }
+            set
+            {
+                OnVideoUrlChanging(value);
+                ReportPropertyChanging("VideoUrl");
+                _VideoUrl = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("VideoUrl");
+                OnVideoUrlChanged();
+            }
+        }
+        private global::System.String _VideoUrl;
+        partial void OnVideoUrlChanging(global::System.String value);
+        partial void OnVideoUrlChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DisplayOrder
+        {
+            get
+            {
+                return _DisplayOrder;
+            }
+            set
+            {
+                OnDisplayOrderChanging(value);
+                ReportPropertyChanging("DisplayOrder");
+                _DisplayOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DisplayOrder");
+                OnDisplayOrderChanged();
+            }
+        }
+        private global::System.Int32 _DisplayOrder;
+        partial void OnDisplayOrderChanging(global::System.Int32 value);
+        partial void OnDisplayOrderChanged();
+
+        #endregion
+
+    
     }
 
     #endregion

@@ -78,8 +78,9 @@
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\psf\Home\Documents\Backup\PHG\bin\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -93,9 +94,15 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
-    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Entity">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -107,7 +114,9 @@
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Extensions">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Abstractions">
       <Private>True</Private>
     </Reference>
@@ -116,7 +125,9 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Web.Services">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="Telerik.Web.Mvc">
       <HintPath>..\packages\TelerikMvcExtensions.2011.3.1115\lib\net40\Telerik.Web.Mvc.dll</HintPath>
@@ -296,6 +307,7 @@
     <Compile Include="Models\PageModels.cs" />
     <Compile Include="Models\ProductModels.cs" />
     <Compile Include="Models\ShoppingCartModel.cs" />
+    <Compile Include="Models\VideoModels.cs" />
     <Compile Include="Order\ShoppingCart.cs" />
     <Compile Include="Order\OrderItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1871,6 +1883,13 @@
     <Content Include="Content\editors\tinymce\utils\mctabs.js" />
     <Content Include="Content\editors\tinymce\utils\validate.js" />
     <Content Include="Content\fileuploader.css" />
+    <Content Include="Content\images\a03.png" />
+    <Content Include="Content\images\a10.png" />
+    <Content Include="Content\images\arrow_left_icon.png" />
+    <Content Include="Content\images\arrow_right_icon.png" />
+    <Content Include="Content\images\b03.png" />
+    <Content Include="Content\images\footer-top.png" />
+    <Content Include="Content\images\loading.gif" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\pictures\logo.jpg" />
     <Content Include="Content\pictures\noDefaultImage.gif" />
@@ -2261,6 +2280,14 @@
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jssorslider\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\jssorslider\jssor.js" />
+    <Content Include="Scripts\jssorslider\jssor.player.ytiframe.js" />
+    <Content Include="Scripts\jssorslider\jssor.player.ytiframe.min.js" />
+    <Content Include="Scripts\jssorslider\jssor.slider.debug.min.js" />
+    <Content Include="Scripts\jssorslider\jssor.slider.js" />
+    <Content Include="Scripts\jssorslider\jssor.slider.min.js" />
+    <Content Include="Scripts\jssorslider\jssor.slider.mini.js" />
     <Content Include="Scripts\MobilePhotoAlbum\css\dc.core.min.css" />
     <Content Include="Scripts\MobilePhotoAlbum\css\dc.mobilephotoalbum.custom.css" />
     <Content Include="Scripts\MobilePhotoAlbum\js\dc.core.1.6.0.min.js" />
@@ -2614,6 +2641,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\prettyPhoto\" />
     <Folder Include="index\" />
     <Folder Include="Scripts\galleriffic-2.0\galleriffic-2.0\" />
   </ItemGroup>
@@ -2639,12 +2667,17 @@
     <Content Include="Views\Home\TradeShow.cshtml" />
     <Content Include="Views\Home\News.cshtml" />
     <Content Include="Views\Home\Customers.cshtml" />
+    <Content Include="pdfFiles\TermsAndConditions.zip" />
     <None Include="Properties\PublishProfiles\Profile1.pubxml" />
     <None Include="Scripts\code.photoswipe\change.log" />
     <None Include="Scripts\code.photoswipe\README.md" />
     <None Include="Scripts\FreshSlidingThumbnailsGallery\ajax\thumbs.php" />
     <None Include="Scripts\FreshSlidingThumbnailsGallery\ajax\thumbs.php.bak" />
     <None Include="Scripts\FreshSlidingThumbnailsGallery\index.php" />
+    <Content Include="Scripts\jssorslider\jssor.player.ytiframe.compress.bat" />
+    <Content Include="Scripts\jssorslider\jssor.slider.debug.min.compress.bat" />
+    <Content Include="Scripts\jssorslider\jssor.slider.min.compress.bat" />
+    <Content Include="Scripts\jssorslider\jssor.slider.mini.compress.bat" />
     <None Include="Scripts\PolaroidPhotobarGallery2\icons\Thumbs.db" />
     <None Include="Scripts\PolaroidPhotobarGallery2\Thumbs.db" />
     <None Include="Scripts\prettyPhoto\images\.DS_Store" />
@@ -2706,6 +2739,7 @@
     <Content Include="Views\FactoryDirect\CollectionDetail.cshtml" />
     <Content Include="Views\FactoryDirect\ArroundCollections.cshtml" />
     <Content Include="Views\Home\PageInline.cshtml" />
+    <Content Include="Views\Home\VideoList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\EditorLocalization.bg-BG.resx">

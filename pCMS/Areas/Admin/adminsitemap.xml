@@ -18,6 +18,7 @@
           <siteMapNode title="Album" pCmsResource="Admin.Album" controller="Album" action="List" />
           <siteMapNode title="Page" pCmsResource="Admin.Page" controller="Page" action="List" />
           <siteMapNode title="Collections" pCmsResource="Admin.Collections" controller="Collection" action="List" />
+          <siteMapNode title="Videos" pCmsResource="Admin.Videos" controller="Video" action="List" />
         </siteMapNode>
       <siteMapNode title="Catalog" pCmsResource="Admin.Catalog" ImageUrl="~/Content/admin/images/ico-catalog.png">
         <siteMapNode title="Manufacturer" pCmsResource="Admin.Manufacturer" controller="Manufacturer" action="List" />

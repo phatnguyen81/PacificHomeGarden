@@ -50,7 +50,10 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\psf\Home\Documents\Backup\PHG\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -91,6 +94,7 @@
     <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\NetAdvImageController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="Controllers\PictureController.cs" />
     <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\ProductAttributeController.cs" />
@@ -110,6 +114,7 @@
     <Compile Include="Models\ManufacturerModel.cs" />
     <Compile Include="Models\NetAdvImageModels.cs" />
     <Compile Include="Models\OrderModel.cs" />
+    <Compile Include="Models\VideoModel.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Models\PollModel.cs" />
     <Compile Include="Models\ProductAttributeModel.cs" />
@@ -140,6 +145,10 @@
     <Content Include="Views\Collection\Edit.cshtml" />
     <Content Include="Views\Collection\_CreateOrUpdate.cshtml" />
     <Content Include="Views\Collection\Create.cshtml" />
+    <Content Include="Views\Video\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\Video\Create.cshtml" />
+    <Content Include="Views\Video\Edit.cshtml" />
+    <Content Include="Views\Video\List.cshtml" />
     <None Include="Views\NetAdvImage\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

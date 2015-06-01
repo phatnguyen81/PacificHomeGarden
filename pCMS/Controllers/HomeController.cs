@@ -37,8 +37,9 @@ namespace pCMS.Controllers
         private readonly IWebHelper _webHelper;
         private readonly ISearchService _searchService;
         private readonly IPageService _pageService;
+        private readonly IVideoService _videoService;
 
-        public HomeController(ICategoryService categoryService, IEventService eventService, IArticleService articleService, IAlbumService albumService, IPictureService pictureService, IProductService productService, IOrderService orderService, IUserService userService, IWebHelper webHelper, ISearchService searchService, IPageService pageService)
+        public HomeController(ICategoryService categoryService, IEventService eventService, IArticleService articleService, IAlbumService albumService, IPictureService pictureService, IProductService productService, IOrderService orderService, IUserService userService, IWebHelper webHelper, ISearchService searchService, IPageService pageService, IVideoService videoService)
         {
             _categoryService = categoryService;
             _eventService = eventService;
@@ -51,6 +52,7 @@ namespace pCMS.Controllers
             _webHelper = webHelper;
             _searchService = searchService;
             _pageService = pageService;
+            _videoService = videoService;
         }
         private PageModel GetPageModel(string alias)
         {
@@ -937,6 +939,18 @@ namespace pCMS.Controllers
         {
             return View(GetPageModel("order-online"));
         }
+        public ActionResult VideoList()
+        {
+            var model = _videoService.GetAll().OrderBy(q => q.DisplayOrder).Select(q=> new VideoModel
+            {
+                Id = q.Id,
+                Title = q.Title,
+                VideoUrl = q.VideoUrl,
+                PictureUrl = _pictureService.GetPictureUrl(q.PictureId,300)
+            });
+            return PartialView(model);
+        }
+        
         //private static bool IsAndroidDevice()
         //{
         //    var useragent = Request.UserAgent;

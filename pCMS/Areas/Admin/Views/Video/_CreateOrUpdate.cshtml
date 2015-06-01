@@ -1,0 +1,67 @@
+﻿@using System
+@using pCMS.Framework
+@model pCMS.Admin.Models.VideoModel
+@Html.HiddenFor(model => model.Id)           
+@(Html.Telerik()
+.TabStrip()
+.Name("Video-Tab")
+.Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Content.Video.Tabs.Info")).Content(TabInfo().ToHtmlString());
+   string selectedTab = ViewBag.SelectedTab;
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+  
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+}))
+
+@helper TabInfo()
+    {
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.Title):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.Title, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.PictureId):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PictureId, "Picture")
+                @Html.ValidationMessageFor(model => model.PictureId)
+            </td>
+        </tr>
+     
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.VideoUrl):
+            </td>
+            <td class="adminData">
+                @Html.TextBoxFor(model => model.VideoUrl, new { @style = "width : 250px" })
+                @Html.ValidationMessageFor(model => model.VideoUrl)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.LabelFor(model => model.DisplayOrder):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.DisplayOrder)
+                @Html.ValidationMessageFor(model => model.DisplayOrder)
+            </td>
+        </tr>
+       
+    </table>
+}
+

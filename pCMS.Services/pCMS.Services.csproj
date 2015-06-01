@@ -65,6 +65,7 @@
     <Compile Include="BaseService.cs" />
     <Compile Include="CategoryService.cs" />
     <Compile Include="ChannelService.cs" />
+    <Compile Include="VideoService.cs" />
     <Compile Include="DownloadService.cs" />
     <Compile Include="ExportManager.cs" />
     <Compile Include="LogService.cs" />

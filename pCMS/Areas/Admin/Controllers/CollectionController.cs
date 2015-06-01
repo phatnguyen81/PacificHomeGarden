@@ -45,7 +45,7 @@ namespace pCMS.Admin.Controllers
         [HttpPost, GridAction(EnableCustomBinding = true)]
         public ActionResult Collections(GridCommand command)
         {
-            var Collections = _collectionService.Search(null, command.Page - 1, command.PageSize);
+            var Collections = _collectionService.Search(null);
             var model = new GridModel<CollectionModel>
             {
                 Data = Collections.Select(
@@ -246,12 +246,13 @@ namespace pCMS.Admin.Controllers
                             Extension = Path.GetExtension(httpPostedFile.FileName)
                         };
                         _downloadService.InsertDownload(download, httpPostedFile.GetDownloadBits());
+                        if (oldDownloadId != Guid.Empty)
+                        {
+                            _downloadService.DeleteDownload(oldDownloadId);
+                        }
+                        oldDownloadId = downloadId;
                     }
-                    if (oldDownloadId != Guid.Empty)
-                    {
-                        _downloadService.DeleteDownload(oldDownloadId);
-                    }
-                    oldDownloadId = downloadId;
+                    
                 }
                 collection.FileDownloadId = oldDownloadId;
 
@@ -271,7 +272,30 @@ namespace pCMS.Admin.Controllers
             return View(model);
 
         }
+        [HttpPost]
+        public ActionResult Delete(Guid id)
+        {
+            try
+            {
+                var collection = _collectionService.GetById(id);
 
+                if(collection.PictureId != Guid.Empty) _pictureService.DeletePicture(collection.PictureId);
+                if (collection.FileDownloadId != Guid.Empty) _downloadService.DeleteDownload(collection.FileDownloadId);
+                _collectionService.Delete(id);
+                _collectionService.SaveChanges();
+
+                SuccessNotification("Delete product '" + collection.Title + "' successful");
+
+                //_searchService.DeleteContent(id);
+
+                return RedirectToAction("List");
+            }
+            catch (Exception ex)
+            {
+                ErrorNotification(ex.GetBaseException().Message, true);
+            }
+            return RedirectToAction("Edit", new { id });
+        }
         public ActionResult Up(Guid id)
         {
             try

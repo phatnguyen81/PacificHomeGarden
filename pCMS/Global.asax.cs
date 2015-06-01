@@ -109,6 +109,7 @@ namespace pCMS
             builder.Register(c => new OrderService(c.Resolve<IDalContext>())).As<IOrderService>().InstancePerHttpRequest();
             builder.Register(c => new UserService(c.Resolve<IDalContext>())).As<IUserService>().InstancePerHttpRequest();
             builder.Register(c => new CollectionService(c.Resolve<IDalContext>())).As<ICollectionService>().InstancePerHttpRequest();
+            builder.Register(c => new VideoService(c.Resolve<IDalContext>())).As<IVideoService>().InstancePerHttpRequest();
             //builder.Register(c => new TelerikLocalizationServiceFactory(c.Resolve<Services.ILocalizationService>())).As<ILocalizationServiceFactory>().InstancePerHttpRequest();
 
             var container = builder.Build();

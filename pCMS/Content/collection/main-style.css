@@ -291,7 +291,8 @@ div.wpcf7 .wpcf7-form .submit-wrap input[type="submit"], div.wpcf7 .wpcf7-form .
 	.nav-wrap.isStuck {
 		padding:10px 0;
 		background:url(images/bg-header.jpg) 0 100% repeat-x;
-		width:100%;
+		width:1170px;
+	    
 	}
 }
 @media (max-width: 998px) {

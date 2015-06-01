@@ -1,24 +1,20 @@
-﻿
-@using pCMS.Framework
-@model pCMS.Admin.Models.CollectionModel
+﻿    @model pCMS.Admin.Models.VideoModel
 
 @{
-    ViewBag.Title = T("Admin.Catalog.Collection.EditCollection");
+    ViewBag.Title = T("Admin.Catalog.Video.CreateVideo");
 }
 
 @using (Html.BeginForm(null, null,FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="section-header">
         <div class="title">
-        <img src="@Url.Content("~/Content/admin/images/ico-content.png")" alt="" />
+        <img src="@Url.Content("~/Content/admin/images/ico-catalog.png")" alt="" />
              @ViewBag.Title @Html.ActionLink("(" + T("Admin.Configuration.Languages.BackToList") + ")", "List")
         </div>
         <div class="options">
             <button type="submit" name="save" value="save" class="t-button">@T("Admin.Common.Save")</button>
             <button type="submit" name="save" value="save-continue" class="t-button">@T("Admin.Common.SaveContinue")</button>
-            <span id="collection-delete" class="t-button">@T("Admin.Common.Delete")</span>
         </div>
     </div>
     @Html.Partial("_CreateOrUpdate", Model)
 }
-@Html.DeleteConfirmation(Model.Id.ToString(), "collection-delete")
