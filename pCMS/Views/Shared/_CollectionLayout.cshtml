@@ -54,25 +54,27 @@
             src='http://maps.googleapis.com/maps/api/js?v=3.exp&#038;sensor=false&#038;ver=4.1.4'></script>
     <style type='text/css'>
         body {
-            background-image: url(@Url.Content("~/Content/collection/images/bg-body.jpg"));
+            /*background-image: url(@Url.Content("~/Content/collection/images/bg-body.jpg"));
             background-repeat: repeat-x;
             background-position: center center;
-            background-attachment: scroll;
+            background-attachment: scroll;*/
+            
         }
 
         body {
-            background-color: #000000;
+            background-color: #333333;
         }
 
         .header {
+        /*
             background-image: url(@Url.Content("~/Content/collection/images/bg-header.jpg"));
             background-repeat: repeat-x;
             background-position: bottom center;
-            background-attachment: scroll;
+            background-attachment: scroll;*/
         }
 
         .header {
-            background-color: #000000;
+            background-color: #333333;
         }
     </style>
     <style type='text/css'>
@@ -116,7 +118,7 @@
         }
 
         .sf-menu > li > a {
-            font: normal 14px/17px Open Sans;
+            font: normal 14px/17px Berlin Sans FB;
             color: #ffffff;
         }
 
@@ -199,6 +201,17 @@
             }).each(function () {
                 if (this.complete) $(this).load();
             });
+            jQuery('ul.sf-menu').superfish({
+                delay: 1000, // the delay in milliseconds that the mouse can remain outside a sub-menu without it closing
+                animation: {
+                    opacity: "show",
+                    height: "show"
+                }, // used to animate the sub-menu open
+                speed: "normal", // animation speed
+                autoArrows: false, // generation of arrow mark-up (for submenu)
+                disableHI: true // to disable hoverIntent detection
+            });
+
         })
 
     </script>
@@ -222,13 +235,31 @@
                                         </a>
                                     </div>
                                 </div>
+                             
+
                                 <div class="col-xs-7">
                                     <div class="row">
                                         <div class="col-xs-12">
                                             <nav class="nav nav__primary clearfix">
                                                 <ul id="topnav" class="sf-menu sf-js-enabled">
-                                                    <li class="menu-item "><a href="@Url.Content("~/pdfFiles/TermsAndConditions.zip")"><span data-hover="Terms & Conditions">Terms & Conditions</span></a></li>
-
+                                                    <li class="menu-item ">
+                                                        <a href="#"><span>Terms & Conditions</span></a>
+                                                        <ul class="sub-menu">
+                                                            <li class="menu-item ">
+                                                                <a href="@Url.Content("~/pdfFiles/Border Protection Notes.doc")" target="_blank">Border Protection Notes</a>
+                                                            </li>
+                                                            <li class="menu-item ">
+                                                                <a href="@Url.Content("~/pdfFiles/Extra Charges from Ports.doc")" target="_blank">Extra Charges from Ports</a>
+                                                            </li>
+                                                            <li class="menu-item ">
+                                                                <a href="@Url.Content("~/pdfFiles/FOB Terms and Conditions.docx")" target="_blank">FOB Terms and Conditions</a>
+                                                            </li>
+                                                            <li class="menu-item ">
+                                                                <a href="@Url.Content("~/pdfFiles/Safty Intructions.docx")" target="_blank">Safty Intructions</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    
                                                     <li class="menu-item "><a href="@Url.Action("LogOff", "Account")"><span data-hover="Log out">Log out</span></a></li>
                                                 </ul>
                                             </nav>

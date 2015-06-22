@@ -1,3 +1,4 @@
+
 body { position:relative; }
 .ie8 body { min-width:980px; }
 @media (max-width: 767px) {
@@ -2900,7 +2901,7 @@ div.ajax-loader {
 }
 .collection-detail h3 {
     margin: 0 0 20px;
-    font: 18px/1.2em 'Source Code Pro', sans-serif;
+    font: 18px/1.2em 'Berlin Sans FB', sans-serif;
     display: block;
     color: #000;
     text-align: left;

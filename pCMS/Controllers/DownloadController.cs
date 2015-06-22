@@ -6,7 +6,7 @@ using pCMS.Services;
 
 namespace pCMS.Controllers
 {
-    public class DownloadController : BaseAdminController
+    public class DownloadController : BaseController
     {
         private readonly IDownloadService _downloadService;
 

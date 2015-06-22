@@ -35,6 +35,15 @@
         </tr>
         <tr>
             <td class="adminTitle">
+                @Html.LabelFor(model => model.CategoryId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(model => model.CategoryId,Model.AvailableCategories,"-- Select One --")
+                @Html.ValidationMessageFor(model => model.CategoryId)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
                 @Html.LabelFor(model => model.PictureId):
             </td>
             <td class="adminData">

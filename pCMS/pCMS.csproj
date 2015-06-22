@@ -78,14 +78,10 @@
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\psf\Home\Documents\Backup\PHG\bin\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Mvc, Version=3.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -106,6 +102,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -113,7 +112,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Web" />
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Extensions">
       <Private>True</Private>
     </Reference>
@@ -2657,7 +2658,11 @@
     <None Include="Content\fonts\BRLNSB.TTF" />
     <None Include="Content\fonts\BRLNSDB.TTF" />
     <None Include="Content\fonts\BRLNSR.TTF" />
+    <Content Include="pdfFiles\Border Protection Notes.doc" />
     <None Include="pdfFiles\CreditApplication.pdf" />
+    <Content Include="pdfFiles\Extra Charges from Ports.doc" />
+    <Content Include="pdfFiles\FOB Terms and Conditions.docx" />
+    <Content Include="pdfFiles\Safty Intructions.docx" />
     <None Include="pdfFiles\ShippingAtFactoriesPrice.pdf" />
     <None Include="pdfFiles\ShippingAtPortPrices.pdf" />
     <None Include="pdfFiles\ShippingFromOurWarehouses.pdf" />
@@ -2740,6 +2745,7 @@
     <Content Include="Views\FactoryDirect\ArroundCollections.cshtml" />
     <Content Include="Views\Home\PageInline.cshtml" />
     <Content Include="Views\Home\VideoList.cshtml" />
+    <Content Include="Views\Home\VideoCategoryList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\EditorLocalization.bg-BG.resx">

@@ -40,7 +40,8 @@ namespace pCMS.Admin.Controllers
                         Id = q.Id,
                         Title = q.Title,
                         VideoUrl = q.VideoUrl,
-                        DisplayOrder = q.DisplayOrder
+                        DisplayOrder = q.DisplayOrder,
+                        CategoryName = q.VideoCategory.Name
                     }).ToList()
             };
 
@@ -60,15 +61,24 @@ namespace pCMS.Admin.Controllers
                         Id = q.Id,
                         Title = q.Title,
                         VideoUrl = q.VideoUrl,
-                        DisplayOrder = q.DisplayOrder
+                        DisplayOrder = q.DisplayOrder,
+                        CategoryName = q.VideoCategory.Name
                     }).ToList()
             };
             return View(model);
         }
 
+        public void PrepareVideoModel(VideoModel model)
+        {
+            model.AvailableCategories =
+                _videoService.GetAllCategories()
+                    .Select(q => new SelectListItem {Text = q.Name, Value = q.Id.ToString()})
+                    .ToList();
+        }
         public ActionResult Create()
         {
             var model = new VideoModel();
+            PrepareVideoModel(model);
             return View(model);
         }
 
@@ -86,7 +96,8 @@ namespace pCMS.Admin.Controllers
                     Title = model.Title,
                     PictureId = model.PictureId,
                     VideoUrl = model.VideoUrl,
-                    DisplayOrder = model.DisplayOrder
+                    DisplayOrder = model.DisplayOrder,
+                    CategoryId = model.CategoryId
                 };
                 _videoService.Add(video);
                 SuccessNotification("Add video '" + model.Title + "' successful");
@@ -98,7 +109,7 @@ namespace pCMS.Admin.Controllers
             {
                 ErrorNotification(ex.GetBaseException().Message, false);
             }
-
+            PrepareVideoModel(model);
             return View(model);
         }
 
@@ -113,8 +124,10 @@ namespace pCMS.Admin.Controllers
                 Title = video.Title,
                 PictureId = video.PictureId,
                 VideoUrl = video.VideoUrl,
-                DisplayOrder = video.DisplayOrder
+                DisplayOrder = video.DisplayOrder,
+                CategoryId = video.CategoryId
             };
+            PrepareVideoModel(model);
             return View(model);
         }
 
@@ -134,6 +147,7 @@ namespace pCMS.Admin.Controllers
                 video.DisplayOrder = model.DisplayOrder;
 
                 video.PictureId = model.PictureId;
+                video.CategoryId = model.CategoryId;
 
 
 
@@ -154,6 +168,7 @@ namespace pCMS.Admin.Controllers
             {
                 ErrorNotification(ex.GetBaseException().Message, false);
             }
+            PrepareVideoModel(model);
             return View(model);
         }
 

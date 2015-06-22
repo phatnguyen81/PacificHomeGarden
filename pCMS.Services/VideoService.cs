@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using pCMS.Core;
 using pCMS.Data;
 
@@ -8,10 +9,13 @@ namespace pCMS.Services
     public interface IVideoService
     {
         IEnumerable<Video> GetAll();
+        IEnumerable<Video> GetAllByCategoryId(Guid categoryId);
         void Add(Video video);
         void SaveChanges();
         Video GetById(Guid id);
         void Delete(Guid id);
+
+        IEnumerable<VideoCategory> GetAllCategories();
 
     }
 
@@ -36,6 +40,11 @@ namespace pCMS.Services
             return _context.Videos.All();
         }
 
+        public IEnumerable<Video> GetAllByCategoryId(Guid categoryId)
+        {
+            return _context.Videos.All().Where(q => q.CategoryId == categoryId);
+        }
+
         public void Add(Video video)
         {
             _context.Videos.Create(video);
@@ -56,6 +65,9 @@ namespace pCMS.Services
             _context.Videos.Delete(q => q.Id == id);
         }
 
-       
+        public IEnumerable<VideoCategory> GetAllCategories()
+        {
+            return _context.VideoCategorys.All().OrderBy(q=>q.DisplayOrder);
+        }
     }
 }

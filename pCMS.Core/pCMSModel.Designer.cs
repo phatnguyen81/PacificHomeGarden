@@ -41,6 +41,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("pCMSModel", "FK_OrderDetail_Picture", "Picture", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(pCMS.Core.Picture), "OrderDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(pCMS.Core.OrderDetail), true)]
 [assembly: EdmRelationshipAttribute("pCMSModel", "FK_OrderDetail_Product", "Product", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(pCMS.Core.Product), "OrderDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(pCMS.Core.OrderDetail), true)]
 [assembly: EdmRelationshipAttribute("pCMSModel", "FK_OrderDetail_Order", "Order", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(pCMS.Core.Order), "OrderDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(pCMS.Core.OrderDetail), true)]
+[assembly: EdmRelationshipAttribute("pCMSModel", "FK_Video_VideoCategory", "VideoCategory", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(pCMS.Core.VideoCategory), "Video", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(pCMS.Core.Video), true)]
 
 #endregion
 
@@ -571,6 +572,22 @@ namespace pCMS.Core
             }
         }
         private ObjectSet<Video> _Videos;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<VideoCategory> VideoCategories
+        {
+            get
+            {
+                if ((_VideoCategories == null))
+                {
+                    _VideoCategories = base.CreateObjectSet<VideoCategory>("VideoCategories");
+                }
+                return _VideoCategories;
+            }
+        }
+        private ObjectSet<VideoCategory> _VideoCategories;
 
         #endregion
 
@@ -814,6 +831,14 @@ namespace pCMS.Core
         public void AddToVideos(Video video)
         {
             base.AddObject("Videos", video);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the VideoCategories EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToVideoCategories(VideoCategory videoCategory)
+        {
+            base.AddObject("VideoCategories", videoCategory);
         }
 
         #endregion
@@ -8093,7 +8118,8 @@ namespace pCMS.Core
         /// <param name="pictureId">Initial value of the PictureId property.</param>
         /// <param name="videoUrl">Initial value of the VideoUrl property.</param>
         /// <param name="displayOrder">Initial value of the DisplayOrder property.</param>
-        public static Video CreateVideo(global::System.Guid id, global::System.String title, global::System.Guid pictureId, global::System.String videoUrl, global::System.Int32 displayOrder)
+        /// <param name="categoryId">Initial value of the CategoryId property.</param>
+        public static Video CreateVideo(global::System.Guid id, global::System.String title, global::System.Guid pictureId, global::System.String videoUrl, global::System.Int32 displayOrder, global::System.Guid categoryId)
         {
             Video video = new Video();
             video.Id = id;
@@ -8101,6 +8127,7 @@ namespace pCMS.Core
             video.PictureId = pictureId;
             video.VideoUrl = videoUrl;
             video.DisplayOrder = displayOrder;
+            video.CategoryId = categoryId;
             return video;
         }
 
@@ -8230,10 +8257,211 @@ namespace pCMS.Core
         private global::System.Int32 _DisplayOrder;
         partial void OnDisplayOrderChanging(global::System.Int32 value);
         partial void OnDisplayOrderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid CategoryId
+        {
+            get
+            {
+                return _CategoryId;
+            }
+            set
+            {
+                OnCategoryIdChanging(value);
+                ReportPropertyChanging("CategoryId");
+                _CategoryId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CategoryId");
+                OnCategoryIdChanged();
+            }
+        }
+        private global::System.Guid _CategoryId;
+        partial void OnCategoryIdChanging(global::System.Guid value);
+        partial void OnCategoryIdChanged();
 
         #endregion
 
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("pCMSModel", "FK_Video_VideoCategory", "VideoCategory")]
+        public VideoCategory VideoCategory
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<VideoCategory>("pCMSModel.FK_Video_VideoCategory", "VideoCategory").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<VideoCategory>("pCMSModel.FK_Video_VideoCategory", "VideoCategory").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<VideoCategory> VideoCategoryReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<VideoCategory>("pCMSModel.FK_Video_VideoCategory", "VideoCategory");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<VideoCategory>("pCMSModel.FK_Video_VideoCategory", "VideoCategory", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="pCMSModel", Name="VideoCategory")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class VideoCategory : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new VideoCategory object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="displayOrder">Initial value of the DisplayOrder property.</param>
+        public static VideoCategory CreateVideoCategory(global::System.Guid id, global::System.String name, global::System.Int32 displayOrder)
+        {
+            VideoCategory videoCategory = new VideoCategory();
+            videoCategory.Id = id;
+            videoCategory.Name = name;
+            videoCategory.DisplayOrder = displayOrder;
+            return videoCategory;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Guid _Id;
+        partial void OnIdChanging(global::System.Guid value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DisplayOrder
+        {
+            get
+            {
+                return _DisplayOrder;
+            }
+            set
+            {
+                OnDisplayOrderChanging(value);
+                ReportPropertyChanging("DisplayOrder");
+                _DisplayOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DisplayOrder");
+                OnDisplayOrderChanged();
+            }
+        }
+        private global::System.Int32 _DisplayOrder;
+        partial void OnDisplayOrderChanging(global::System.Int32 value);
+        partial void OnDisplayOrderChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("pCMSModel", "FK_Video_VideoCategory", "Video")]
+        public EntityCollection<Video> Videos
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Video>("pCMSModel.FK_Video_VideoCategory", "Video");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Video>("pCMSModel.FK_Video_VideoCategory", "Video", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
 
     #endregion

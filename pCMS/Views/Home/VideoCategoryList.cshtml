@@ -1,0 +1,124 @@
+﻿@using PagedList.Mvc
+
+@model IEnumerable<pCMS.Models.VideoCategoryModel>
+                      <link rel='stylesheet' id='font-awesome-css'
+                            href='http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css?ver=3.2.1")' type='text/css'
+                            media='all' />
+                      <link href="@Url.Content("~/Scripts/prettyPhoto/css/prettyPhoto.css")" rel="stylesheet" type="text/css">
+                      <script src="@Url.Content("~/Scripts/prettyPhoto/js/jquery.prettyPhoto.js")" type="text/javascript"></script>
+                      <script src="@Url.Content("~/Scripts/jssorslider/jssor.slider.mini.js")"></script>
+                      <script>
+                          jQuery(document).ready(function ($) {
+                          
+                              //responsive code end
+
+                              $("a[rel^='prettyPhoto']").prettyPhoto({ social_tools: false });
+
+                          });
+                          var _CaptionTransitions = [];
+
+                          var options = {
+                              $AutoPlay: false,                                    //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
+                              $AutoPlaySteps: 4,                                  //[Optional] Steps to go for each navigation request (this options applys only when slideshow disabled), the default value is 1
+                              $AutoPlayInterval: 8000,                            //[Optional] Interval (in milliseconds) to go for next slide since the previous stopped if the slider is auto playing, default value is 3000
+                              $PauseOnHover: 1,                               //[Optional] Whether to pause when mouse over if a slider is auto playing, 0 no pause, 1 pause for desktop, 2 pause for touch device, 3 pause for desktop and touch device, 4 freeze for desktop, 8 freeze for touch device, 12 freeze for desktop and touch device, default value is 1
+
+                              $ArrowKeyNavigation: true,   			            //[Optional] Allows keyboard (arrow key) navigation or not, default value is false
+                              $SlideDuration: 160,                                //[Optional] Specifies default duration (swipe) for slide in milliseconds, default value is 500
+                              $MinDragOffsetToSlide: 20,                          //[Optional] Minimum drag offset to trigger slide , default value is 20
+                              $SlideWidth: 229,                                   //[Optional] Width of every slide in pixels, default value is width of 'slides' container
+                              $SlideHeight: 150,                                //[Optional] Height of every slide in pixels, default value is height of 'slides' container
+                              $SlideSpacing: 18, 					                //[Optional] Space between each slide in pixels, default value is 0
+                              $DisplayPieces: 5,                                  //[Optional] Number of pieces to display (the slideshow would be disabled if the value is set to greater than 1), the default value is 1
+                              $ParkingPosition: 0,                              //[Optional] The offset position to park slide (this options applys only when slideshow disabled), default value is 0.
+                              $UISearchMode: 1,                                   //[Optional] The way (0 parellel, 1 recursive, default value is 1) to search UI components (slides container, loading screen, navigator container, arrow navigator container, thumbnail navigator container etc).
+                              $PlayOrientation: 1,                                //[Optional] Orientation to play slide (for auto play, navigation), 1 horizental, 2 vertical, 5 horizental reverse, 6 vertical reverse, default value is 1
+                              $DragOrientation: 1,                                //[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $DisplayPieces is greater than 1, or parking position is not 0)
+
+
+                              $CaptionSliderOptions: {                            //[Optional] Options which specifies how to animate caption
+                                  $Class: $JssorCaptionSlider$,                   //[Required] Class to create instance to animate caption
+                                  $CaptionTransitions: _CaptionTransitions,       //[Required] An array of caption transitions to play caption, see caption transition section at jssor slideshow transition builder
+                                  $PlayInMode: 1,                                 //[Optional] 0 None (no play), 1 Chain (goes after main slide), 3 Chain Flatten (goes after main slide and flatten all caption animations), default value is 1
+                                  $PlayOutMode: 3                                 //[Optional] 0 None (no play), 1 Chain (goes before main slide), 3 Chain Flatten (goes before main slide and flatten all caption animations), default value is 1
+                              },
+
+                              $ArrowNavigatorOptions: {
+                                  $Class: $JssorArrowNavigator$,              //[Requried] Class to create arrow navigator instance
+                                  $ChanceToShow: 2,                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+                                  $AutoCenter: 0,                                 //[Optional] Auto center navigator in parent container, 0 None, 1 Horizontal, 2 Vertical, 3 Both, default value is 0
+                                  $Steps: 4                                       //[Optional] Steps to go for each navigation request, default value is 1
+                              }
+                          };
+
+
+                      </script>
+@foreach (var item in Model)
+{
+    if (item.Videos.Count > 0)
+     {
+         <div id="slider_container_@(item.Id.ToString("N"))" style="position: relative; top: 0px; left: 0px; width: 970px; height: 210px; overflow: hidden;">
+
+             <!-- Loading Screen -->
+             <div u="loading" style="position: absolute; top: 0px; left: 0px;">
+                 <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                             background-color: #000; top: 0px; left: 0px; width: 100%; height: 100%;">
+                 </div>
+                 <div style="position: absolute; display: block; background: url(@Url.Content("~/Content/images/loading.gif")) no-repeat center center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             top 0px; left 0px; width 100%; height: 100%;">
+                 </div>
+             </div>
+
+             <div class="separator"><span>@item.Name</span></div>
+             <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 30px; width: 970px; height: 175px; overflow: hidden;">
+                 @foreach (var video in item.Videos)
+                 {
+                     <div class="itemslide">
+                         <a href="@video.VideoUrl" class="video" rel="prettyPhoto" title="@video.Title" style="z-index: 0;">
+                             <img u="image" src="@video.PictureUrl" style="height: 150px;" />
+                         </a>
+                         <div u="caption" style="position: absolute; top: 150px; left: 0px; width: 229px; height: 25px; z-index: 1;">
+
+                             <div style="position: absolute; top: 0px; left: 0px; width: 229px; height: 25px; color: White; font-size: 12px; font-weight: bold; line-height: 25px; text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                 @video.Title
+                             </div>
+                         </div>
+
+                     </div>
+                 }
+
+             </div>
+
+
+             <!-- Arrow Left -->
+             <span u="arrowleft" class="leftnav">
+             </span>
+             <!-- Arrow Right -->
+             <span u="arrowright" class="rightnav">
+             </span>
+
+
+
+
+         </div>
+         <script>
+             var jssor_slider_@(item.Id.ToString("N")) = new $JssorSlider$("slider_container_@(item.Id.ToString("N"))", options);
+
+             //responsive code begin
+             //you can remove responsive code if you don't want the slider scales while window resizes
+             function ScaleSlider_jssor_slider_@(item.Id.ToString("N"))() {
+                 var bodyWidth = document.body.clientWidth;
+                 if (bodyWidth)
+                     jssor_slider_@(item.Id.ToString("N")).$ScaleWidth(Math.min(bodyWidth, 970));
+                 else
+                     window.setTimeout(ScaleSlider, 30);
+             }
+
+             ScaleSlider_jssor_slider_@(item.Id.ToString("N"))();
+
+             $(window).bind("load", ScaleSlider_jssor_slider_@(item.Id.ToString("N")));
+             $(window).bind("resize", ScaleSlider_jssor_slider_@(item.Id.ToString("N")));
+             $(window).bind("orientationchange", ScaleSlider_jssor_slider_@(item.Id.ToString("N")));
+         </script>
+     }
+}

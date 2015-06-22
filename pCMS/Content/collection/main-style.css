@@ -1,5 +1,9 @@
 @import url("./style.css");
 @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700|Open+Sans:300,300italic,400,700,800);
+@font-face {
+    font-family: "Berlin Sans FB";
+    src: url(../fonts/BRLNSR.TTF);
+}
 .main-holder {
 	z-index:100;
 	overflow:hidden;
@@ -290,7 +294,8 @@ div.wpcf7 .wpcf7-form .submit-wrap input[type="submit"], div.wpcf7 .wpcf7-form .
 @media only screen and (min-width: 998px) {
 	.nav-wrap.isStuck {
 		padding:10px 0;
-		background:url(images/bg-header.jpg) 0 100% repeat-x;
+		/*background:url(images/bg-header.jpg) 0 100% repeat-x;*/
+        background-color: #333333;
 		width:1170px;
 	    
 	}
@@ -416,10 +421,10 @@ div.wpcf7 .wpcf7-form .submit-wrap input[type="submit"], div.wpcf7 .wpcf7-form .
 }
 .nav__primary .sf-menu > .menu-item > a:hover span, .nav__primary .sf-menu > .menu-item > a:active span, .nav__primary .sf-menu > .menu-item > a:focus span {
 	color:#909090;
-	-webkit-transform:translate3d(0,120%,0) rotateX(-90deg);
+	/*-webkit-transform:translate3d(0,120%,0) rotateX(-90deg);
 	-moz-transform:translate3d(0,120%,0) rotateX(-90deg);
 	-ms-transform:translate3d(0,120%,0) rotateX(-90deg);
-	transform:translate3d(0,120%,0) rotateX(-90deg);
+	transform:translate3d(0,120%,0) rotateX(-90deg);*/
 }
 .ie .nav__primary .sf-menu > .menu-item > a span {
 	color:inherit;
@@ -458,10 +463,11 @@ div.wpcf7 .wpcf7-form .submit-wrap input[type="submit"], div.wpcf7 .wpcf7-form .
 }
 .nav__primary .sf-menu > .menu-item.current-menu-item > a span, .nav__primary .sf-menu > .menu-item.sfHover > a span {
 	color:#909090;
-	-webkit-transform:translate3d(0,120%,0) rotateX(-90deg);
+	/*-webkit-transform:translate3d(0,120%,0) rotateX(-90deg);
 	-moz-transform:translate3d(0,120%,0) rotateX(-90deg);
 	-ms-transform:translate3d(0,120%,0) rotateX(-90deg);
 	transform:translate3d(0,120%,0) rotateX(-90deg);
+        */
 }
 .nav__primary .sf-menu > .menu-item.current-menu-item > a .sf-sub-indicator, .nav__primary .sf-menu > .menu-item.sfHover > a .sf-sub-indicator { background-position:-10px -100px; }
 .nav__primary .sf-menu > .menu-item > .sub-menu {
@@ -482,7 +488,7 @@ div.wpcf7 .wpcf7-form .submit-wrap input[type="submit"], div.wpcf7 .wpcf7-form .
 .nav__primary .sf-menu > .menu-item > .sub-menu .menu-item {
 	text-align:left;
 	background:none;
-	font:14px/1.2em 'Open Sans', sans-serif;
+	font:14px/1.2em 'Berlin Sans FB', sans-serif;
 	padding:0;
 	border:none;
 	position:relative;
@@ -2181,7 +2187,7 @@ div.type-page .extra-wrap h6 { font-size:20px; }
 	div.type-page .extra-wrap h6 { font-size:15px; }
 }
 .carousel-wrap > h2 {
-	font:18px/1.2em 'Source Code Pro', sans-serif;
+	font:18px/1.2em 'Berlin Sans FB', sans-serif;
 	color:#000;
 	padding:0 15px;
 	margin:0 0 25px;
@@ -3283,7 +3289,7 @@ blockquote p { line-height:22px; }
 	-o-transform:scale(1.1);
 	transform:scale(1.1);
 }
-
+.collection-detail h3 
 .collection-list .format-collection figure {
 	margin:0 0 20px;
 	overflow:hidden;
@@ -3297,7 +3303,7 @@ blockquote p { line-height:22px; }
 .collection-list .item .desc h5 a {
   color: #000;
   margin: 0 0 5px;
-  font: 18px/1.3em 'Open Sans', sans-serif;
+  font: 18px/1.3em Verdana,Geneva,Arial,Helvetica,sans-serif;
 }
 .collection-list  .item .desc .video-description {
   font: 300 italic 14px/1.3em 'Open Sans', sans-serif;

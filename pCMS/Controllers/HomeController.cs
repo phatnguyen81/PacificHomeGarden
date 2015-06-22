@@ -718,13 +718,15 @@ namespace pCMS.Controllers
                 //}
                 //_orderService.Add(order);
                 //_orderService.SaveChanges();
-                SessionManager.CurrentShoppingCard.SubmitCart();
+                var listOrderHtml = GetTableShoppingCart();
                 var totalprice = SessionManager.CurrentShoppingCard.TotalPrice;
+                SessionManager.CurrentShoppingCard.SubmitCart();
+                
                 if(!string.IsNullOrWhiteSpace(AppSettings.EmailReceive))
                 {
                     try
                     {
-                        var listOrderHtml = GetTableShoppingCart();
+                        
                         SessionManager.CurrentShoppingCard.ClearAll();
                         //var client = new SmtpClient { Timeout = 60000 };
                         
@@ -804,11 +806,11 @@ namespace pCMS.Controllers
                                                            string.Format("{0:c}", totalprice),
                                                            listOrderHtml));
                         //OrderSubmitToCustomer(user);
-                        EmailHelper.SendMailWithSignature(user.Email, "Your Pacific Home and Garden Order", "SubmitOrderSuccess.htm");
+                        EmailHelper.SendMailWithSignature(user.Email, "Your Pacific Home and Garden Order", "SubmitOrderSuccess.htm", new[] { listOrderHtml, string.Format("{0:c}", totalprice) });
                     }
-                    catch
+                    catch(Exception ex)
                     {
-                        
+                        var a = ex.GetBaseException().Message;
                     }
                 }
                 
@@ -939,18 +941,33 @@ namespace pCMS.Controllers
         {
             return View(GetPageModel("order-online"));
         }
-        public ActionResult VideoList()
+        //public ActionResult VideoList(Guid categoryId)
+        //{
+        //    var model = _videoService.GetAllByCategoryId(categoryId).OrderBy(q => q.DisplayOrder).Select(q => new VideoModel
+        //    {
+        //        Id = q.Id,
+        //        Title = q.Title,
+        //        VideoUrl = q.VideoUrl,
+        //        PictureUrl = _pictureService.GetPictureUrl(q.PictureId,300)
+        //    });
+        //    return PartialView(model);
+        //}
+        public ActionResult VideoCategoryList()
         {
-            var model = _videoService.GetAll().OrderBy(q => q.DisplayOrder).Select(q=> new VideoModel
+            var model = _videoService.GetAllCategories().OrderBy(q => q.DisplayOrder).Select(q => new VideoCategoryModel
             {
                 Id = q.Id,
-                Title = q.Title,
-                VideoUrl = q.VideoUrl,
-                PictureUrl = _pictureService.GetPictureUrl(q.PictureId,300)
+                Name = q.Name,
+                Videos = q.Videos.OrderBy(v => v.DisplayOrder).Select(v => new VideoModel
+                {
+                    Id = v.Id,
+                    Title = v.Title,
+                    VideoUrl = v.VideoUrl,
+                    PictureUrl = _pictureService.GetPictureUrl(v.PictureId, 300)
+                }).ToList()
             });
             return PartialView(model);
         }
-        
         //private static bool IsAndroidDevice()
         //{
         //    var useragent = Request.UserAgent;

@@ -8,16 +8,14 @@
     {
         <div class="item format-collection col-sm-3">
             <figure class="crop">
-                <a href="@Url.Action("CollectionDetail", "FactoryDirect", new {id = item.Alias})"
-                   title="Mauris accumsan nulla">
+                <a href="@Url.Action("CollectionDetail", "FactoryDirect", new {id = item.Alias})">
                     <img src="@item.PictureUrl"
-                         alt="Mauris accumsan nulla" class="img-responsive" />
+                         alt="@item.Title" class="img-responsive" />
                 </a>
             </figure>
             <div class="desc">
                 <h5>
-                    <a href="@Url.Action("CollectionDetail", "FactoryDirect", new {id = item.Alias})"
-                       title="Mauris accumsan nulla">
+                    <a href="@Url.Action("CollectionDetail", "FactoryDirect", new {id = item.Alias})" title="@item.Title">
                         @item.Title
                     </a>
                 </h5>

@@ -359,6 +359,15 @@
           <Property Name="PictureId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="VideoUrl" Type="varchar(max)" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VideoCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Album_Picture_Album">
           <End Role="Album" Type="Self.Album" Multiplicity="1">
@@ -666,6 +675,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Video_VideoCategory">
+          <End Role="VideoCategory" Type="Self.VideoCategory" Multiplicity="1" />
+          <End Role="Video" Type="Self.Video" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VideoCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Video">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="sp_GetAllCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_GetAllCategories_Paging" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PageIndex" Type="int" Mode="In" />
@@ -705,6 +726,7 @@
           <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductType_ProductAttribute" EntityType="Self.ProductType_ProductAttribute" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Video" EntityType="Self.Video" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VideoCategory" EntityType="Self.VideoCategory" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Album_Picture_Album" Association="Self.FK_Album_Picture_Album">
             <End Role="Album" EntitySet="Album" />
             <End Role="Album_Picture" EntitySet="Album_Picture" />
@@ -792,6 +814,10 @@
           <AssociationSet Name="FK_ProductType_ProductAttribute_ProductType" Association="Self.FK_ProductType_ProductAttribute_ProductType">
             <End Role="ProductType" EntitySet="ProductType" />
             <End Role="ProductType_ProductAttribute" EntitySet="ProductType_ProductAttribute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Video_VideoCategory" Association="Self.FK_Video_VideoCategory">
+            <End Role="VideoCategory" EntitySet="VideoCategory" />
+            <End Role="Video" EntitySet="Video" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -925,6 +951,11 @@
           <EntitySet Name="Collections" EntityType="pCMSModel.Collection" />
           <EntitySet Name="FileDownloads" EntityType="pCMSModel.FileDownload" />
           <EntitySet Name="Videos" EntityType="pCMSModel.Video" />
+          <EntitySet Name="VideoCategories" EntityType="pCMSModel.VideoCategory" />
+          <AssociationSet Name="FK_Video_VideoCategory" Association="pCMSModel.FK_Video_VideoCategory">
+            <End Role="VideoCategory" EntitySet="VideoCategories" />
+            <End Role="Video" EntitySet="Videos" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Channel">
           <Key>
@@ -1602,7 +1633,30 @@
           <Property Name="PictureId" Type="Guid" Nullable="false" />
           <Property Name="VideoUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="VideoCategory" Relationship="pCMSModel.FK_Video_VideoCategory" FromRole="Video" ToRole="VideoCategory" />
         </EntityType>
+        <EntityType Name="VideoCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Videos" Relationship="pCMSModel.FK_Video_VideoCategory" FromRole="VideoCategory" ToRole="Video" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Video_VideoCategory">
+          <End Type="pCMSModel.VideoCategory" Role="VideoCategory" Multiplicity="1" />
+          <End Type="pCMSModel.Video" Role="Video" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VideoCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Video">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2032,10 +2086,20 @@
           <EntitySetMapping Name="Videos">
             <EntityTypeMapping TypeName="pCMSModel.Video">
               <MappingFragment StoreEntitySet="Video">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="VideoUrl" ColumnName="VideoUrl" />
                 <ScalarProperty Name="PictureId" ColumnName="PictureId" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VideoCategories">
+            <EntityTypeMapping TypeName="pCMSModel.VideoCategory">
+              <MappingFragment StoreEntitySet="VideoCategory">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2226,6 +2290,8 @@
         <EntityTypeShape EntityType="pCMSModel.Collection" Width="1.5" PointX="11.375" PointY="10.75" />
         <EntityTypeShape EntityType="pCMSModel.FileDownload" Width="1.5" PointX="0.75" PointY="12.75" />
         <EntityTypeShape EntityType="pCMSModel.Video" Width="1.5" PointX="3.375" PointY="12.75" />
+        <EntityTypeShape EntityType="pCMSModel.VideoCategory" Width="1.5" PointX="1.125" PointY="16.125" />
+        <AssociationConnector Association="pCMSModel.FK_Video_VideoCategory" />
         </Diagram>
     </Diagrams>
   </Designer>
