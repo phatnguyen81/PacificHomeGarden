@@ -2815,6 +2815,7 @@ div.ajax-loader {
 }
 .collection-list figure {
     height: 190px;
+    overflow: hidden;
 }
 .white-block {
     background-color: #fff;
