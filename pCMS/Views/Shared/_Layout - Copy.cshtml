@@ -1,0 +1,181 @@
+﻿@{
+    /*
+    if(SessionManager.FirstVisit)
+    {
+        <script type="text/javascript">
+            if (!confirm("We are currently updating our website now, please check back in June for our new catalog.  We value your business, please don't hesitate to call us or email us your inquiries. Do you want access?")) {
+                document.location = "http://google.com";
+            }
+        </script>
+        SessionManager.FirstVisit = false;
+    }
+    */
+}
+@using pCMS.Utils
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0033)http://www.pacifichomegarden.com/ -->
+@{
+    var countitem = SessionManager.CurrentShoppingCard.OrderList.Count == 0 ? 0 : SessionManager.CurrentShoppingCard.OrderList.Sum(q => q.Qtty);
+    var countproduct = SessionManager.CurrentShoppingCard.OrderList.Count;
+    var metadescription = "Pottery importing &amp; wholesale. Catalog and information available on Le Beau, Chelsea Gardener, Seasons, Origins brands.";
+    var metakeywords = "Le Beau Pottery, Chelsea Gardener Pottery, Seasons Pottery, Origins Pottery, Provenza Pottery, Le Beau, Chelsea Gardener, Seasons, Origins ,Provenza";
+    if(!string.IsNullOrWhiteSpace(ViewBag.MetaDescription))
+    {
+        metadescription = ViewBag.MetaDescription;
+    }
+    if (!string.IsNullOrWhiteSpace(ViewBag.MetaKeywords))
+    {
+        metakeywords = ViewBag.MetaKeywords;
+    }
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Pacific Home &amp; Garden - @ViewBag.Title</title>
+    <meta name="description" content="@metadescription">
+    <meta name="keywords" content="@metakeywords">
+    <link href="@Url.Content("~/Content/css.css")" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/Scripts/qtip2/jquery.qtip.min.css")" rel="stylesheet" type="text/css">
+    <script src="@Url.Content("~/Scripts/jquery-1.5.1.js")" type="text/javascript"></script>
+    <link rel="stylesheet" href="@Url.Content("~/Content/themes/base/jquery.ui.all.css")">
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/qtip2/jquery.qtip.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        var timeout = 500;
+        var closetimer = 0;
+        var ddmenuitem = 0;
+        function Menu_open() {
+            Menu_canceltimer(); 
+            Menu_close(); 
+            ddmenuitem = $(this).find('ul').eq(0).css('visibility', 'visible');
+        }
+        function Menu_close() {
+            if (ddmenuitem) ddmenuitem.css('visibility', 'hidden');
+        } 
+        function Menu_timer() {
+            closetimer = window.setTimeout(Menu_close, timeout);
+        } 
+        function Menu_canceltimer() {
+            if (closetimer) {
+                window.clearTimeout(closetimer); closetimer = null;
+            }
+        }
+        $(document).ready(
+            function () {
+                $('#Menu > li').bind('mouseover', Menu_open);
+                $('#Menu > li').bind('mouseout', Menu_timer);
+                $("#shoppingcart").qtip({
+                    content: {
+                        text: function (api) {
+                            return "There are " + $("#hproductcount").val() + " product(s), total " + $("#hitemcount").val() + " item(s).";
+                        },
+                        title: 'Shopping Cart'
+                    },
+                    position : {
+                        my: 'top right',
+                        at: 'bottom left'
+                    },
+                    style: {
+                        classes: 'ui-tooltip-shadow ui-tooltip-youtube'
+                    }
+                });
+            }); 
+        document.onclick = Menu_close;
+    </script>
+    <script type="text/javascript">
+        window["_GOOG_TRANS_EXT_VER"] = "1";
+    </script>
+    @(Html.Telerik().StyleSheetRegistrar().DefaultGroup(group => group.Add("telerik.common.css").Add("telerik.default.css")))
+</head>
+<body>
+    <div id="AllPage">
+        <div id="Header">
+            <div id="TopMenu" style="float: left;">
+                
+                <ul id="Menu">
+                    <li>@Html.ActionLink("Company", "Company","Home")
+                        <ul>
+                            <li>@Html.ActionLink("Company", "Company","Home")</li>
+                            <li>@Html.ActionLink("How to buy from us", "HowToBuy","Home")</li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Our Products", "DesignsProductions", "Home")
+                        <ul>
+                            <li>@Html.ActionLink("Designs & Productions", "DesignsProductions", "Home")</li>
+                            <li>@Html.ActionLink("Care for our products", "Care", "Home")</li>
+                        </ul>
+                    </li>
+                    
+                    <li>@Html.ActionLink("Terms & Conditions", "TermsConditions", "Home")
+                        <ul style="visibility: hidden;">
+                            <li>@Html.ActionLink("Terms & Conditions", "TermsConditions", "Home")</li>
+                            <li><a href="@Url.Content("~/pdfFiles/CreditApplication.pdf")" target="_blank">
+                                    Credit Application</a></li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Trade Shows / News", "TradeShow", "Home")
+                        <ul>
+                            <li>@Html.ActionLink("Trade Show Schedules", "TradeShow", "Home")</li>
+                            <li>@Html.ActionLink("News", "News", "Home")</li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Stores & Gardens", "Customers", "Home")
+                        <ul>
+                            <li>@Html.ActionLink("Our customers", "Customers", "Home")</li>
+                            <li>@Html.ActionLink("Our products in Gardens", "ProductsInGardens", "Home")</li>
+                            <li>@Html.ActionLink("Our products in Stores", "ProductsInStores", "Home")</li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Factory direct", "Index", "FactoryDirect")</li>
+                    <li>@Html.ActionLink("Contact Us", "ContactUs", "Home")</li>
+                </ul>
+                
+            </div>
+            <div style="float: right;padding-top: 5px; color: white;vertical-align: middle;">
+                <a href="@Url.Action("ShoppingCart", "Home")">
+                    <img src="@Url.Content("~/Images/cart.png")" alt="Shopping Cart" title="Shopping Cart" id="shoppingcart" />
+                    <span id="countitem" style="color: white">(@countitem)</span>
+                </a>
+                @Html.Hidden("hproductcount", countproduct)
+                @Html.Hidden("hitemcount", countitem)
+            </div>
+        </div>
+        <div class="Logo">
+            <a href="@Url.Action("Index","Home")" style="float: left;">
+                <img src="@Url.Content("~/Images/logo.png")" style="border: 0px; margin-left: 5px;" alt="HomePage" /></a>
+            <span class="Slogan" style="display: none;">Le Beau Pottery,Chelsea Gardener Pottery,Seasons
+                Pottery,Origins Pottery,Provenza Pottery,Le Beau,Chelsea Gardener,Seasons,Origins,Provenza</span>
+        </div>
+        <div class="clr">
+        </div>
+        <div class="orderonline">
+            @Html.ActionLink("How to order online", "OderOnline", "Home")
+        </div>
+        
+        <div class="userinfo">
+            <div class="textlogon">
+                @{ Html.RenderPartial("_LogOnPartial"); }
+            </div>
+        </div>
+        <!-- start content pages -->
+        <div id="PageContent">
+            <div id="LeftMenu" style="height: 520px;">
+                
+                @{Html.RenderAction("ProductCategoryMenu","Home");}
+            </div>
+            <div id="RightContent" style="width: 695px; height: 550px; margin: 0; padding: 0;">
+                @RenderBody()
+            </div>
+        </div>
+        <div class="clr" style="margin-bottom: 20px;"></div>
+        <div class="video-list">
+            @Html.Action("VideoCategoryList", "Home")
+        </div>
+        <!-- end content pages -->
+        <div id="Copyright">
+            ©2012 Pacific Home &amp; Garden. All Rights Reserved.</div>
+    </div>
+</body>
+</html>
+@Html.Partial("_Notifications")
+@(Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false))
